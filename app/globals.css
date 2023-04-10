@@ -24,7 +24,7 @@
     top: 0;
     top: 50%;
     left: 100%;
-    width: 12px;
+    width: 10px;
     height: 97%;
     border-radius: 0 5px 5px 0;
     background-color: #d3d4d6d7;
@@ -34,7 +34,7 @@
 
   .calendar::before {
     height: 94%;
-    left: calc(100% + 12px);
+    left: calc(100% + 10px);
     background-color: rgb(153, 153, 153);
   }
 
@@ -45,14 +45,14 @@
       top: 100%;
       left: 50%;
       width: 97%;
-      height: 12px;
+      height: 10px;
       border-radius: 0 0 5px 5px;
       transform: translateX(-50%);
     }
 
     .calendar::before {
       width: 94%;
-      top: calc(100% + 12px);
+      top: calc(100% + 10px);
     }
   }
 
@@ -74,6 +74,7 @@
 
   /* prevent double border; */
   .calendar .days .day {
+    cursor: pointer;
     border: 1px solid #f5f5f5;
   }
 

@@ -1,5 +1,5 @@
-import Calendar from "./Calendar";
-import ToDoList from "./ToDoList";
+import Calendar from "./calendar/Calendar";
+import ToDoList from "./todos/ToDoList";
 
 export default function BlackBoard() {
   return (

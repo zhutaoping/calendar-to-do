@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import DaysContent from "./DaysContent";
+import { useDay } from "../../store/DayContext";
 
 export default function Calendar() {
-  const [today, setToday] = useState(new Date());
   const [isSelected, setIsSelected] = useState(false);
+  const { today, setToday, setActiveDate } = useDay();
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -17,22 +18,22 @@ export default function Calendar() {
 
   const handleChevronLeft = () => {
     setIsSelected(false);
-    setToday(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+    setToday(new Date(today.getFullYear(), today.getMonth() - 1));
+    setActiveDate(null);
   };
 
   const handleChevronRight = () => {
     setIsSelected(false);
-    setToday(new Date(today.getFullYear(), today.getMonth() + 1, 1));
+    setToday(new Date(today.getFullYear(), today.getMonth() + 1));
+    setActiveDate(null);
   };
 
   const handleNextDays = (day: number) => {
-    console.log(today);
     setToday(new Date(today.getFullYear(), today.getMonth() + 1, day));
     setIsSelected(true);
   };
 
   const handleLastDays = (day: number) => {
-    console.log(today);
     setToday(new Date(today.getFullYear(), today.getMonth() - 1, day));
     setIsSelected(true);
   };
@@ -74,6 +75,7 @@ export default function Calendar() {
           className="select-none rounded-sm border border-primary px-2 py-1 text-xs text-primary transition hover:bg-primary hover:text-white active:scale-95"
           onClick={() => {
             setToday(new Date());
+            setActiveDate(new Date());
             setIsSelected(true);
           }}
         >

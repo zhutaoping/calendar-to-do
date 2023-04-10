@@ -1,8 +1,8 @@
-"use client";
-
+import React, { MouseEvent, memo, useEffect, useState } from "react";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
-import { MouseEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import DayItem from "./DayItem";
+import { useDay } from "@/app/store/DayContext";
 
 interface Props {
   today: Date;
@@ -19,41 +19,46 @@ export default function DaysContent({
   isSelected,
   setIsSelected,
 }: Props) {
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
+  const { activeDate, setActiveDate } = useDay();
 
+  // prevent multiple active date
   useEffect(() => {
-    setSelectedDate(null);
-  }, [today]);
+    if (!isSelected) return;
 
-  useEffect(() => {
-    if (selectedDate) {
+    if (activeDate) {
       setIsSelected(false);
     }
-  }, [selectedDate, setIsSelected]);
+  }, [activeDate, setIsSelected, isSelected]);
 
-  let now = today;
-  // if (new Date().getMonth() === today.getMonth()) {
-  //   now = new Date();
-  // }
-
-  const daysInMonth = getDaysInMonth(now);
-  const startDay = startOfMonth(now).getDay();
-  const endDay = endOfMonth(now).getDay();
+  const daysInMonth = getDaysInMonth(today);
+  const startDay = startOfMonth(today).getDay();
+  const endDay = endOfMonth(today).getDay();
 
   const lastDaysInMonth = getDaysInMonth(
-    new Date(now.getFullYear(), now.getMonth() - 1, 1)
+    new Date(today.getFullYear(), today.getMonth() - 1, 1)
   );
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     const element = e.target as HTMLElement;
-    setSelectedDate(parseInt(element.innerText));
+    setActiveDate(
+      new Date(today.getFullYear(), today.getMonth(), +element.innerText)
+    );
   };
 
-  const content = [];
+  function handleLastDaysClick(day: number) {
+    handleLastDays(day);
+    setActiveDate(new Date(today.getFullYear(), today.getMonth(), day));
+  }
+  function handleNextDaysClick(day: number) {
+    handleNextDays(day);
+    setActiveDate(new Date(today.getFullYear(), today.getMonth(), day));
+  }
+
+  let content = [];
   for (let i = lastDaysInMonth - startDay; i < lastDaysInMonth; i++) {
     content.push(
       <div
-        onClick={() => handleLastDays(i + 1)}
+        onClick={() => handleLastDaysClick(i + 1)}
         key={uuid()}
         className="day flex items-center justify-center text-xs text-otherDays"
       >
@@ -64,13 +69,17 @@ export default function DaysContent({
   for (let i = 0; i < daysInMonth; i++) {
     const isToday =
       new Date().getDate() === i + 1 &&
-      new Date().getMonth() === now.getMonth();
+      new Date().getMonth() === today.getMonth() &&
+      new Date().getFullYear() === today.getFullYear();
 
+    // days in current month
     let isActive = false;
-    if (selectedDate) {
-      isActive = i + 1 === selectedDate;
+    if (activeDate) {
+      isActive = i + 1 === activeDate.getDate();
     }
-    if (isSelected && i + 1 === now.getDate()) {
+
+    // change to other month
+    if (isSelected && i + 1 === today.getDate()) {
       isActive = true;
     }
 
@@ -86,10 +95,11 @@ export default function DaysContent({
       </div>
     );
   }
+
   for (let i = 0; i < 6 - endDay; i++) {
     content.push(
       <div
-        onClick={() => handleNextDays(i + 1)}
+        onClick={() => handleNextDaysClick(i + 1)}
         key={uuid()}
         className="day flex items-center justify-center text-xs text-otherDays"
       >

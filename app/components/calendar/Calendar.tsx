@@ -4,37 +4,40 @@ import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import DaysContent from "./DaysContent";
 import { useDay } from "../../store/DayContext";
+import SelectMonth from "./SelectMonth";
 
 export default function Calendar() {
   const [isSelected, setIsSelected] = useState(false);
-  const { today, setToday, setActiveDate } = useDay();
+  const { dayInView, setDayInView, setActiveDate } = useDay();
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const yearAndMonth = today.toLocaleDateString("en-US", {
+  const yearAndMonth = dayInView.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
   });
 
   const handleChevronLeft = () => {
-    setIsSelected(false);
-    setToday(new Date(today.getFullYear(), today.getMonth() - 1));
-    setActiveDate(null);
+    // setIsSelected(false);
+    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() - 1));
   };
 
   const handleChevronRight = () => {
-    setIsSelected(false);
-    setToday(new Date(today.getFullYear(), today.getMonth() + 1));
-    setActiveDate(null);
+    // setIsSelected(false);
+    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() + 1));
   };
 
   const handleNextDays = (day: number) => {
-    setToday(new Date(today.getFullYear(), today.getMonth() + 1, day));
+    setDayInView(
+      new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
+    );
     setIsSelected(true);
   };
 
   const handleLastDays = (day: number) => {
-    setToday(new Date(today.getFullYear(), today.getMonth() - 1, day));
+    setDayInView(
+      new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
+    );
     setIsSelected(true);
   };
 
@@ -43,14 +46,14 @@ export default function Calendar() {
       <div className="text-textOnPrimary flex items-center justify-between px-8 py-8">
         <button
           onClick={handleChevronLeft}
-          className="p-2 text-sm hover:bg-borderDays active:scale-95"
+          className="focus-ring rounded p-2 text-sm hover:bg-borderDays active:scale-95"
         >
           <FaChevronLeft />
         </button>
         <h4 className="py-2 text-sm">{yearAndMonth}</h4>
         <button
           onClick={handleChevronRight}
-          className="p-2 text-sm hover:bg-borderDays active:scale-95"
+          className="focus-ring p-2 text-sm hover:bg-borderDays active:scale-95"
         >
           <FaChevronRight className="text-sm" />
         </button>
@@ -63,18 +66,20 @@ export default function Calendar() {
         ))}
       </div>
       <DaysContent
-        today={today}
+        dayInView={dayInView}
         handleNextDays={handleNextDays}
         handleLastDays={handleLastDays}
         isSelected={isSelected}
         setIsSelected={setIsSelected}
       />
-      <footer className="flex justify-between px-8 pb-4">
-        <div className="text-xs">placeholder</div>
+      <footer className="flex justify-between gap-24 px-8 pb-4 lg:gap-36">
+        <div className="relative z-50 flex-1 text-xs">
+          <SelectMonth />
+        </div>
         <button
-          className="select-none rounded-sm border border-primary px-2 py-1 text-xs text-primary transition hover:bg-primary hover:text-white active:scale-95"
+          className="focus-ring select-none !rounded-lg border border-primary px-2 py-1 text-xs text-primary shadow-md transition hover:bg-primary hover:text-white focus-visible:border-orange-300 focus-visible:ring-offset-1 active:scale-95"
           onClick={() => {
-            setToday(new Date());
+            setDayInView(new Date());
             setActiveDate(new Date());
             setIsSelected(true);
           }}

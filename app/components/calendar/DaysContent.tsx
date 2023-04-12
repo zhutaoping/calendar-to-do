@@ -1,11 +1,10 @@
-import React, { MouseEvent, memo, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
-import { v4 as uuid } from "uuid";
-import DayItem from "./DayItem";
 import { useDay } from "@/app/store/DayContext";
+import DayItem from "./DayItem";
 
 interface Props {
-  today: Date;
+  dayInView: Date;
   handleNextDays: (day: number) => void;
   handleLastDays: (day: number) => void;
   isSelected: boolean;
@@ -13,7 +12,7 @@ interface Props {
 }
 
 export default function DaysContent({
-  today,
+  dayInView,
   handleNextDays,
   handleLastDays,
   isSelected,
@@ -30,28 +29,25 @@ export default function DaysContent({
     }
   }, [activeDate, setIsSelected, isSelected]);
 
-  const daysInMonth = getDaysInMonth(today);
-  const startDay = startOfMonth(today).getDay();
-  const endDay = endOfMonth(today).getDay();
+  const daysInMonth = getDaysInMonth(dayInView);
+  const startDay = startOfMonth(dayInView).getDay();
+  const endDay = endOfMonth(dayInView).getDay();
 
   const lastDaysInMonth = getDaysInMonth(
-    new Date(today.getFullYear(), today.getMonth() - 1, 1)
+    new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, 1)
   );
-
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    const element = e.target as HTMLElement;
-    setActiveDate(
-      new Date(today.getFullYear(), today.getMonth(), +element.innerText)
-    );
-  };
 
   function handleLastDaysClick(day: number) {
     handleLastDays(day);
-    setActiveDate(new Date(today.getFullYear(), today.getMonth(), day));
+    setActiveDate(
+      new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
+    );
   }
   function handleNextDaysClick(day: number) {
     handleNextDays(day);
-    setActiveDate(new Date(today.getFullYear(), today.getMonth(), day));
+    setActiveDate(
+      new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
+    );
   }
 
   let content = [];
@@ -59,7 +55,7 @@ export default function DaysContent({
     content.push(
       <div
         onClick={() => handleLastDaysClick(i + 1)}
-        key={uuid()}
+        key={i}
         className="day flex items-center justify-center text-xs text-otherDays"
       >
         {i + 1}
@@ -67,41 +63,14 @@ export default function DaysContent({
     );
   }
   for (let i = 0; i < daysInMonth; i++) {
-    const isToday =
-      new Date().getDate() === i + 1 &&
-      new Date().getMonth() === today.getMonth() &&
-      new Date().getFullYear() === today.getFullYear();
-
-    // days in current month
-    let isActive = false;
-    if (activeDate) {
-      isActive = i + 1 === activeDate.getDate();
-    }
-
-    // change to other month
-    if (isSelected && i + 1 === today.getDate()) {
-      isActive = true;
-    }
-
-    content.push(
-      <div
-        key={uuid()}
-        onClick={handleClick}
-        className={`day flex h-[40px] w-[40px] items-center justify-center text-primary transition hover:bg-primary hover:text-white md:h-[50px] md:w-[50px] ${
-          isToday ? "text-xl font-bold" : "text-xs"
-        } ${isActive ? "active" : ""}`}
-      >
-        {i + 1}
-      </div>
-    );
+    content.push(<DayItem key={i + 32} i={i} isSelected={isSelected} />);
   }
-
   for (let i = 0; i < 6 - endDay; i++) {
     content.push(
       <div
         onClick={() => handleNextDaysClick(i + 1)}
-        key={uuid()}
-        className="day flex items-center justify-center text-xs text-otherDays"
+        key={i + 90}
+        className="day events flex items-center justify-center text-xs text-otherDays"
       >
         {i + 1}
       </div>

@@ -3,14 +3,20 @@
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
 const useDayStore = () => {
-  const [today, setToday] = useState(new Date());
-  const [activeDate, setActiveDate] = useState<Date | null>(null);
+  const [dayInView, setDayInView] = useState(new Date());
+  const [activeDate, setActiveDate] = useState<Date | null>(new Date());
+  const [eventDay, setEventDay] = useState<EventDay | null>(null);
+  const [hasEvent, setHasEvent] = useState(false);
 
   return {
-    today,
-    setToday,
+    dayInView,
+    setDayInView,
     activeDate,
     setActiveDate,
+    eventDay,
+    setEventDay,
+    hasEvent,
+    setHasEvent,
   };
 };
 

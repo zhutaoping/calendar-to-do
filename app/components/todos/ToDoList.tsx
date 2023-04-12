@@ -6,7 +6,7 @@ import { useDay } from "../../store/DayContext";
 import Events from "./Events";
 
 export default function ToDoList() {
-  const { today, activeDate } = useDay();
+  const { dayInView, activeDate } = useDay();
 
   const dayOfWeek = activeDate
     ? format(activeDate, "EEEE")
@@ -18,13 +18,13 @@ export default function ToDoList() {
 
   return (
     <div className="todo-list relative col-span-1 flex min-h-full flex-col justify-between p-4 md:h-fit md:pl-12">
-      <div className="flex flex-col gap-4">
+      <div className=" flex flex-col gap-4">
         <div className="flex items-baseline justify-between">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <span className="text-sm text-textOnCalendar">{dayOfMonth}</span>
         </div>
         <section className="self-start p-2 text-xl text-textOnCalendar">
-          <Events />
+          <Events activeDate={activeDate} />
         </section>
       </div>
       <AddEvent />

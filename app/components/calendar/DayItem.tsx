@@ -1,54 +1,70 @@
+import { useDay } from "@/app/store/DayContext";
 import { MouseEvent, useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
 
 interface Props {
-  today: Date;
   i: number;
   isSelected: boolean;
-  selectedDate: number | null;
-  handleClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-export default function DayItem({
-  today,
-  isSelected,
-  selectedDate,
-  i,
-  handleClick,
-}: Props) {
+const DayItem = ({ i, isSelected }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const [isToday, setIsToday] = useState(false);
 
+  const { activeDate, setActiveDate, dayInView } = useDay();
+
   useEffect(() => {
+    setIsToday(false);
     if (
       new Date().getDate() === i + 1 &&
-      new Date().getMonth() === today.getMonth() &&
-      new Date().getFullYear() === today.getFullYear()
+      new Date().getMonth() === dayInView.getMonth() &&
+      new Date().getFullYear() === dayInView.getFullYear()
     ) {
       setIsToday(true);
     }
-  }, [today, i]);
+  }, [dayInView, i]);
 
   useEffect(() => {
-    if (selectedDate) {
-      if (i + 1 === selectedDate) {
-        setIsActive(true);
-      }
-    }
-    if (isSelected && i + 1 === today.getDate()) {
+    setIsActive(false);
+    if (!activeDate) return;
+
+    if (
+      i + 1 === activeDate.getDate() &&
+      activeDate.getMonth() === dayInView.getMonth() &&
+      activeDate.getFullYear() === dayInView.getFullYear()
+    ) {
       setIsActive(true);
     }
-  }, [selectedDate, isSelected, today, i]);
+    if (
+      isSelected &&
+      i + 1 === dayInView.getDate() &&
+      activeDate.getMonth() === dayInView.getMonth() &&
+      activeDate.getFullYear() === dayInView.getFullYear()
+    ) {
+      setIsActive(true);
+    }
+  }, [activeDate, isSelected, dayInView, i]);
+
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+    const element = e.target as HTMLDivElement;
+    setActiveDate(
+      new Date(
+        dayInView.getFullYear(),
+        dayInView.getMonth(),
+        +element.innerText
+      )
+    );
+  };
 
   return (
     <div
-      key={uuid()}
       onClick={handleClick}
-      className={`day flex h-[40px] w-[40px] items-center justify-center text-primary transition hover:bg-primary hover:text-white md:h-[50px] md:w-[50px] ${
+      className={`day flex h-[40px] w-[40px] items-center justify-center text-primary transition  hover:bg-primary hover:text-white md:h-[45px] md:w-[45px] lg:h-[50px] lg:w-[50px] ${
         isToday ? "text-xl font-bold" : "text-xs"
       } ${isActive ? "active" : ""}`}
     >
       {i + 1}
     </div>
   );
-}
+};
+
+export default DayItem;

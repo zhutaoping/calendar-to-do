@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import DaysContent from "./DaysContent";
-import { useDay } from "../../store/DayContext";
+import { useDay } from "@/app/store/DayContext";
 import SelectMonth from "./SelectMonth";
 
 export default function Calendar() {
@@ -18,23 +18,21 @@ export default function Calendar() {
   });
 
   const handleChevronLeft = () => {
-    // setIsSelected(false);
     setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() - 1));
   };
 
   const handleChevronRight = () => {
-    // setIsSelected(false);
     setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() + 1));
   };
 
-  const handleNextDays = (day: number) => {
+  const handleDaysOfNextMonth = (day: number) => {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
     );
     setIsSelected(true);
   };
 
-  const handleLastDays = (day: number) => {
+  const handleDaysOfLastMonth = (day: number) => {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
     );
@@ -66,8 +64,8 @@ export default function Calendar() {
         ))}
       </div>
       <DaysContent
-        handleNextDays={handleNextDays}
-        handleLastDays={handleLastDays}
+        handleDaysOfNextMonth={handleDaysOfNextMonth}
+        handleDaysOfLastMonth={handleDaysOfLastMonth}
         isSelected={isSelected}
         setIsSelected={setIsSelected}
       />

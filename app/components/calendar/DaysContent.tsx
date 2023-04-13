@@ -8,15 +8,15 @@ import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/helper/checkHasEvent";
 
 interface Props {
-  handleNextDays: (day: number) => void;
-  handleLastDays: (day: number) => void;
+  handleDaysOfNextMonth: (day: number) => void;
+  handleDaysOfLastMonth: (day: number) => void;
   isSelected: boolean;
   setIsSelected: (value: boolean) => void;
 }
 
 export default function DaysContent({
-  handleNextDays,
-  handleLastDays,
+  handleDaysOfNextMonth,
+  handleDaysOfLastMonth,
   isSelected,
   setIsSelected,
 }: Props) {
@@ -42,14 +42,14 @@ export default function DaysContent({
     new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, 1)
   );
 
-  function handleLastDaysClick(day: number) {
-    handleLastDays(day);
+  function handleDaysOfLastMonthClick(day: number) {
+    handleDaysOfLastMonth(day);
     setActiveDate(
       new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
     );
   }
-  function handleNextDaysClick(day: number) {
-    handleNextDays(day);
+  function handleDaysOfNextMonthClick(day: number) {
+    handleDaysOfNextMonth(day);
     setActiveDate(
       new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
     );
@@ -62,7 +62,7 @@ export default function DaysContent({
 
     content.push(
       <div
-        onClick={() => handleLastDaysClick(i + 1)}
+        onClick={() => handleDaysOfLastMonthClick(i + 1)}
         key={i}
         className={`day other-day text-xs text-otherDays ${
           hasEvent ? "hasEvent" : ""
@@ -84,7 +84,7 @@ export default function DaysContent({
 
     content.push(
       <div
-        onClick={() => handleNextDaysClick(i + 1)}
+        onClick={() => handleDaysOfNextMonthClick(i + 1)}
         key={i + 90}
         className={`day other-day text-xs text-otherDays ${
           hasEvent ? "hasEvent" : ""

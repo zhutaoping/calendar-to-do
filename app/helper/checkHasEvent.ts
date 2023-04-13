@@ -13,5 +13,5 @@ export const checkHasEvent = (
   );
   const filterArray = filteredEvents?.map((event) => event.day);
 
-  return filterArray?.includes(i);
+  return filterArray?.includes(i + 1);
 };

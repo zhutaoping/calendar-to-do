@@ -5,15 +5,12 @@ import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 const useDayStore = () => {
   const [dayInView, setDayInView] = useState(new Date());
   const [activeDate, setActiveDate] = useState<Date | null>(new Date());
-  const [hasEvent, setHasEvent] = useState(false);
 
   return {
     dayInView,
     setDayInView,
     activeDate,
     setActiveDate,
-    hasEvent,
-    setHasEvent,
   };
 };
 

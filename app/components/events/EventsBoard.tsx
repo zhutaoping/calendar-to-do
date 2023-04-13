@@ -1,12 +1,12 @@
 "use client";
 
 import { format } from "date-fns";
-import AddEvent from "./AddEvent";
 import { useDay } from "../../store/DayContext";
-import Events from "./Events";
+import EventList from "./EventList";
+import AddEvent from "./AddEvent";
 
 export default function ToDoList() {
-  const { dayInView, activeDate } = useDay();
+  const { activeDate } = useDay();
 
   const dayOfWeek = activeDate
     ? format(activeDate, "EEEE")
@@ -24,7 +24,7 @@ export default function ToDoList() {
           <span className="text-sm text-textOnCalendar">{dayOfMonth}</span>
         </div>
         <section className="self-start p-2 text-xl text-textOnCalendar">
-          <Events activeDate={activeDate} />
+          <EventList activeDate={activeDate} />
         </section>
       </div>
       <AddEvent />

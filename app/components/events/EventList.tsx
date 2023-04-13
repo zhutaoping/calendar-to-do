@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Event } from "@prisma/client";
+import { getEvents } from "@/app/lib/eventApi";
 
 interface Props {
   activeDate: Date | null;
@@ -8,8 +8,8 @@ interface Props {
 
 export default function Events({ activeDate }: Props) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: () => axios.get("/api/events").then((res) => res.data),
+    queryKey: ["events", "eventsOfDay"],
+    queryFn: getEvents,
   });
 
   if (isLoading) return <p>Loading...</p>;

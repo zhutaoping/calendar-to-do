@@ -66,7 +66,6 @@ export default function Calendar() {
         ))}
       </div>
       <DaysContent
-        dayInView={dayInView}
         handleNextDays={handleNextDays}
         handleLastDays={handleLastDays}
         isSelected={isSelected}

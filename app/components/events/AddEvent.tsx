@@ -1,14 +1,12 @@
-"use client";
-
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BsPlusCircle } from "react-icons/bs";
-import { useDay } from "@/app/store/DayContext";
-import { useState } from "react";
-import { Dialog } from "@headlessui/react";
-import addEvent from "@/app/lib/eventApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { BsPlusCircle } from "react-icons/bs";
+import { Dialog } from "@headlessui/react";
+import { useDay } from "@/app/store/DayContext";
+import addEvent from "@/app/lib/eventApi";
 
 const schema = z
   .object({
@@ -46,9 +44,11 @@ export default function AddEvent() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const year = activeDate?.getFullYear();
-    const month = activeDate?.getMonth()! + 1;
-    const day = activeDate?.getDate();
+    if (!activeDate) return;
+
+    const year = activeDate.getFullYear();
+    const month = activeDate.getMonth()! + 1;
+    const day = activeDate.getDate();
 
     newEventMutation.mutate({
       ...data,
@@ -57,8 +57,8 @@ export default function AddEvent() {
       day,
     });
 
-    reset();
     setIsOpen(false);
+    reset();
   };
 
   return (
@@ -116,7 +116,6 @@ export default function AddEvent() {
         type="button"
         onClick={() => setIsOpen(true)}
         title="Add event"
-        disabled={newEventMutation.isLoading}
       >
         <BsPlusCircle color="white" size={30} />
       </button>

@@ -4,9 +4,10 @@ import { MouseEvent, useEffect, useState } from "react";
 interface Props {
   i: number;
   isSelected: boolean;
+  thisMonthFilter: number[];
 }
 
-const DayItem = ({ i, isSelected }: Props) => {
+const DayItem = ({ i, isSelected, thisMonthFilter }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const [isToday, setIsToday] = useState(false);
 
@@ -54,13 +55,17 @@ const DayItem = ({ i, isSelected }: Props) => {
       )
     );
   };
+  let hasEvent = false;
+  if (thisMonthFilter && thisMonthFilter.includes(i + 1)) {
+    hasEvent = true;
+  }
 
   return (
     <div
       onClick={handleClick}
-      className={`day flex h-[40px] w-[40px] items-center justify-center text-primary transition  hover:bg-primary hover:text-white md:h-[45px] md:w-[45px] lg:h-[50px] lg:w-[50px] ${
+      className={`day text-primary transition  hover:bg-primary hover:text-white ${
         isToday ? "text-xl font-bold" : "text-xs"
-      } ${isActive ? "active" : ""}`}
+      } ${isActive ? "active" : ""} ${hasEvent ? "hasEvent" : ""}`}
     >
       {i + 1}
     </div>

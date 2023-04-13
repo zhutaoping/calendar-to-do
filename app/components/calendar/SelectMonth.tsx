@@ -25,8 +25,8 @@ const months = [
 
 export default function SelectMonth() {
   const [selectedMonth, setSelectedMonth] = useState(months[0]);
-
   const { dayInView, setDayInView } = useDay();
+
   const thisMonth = months[dayInView.getMonth()];
 
   const handleChange = (m: Month) => {

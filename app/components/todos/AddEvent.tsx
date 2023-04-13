@@ -7,6 +7,8 @@ import { BsPlusCircle } from "react-icons/bs";
 import { useDay } from "@/app/store/DayContext";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import addEvent from "@/app/lib/eventApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const schema = z
   .object({
@@ -25,6 +27,15 @@ export default function AddEvent() {
   const [isOpen, setIsOpen] = useState(false);
   const { activeDate } = useDay();
 
+  const queryClient = useQueryClient();
+
+  const newEventMutation = useMutation({
+    mutationFn: addEvent,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -34,9 +45,20 @@ export default function AddEvent() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data, activeDate);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const year = activeDate?.getFullYear();
+    const month = activeDate?.getMonth()! + 1;
+    const day = activeDate?.getDate();
+
+    newEventMutation.mutate({
+      ...data,
+      year,
+      month,
+      day,
+    });
+
     reset();
+    setIsOpen(false);
   };
 
   return (
@@ -94,6 +116,7 @@ export default function AddEvent() {
         type="button"
         onClick={() => setIsOpen(true)}
         title="Add event"
+        disabled={newEventMutation.isLoading}
       >
         <BsPlusCircle color="white" size={30} />
       </button>

@@ -1,52 +1,42 @@
-import { useDay } from "@/app/store/DayContext";
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { Event } from "@prisma/client";
 
 interface Props {
   activeDate: Date | null;
 }
 
-const eventsArr = [
-  {
-    day: 13,
-    month: 4,
-    year: 2023,
-    events: [
-      {
-        id: 1,
-        title: "想辦法多睡點",
-        time: "10:00 AM",
-      },
-      {
-        id: 2,
-        title:
-          "Event 2 Event 2 lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, quas?",
-        time: "11:00 AM",
-      },
-    ],
-  },
-];
-
 export default function Events({ activeDate }: Props) {
-  const { eventDay, setEventDay } = useDay();
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => axios.get("/api/events").then((res) => res.data),
+  });
 
-  useEffect(() => {
-    setEventDay(null);
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) {
+    return <pre>{JSON.stringify(error)}</pre>;
+  }
 
-    const targetDate = eventsArr.find(
+  const events = data as Event[];
+
+  let eventList: Event[] = [];
+
+  if (events && activeDate) {
+    eventList = events.filter(
       (evt) =>
-        evt.day === activeDate?.getDate() &&
-        evt.month === activeDate?.getMonth() + 1 &&
-        evt.year === activeDate?.getFullYear()
+        evt.day === activeDate.getDate() &&
+        evt.month === activeDate.getMonth() + 1 &&
+        evt.year === activeDate.getFullYear()
     );
-    setEventDay(targetDate ? targetDate : null);
-  }, [activeDate, setEventDay]);
+  }
 
   return (
     <ul className="list-disc space-y-6 marker:text-primary">
-      {eventDay?.events.map((evt) => (
+      {eventList.map((evt) => (
         <li className="" key={evt.id}>
-          <p className="mb-2 text-base leading-5 text-white">{evt.title}</p>
-          <h3 className="text-xs text-gray-400">{evt.time}</h3>
+          <p className="text-base text-white">{evt.title}</p>
+          <span className="text-xs text-gray-400">{evt.startTime} - </span>
+          <span className="text-xs text-gray-400">{evt.endTime}</span>
         </li>
       ))}
     </ul>

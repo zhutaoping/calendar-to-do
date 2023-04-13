@@ -1,13 +1,15 @@
+import { checkHasEvent } from "@/app/helper/checkHasEvent";
 import { useDay } from "@/app/store/DayContext";
+import { Event } from "@prisma/client";
 import { MouseEvent, useEffect, useState } from "react";
 
 interface Props {
   i: number;
   isSelected: boolean;
-  thisMonthFilter: number[];
+  events: Event[];
 }
 
-const DayItem = ({ i, isSelected, thisMonthFilter }: Props) => {
+const DayItem = ({ i, isSelected, events }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const [isToday, setIsToday] = useState(false);
 
@@ -55,16 +57,13 @@ const DayItem = ({ i, isSelected, thisMonthFilter }: Props) => {
       )
     );
   };
-  let hasEvent = false;
-  if (thisMonthFilter && thisMonthFilter.includes(i + 1)) {
-    hasEvent = true;
-  }
+  const hasEvent = checkHasEvent(i, dayInView, events, 1);
 
   return (
     <div
       onClick={handleClick}
       className={`day text-primary transition  hover:bg-primary hover:text-white ${
-        isToday ? "text-xl font-bold" : "text-xs"
+        isToday ? "text-lg font-bold" : "text-xs"
       } ${isActive ? "active" : ""} ${hasEvent ? "hasEvent" : ""}`}
     >
       {i + 1}

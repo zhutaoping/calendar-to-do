@@ -13,12 +13,9 @@
     --other-days: #b3b3b3;
     --bg-credits: #b38add;
   }
-  
-  
 }
 
 @layer components {
-
   .calendar::before,
   .calendar::after {
     content: "";
@@ -31,7 +28,6 @@
     border-radius: 0 5px 5px 0;
     background-color: #d3d4d6d7;
     transform: translateY(-50%);
-
   }
 
   .calendar::before {
@@ -41,7 +37,6 @@
   }
 
   @media screen and (max-width: 769px) {
-
     .calendar::before,
     .calendar::after {
       top: 100%;
@@ -71,13 +66,12 @@
     position: relative;
     background-color: var(--primary);
     color: white;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: bold;
     transition: all 0.2s ease;
     z-index: 2;
   }
 
-  
   .day.active::before {
     content: "";
     position: absolute;

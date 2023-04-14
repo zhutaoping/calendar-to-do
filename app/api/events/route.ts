@@ -12,10 +12,6 @@ export async function POST(req: Request, res: Response) {
   try {
     const event: Event = await req.json();
 
-    // if (!title || !startTime || !endTime || !year || !month || !day) {
-    //   return NextResponse.json({ message: "Missing required data" });
-    // }
-
     const newEvent = await prisma.event.create({
       data: {
         ...event,

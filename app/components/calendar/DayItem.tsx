@@ -62,7 +62,7 @@ const DayItem = ({ i, isSelected, events }: Props) => {
   return (
     <div
       onClick={handleClick}
-      className={`day text-primary transition  hover:bg-primary hover:text-white ${
+      className={`day text-primary hover:bg-primary hover:text-white ${
         isToday ? "text-lg font-bold" : "text-xs"
       } ${isActive ? "active" : ""} ${hasEvent ? "hasEvent" : ""}`}
     >

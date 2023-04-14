@@ -60,8 +60,6 @@ export default function AddEvent() {
       month,
       day,
     });
-    // setIsOpen(false);
-    // reset();
   };
 
   return (

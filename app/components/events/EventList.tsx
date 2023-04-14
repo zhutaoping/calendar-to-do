@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CgRemove } from "react-icons/cg";
 import { Event } from "@prisma/client";
-import { getEvents } from "@/app/lib/eventApi";
+import { deleteEvent, getEvents } from "@/app/lib/eventApi";
 
 interface Props {
   activeDate: Date | null;
@@ -12,6 +12,24 @@ export default function Events({ activeDate }: Props) {
     queryKey: ["events", "eventsOfDay"],
     queryFn: getEvents,
   });
+
+  const queryClient = useQueryClient();
+
+  const deleteEventMutation = useMutation({
+    mutationFn: deleteEvent,
+    onSuccess: (data, variables, context) => {
+      // from NextResponse
+      console.log(data.message);
+      queryClient.invalidateQueries(["events"]);
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+
+  function handleDelete(id: string) {
+    deleteEventMutation.mutate(id);
+  }
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) {
@@ -32,14 +50,23 @@ export default function Events({ activeDate }: Props) {
   }
 
   return (
-    <ul className="list-disc space-y-6 overflow-hidden  marker:text-primary">
+    <ul className="list-disc space-y-6 px-2  marker:text-primary">
+      {deleteEventMutation.isError ? (
+        <div className="text-sm text-red-500">
+          An error occurred: {(deleteEventMutation.error as any).message}
+        </div>
+      ) : null}
       {eventList.map((evt) => (
-        <li key={evt.id}>
+        <li className="mx-4" key={evt.id}>
           <div className="flex w-full items-center justify-between">
             <p className="text-base text-white">{evt.title}</p>
-            <div>
-              <CgRemove className="mx-4 inline-block h-4 w-4 text-gray-400" />
-            </div>
+            <button
+              className="mx-2 active:scale-95"
+              type="button"
+              onClick={() => handleDelete(evt.id)}
+            >
+              <CgRemove className="inline h-4 w-4 text-gray-400 " />
+            </button>
           </div>
           <span className="text-xs text-gray-400">{evt.startTime} - </span>
           <span className="text-xs text-gray-400">{evt.endTime}</span>

@@ -9,20 +9,33 @@ export async function GET() {
 }
 
 export async function POST(req: Request, res: Response) {
-  try {
-    const event: Event = await req.json();
+  const event: Event = await req.json();
 
-    const newEvent = await prisma.event.create({
-      data: {
-        ...event,
-      },
-    });
+  const newEvent = await prisma.event.create({
+    data: {
+      ...event,
+    },
+  });
 
-    return NextResponse.json({
-      message: "Event created successfully",
-      data: newEvent,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  return NextResponse.json({
+    message: "Event created successfully",
+    data: newEvent,
+  });
+}
+
+export async function DELETE(req: Request, res: Response) {
+  const { id } = await req.json();
+
+  if (!id) return NextResponse.json({ message: "No id provided" }); // return to axios(res)
+
+  const deletedEvent = await prisma.event.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Event deleted successfully",
+    data: deletedEvent,
+  });
 }

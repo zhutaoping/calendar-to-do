@@ -50,7 +50,7 @@ export default function Events({ activeDate }: Props) {
   }
 
   return (
-    <ul className="list-disc space-y-6 px-2  marker:text-primary">
+    <ul className="list-disc space-y-6 px-2 marker:text-primary">
       {deleteEventMutation.isError ? (
         <div className="text-sm text-red-500">
           An error occurred: {(deleteEventMutation.error as any).message}

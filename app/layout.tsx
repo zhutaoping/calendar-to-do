@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} overflow-hidden bg-slate-600`}>
+      <body className={`${poppins.className} bg-bgContainer md:bg-slate-600`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -17,13 +17,13 @@ export default function ToDoList() {
     : format(new Date(), "d MMMM yyyy");
 
   return (
-    <div className="right-board relative col-span-1 mt-8 flex min-h-full flex-col justify-between p-4 md:mt-0 md:h-fit md:pl-16 lg:pl-20">
+    <div className="right-board relative col-span-1 flex min-h-full flex-col justify-between p-4 md:mt-0 md:h-fit md:pl-16 lg:pl-20">
       <div className=" flex flex-col gap-4">
         <div className="flex items-baseline justify-between">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <span className="text-sm text-textOnCalendar">{dayOfMonth}</span>
         </div>
-        <section className="event-list max-h-[400px] w-full self-start overflow-y-auto text-xl text-textOnCalendar">
+        <section className="event-list w-full self-start text-xl text-textOnCalendar md:max-h-[420px] md:overflow-y-auto">
           <EventList activeDate={activeDate} />
         </section>
       </div>

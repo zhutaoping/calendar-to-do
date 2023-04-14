@@ -3,7 +3,7 @@ import ToDoList from "./events/EventsBoard";
 
 export default function BlackBoard() {
   return (
-    <div className="blackboard grid w-full  bg-bgContainer p-4 md:mx-auto md:my-24 md:max-w-4xl md:grid-cols-2 md:rounded-md ">
+    <div className="blackboard grid w-full bg-bgContainer p-4 md:mx-auto md:max-h-[580px]  md:max-w-4xl md:grid-cols-2 md:rounded-md ">
       <Calendar />
       <ToDoList />
     </div>

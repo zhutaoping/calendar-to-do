@@ -32,13 +32,13 @@ export default function Events({ activeDate }: Props) {
   }
 
   return (
-    <ul className="list-disc space-y-6 marker:text-primary">
+    <ul className="list-disc space-y-6 overflow-hidden  marker:text-primary">
       {eventList.map((evt) => (
         <li key={evt.id}>
           <div className="flex w-full items-center justify-between">
             <p className="text-base text-white">{evt.title}</p>
             <div>
-              <CgRemove className="ml-2 inline-block h-4 w-4 text-gray-400" />
+              <CgRemove className="mx-4 inline-block h-4 w-4 text-gray-400" />
             </div>
           </div>
           <span className="text-xs text-gray-400">{evt.startTime} - </span>

@@ -40,7 +40,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="calendar relative col-span-1 mx-auto my-2 min-w-max rounded-md bg-white md:min-w-fit ">
+    <div className=" calendar relative col-span-1 mx-auto my-2 min-w-max rounded-md bg-white md:max-h-[533px] md:min-w-fit ">
       <div className="text-textOnPrimary flex items-center justify-between px-8 py-8">
         <button
           onClick={handleChevronLeft}

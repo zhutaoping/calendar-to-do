@@ -1,6 +1,6 @@
 "use client";
 
-import QueryClientProvider from "./lib/QueryClientProvider";
+import QueryClientProvider from "./lib/QueryProvider";
 import DayProvider from "./store/DayContext";
 
 interface Props {

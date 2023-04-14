@@ -6,7 +6,7 @@ interface Props {
 
 const queryClient = new QueryClient();
 
-export default function QCProvider({ children }: Props) {
+export default function QueryProvider({ children }: Props) {
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { CgRemove } from "react-icons/cg";
 import { Event } from "@prisma/client";
 import { getEvents } from "@/app/lib/eventApi";
 
@@ -33,8 +34,13 @@ export default function Events({ activeDate }: Props) {
   return (
     <ul className="list-disc space-y-6 marker:text-primary">
       {eventList.map((evt) => (
-        <li className="" key={evt.id}>
-          <p className="text-base text-white">{evt.title}</p>
+        <li key={evt.id}>
+          <div className="flex w-full items-center justify-between">
+            <p className="text-base text-white">{evt.title}</p>
+            <div>
+              <CgRemove className="ml-2 inline-block h-4 w-4 text-gray-400" />
+            </div>
+          </div>
           <span className="text-xs text-gray-400">{evt.startTime} - </span>
           <span className="text-xs text-gray-400">{evt.endTime}</span>
         </li>

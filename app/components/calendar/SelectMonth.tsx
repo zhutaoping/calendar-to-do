@@ -36,11 +36,8 @@ export default function SelectMonth() {
 
   return (
     <Listbox value={selectedMonth} onChange={(m) => handleChange(m)}>
-      <Listbox.Button
-        className="focus-ring relative w-full cursor-default !rounded-lg bg-white py-2 pl-3 pr-10 text-left 
-      shadow-md"
-      >
-        <span className="block w-full truncate">{thisMonth.name}</span>
+      <Listbox.Button className="focus-ring relative w-full cursor-default !rounded-lg bg-white py-2 pl-3 text-left shadow-md">
+        <span>{thisMonth.name}</span>
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <HiChevronUpDown
             className="h-5 w-5 text-gray-400"

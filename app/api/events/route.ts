@@ -9,22 +9,16 @@ export async function GET() {
 }
 
 export async function POST(req: Request, res: Response) {
-  const { title, startTime, endTime, year, month, day }: Event =
-    await req.json();
-
-  if (!title || !startTime || !endTime || !year || !month || !day) {
-    return NextResponse.json({ message: "Missing required data" });
-  }
-
   try {
+    const event: Event = await req.json();
+
+    // if (!title || !startTime || !endTime || !year || !month || !day) {
+    //   return NextResponse.json({ message: "Missing required data" });
+    // }
+
     const newEvent = await prisma.event.create({
       data: {
-        title,
-        startTime,
-        endTime,
-        year,
-        month,
-        day,
+        ...event,
       },
     });
 

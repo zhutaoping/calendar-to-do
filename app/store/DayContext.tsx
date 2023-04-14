@@ -1,5 +1,3 @@
-"use client";
-
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
 const useDayStore = () => {
@@ -16,7 +14,7 @@ const useDayStore = () => {
 
 const DayContext = createContext<ReturnType<typeof useDayStore> | null>(null);
 
-export const DayProvider = ({ children }: { children: ReactNode }) => {
+const DayProvider = ({ children }: { children: ReactNode }) => {
   const dayStore = useDayStore();
 
   return <DayContext.Provider value={dayStore}>{children}</DayContext.Provider>;
@@ -31,3 +29,5 @@ export const useDay = () => {
 
   return context;
 };
+
+export default DayProvider;

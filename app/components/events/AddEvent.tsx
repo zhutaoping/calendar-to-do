@@ -7,6 +7,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import { Dialog } from "@headlessui/react";
 import { useDay } from "@/app/store/DayContext";
 import addEvent from "@/app/lib/eventApi";
+import { Event } from "@prisma/client";
 
 const schema = z
   .object({
@@ -27,10 +28,13 @@ export default function AddEvent() {
 
   const queryClient = useQueryClient();
 
-  const newEventMutation = useMutation({
+  const createEventMutation = useMutation({
     mutationFn: addEvent,
-    onSuccess: () => {
+    onSuccess: (data, variables, context) => {
+      // queryClient.setQueryData(["events", data.id], data);
       queryClient.invalidateQueries(["events"]);
+      setIsOpen(false);
+      reset();
     },
   });
 
@@ -50,19 +54,24 @@ export default function AddEvent() {
     const month = activeDate.getMonth()! + 1;
     const day = activeDate.getDate();
 
-    newEventMutation.mutate({
+    createEventMutation.mutate({
       ...data,
       year,
       month,
       day,
     });
-
-    setIsOpen(false);
-    reset();
+    // setIsOpen(false);
+    // reset();
   };
 
   return (
     <div className="">
+      {/* error from axios  */}
+      {createEventMutation.isError ? (
+        <div className="text-sm text-red-500">
+          An error occurred: {(createEventMutation.error as any).message}
+        </div>
+      ) : null}
       <Dialog
         className="absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-slate-800 p-4 text-white"
         open={isOpen}

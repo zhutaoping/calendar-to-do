@@ -8,6 +8,10 @@ export async function getEvents() {
 }
 
 export default async function addEvent(data: Partial<Event>) {
-  const res = await axios.post("/api/events", data);
-  return res.data;
+  try {
+    const res = await axios.post("/api/events", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
 }

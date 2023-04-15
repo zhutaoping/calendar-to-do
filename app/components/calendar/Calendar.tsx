@@ -40,15 +40,15 @@ export default function Calendar() {
   };
 
   return (
-    <div className="calendar relative col-span-1 mx-auto my-2  min-w-max rounded-md bg-white md:max-h-[533px] md:min-w-fit ">
-      <div className="text-textOnPrimary flex items-center justify-between px-8 py-8">
+    <div className="calendar relative col-span-1 mx-auto my-2 min-w-max rounded-md bg-white p-6 md:max-h-[533px] md:min-w-fit ">
+      <div className="text-textOnPrimary flex items-center justify-between">
         <button
           onClick={handleChevronLeft}
           className="focus-ring rounded p-2 text-sm hover:bg-borderDays active:scale-95"
         >
           <FaChevronLeft />
         </button>
-        <h4 className="py-2 text-sm">{yearAndMonth}</h4>
+        <h4 className="text-sm">{yearAndMonth}</h4>
         <button
           onClick={handleChevronRight}
           className="focus-ring p-2 text-sm hover:bg-borderDays active:scale-95"
@@ -56,7 +56,7 @@ export default function Calendar() {
           <FaChevronRight className="text-sm" />
         </button>
       </div>
-      <div className="grid grid-cols-7 px-8">
+      <div className="grid grid-cols-7 px-4 md:py-3">
         {days.map((day) => (
           <div key={day} className="day text-center text-xs">
             {day}
@@ -69,7 +69,7 @@ export default function Calendar() {
         isSelected={isSelected}
         setIsSelected={setIsSelected}
       />
-      <footer className="flex justify-between gap-24 px-8 pb-4 lg:gap-36">
+      <footer className="flex justify-between gap-24 px-4 md:pt-2 lg:gap-36">
         <div className="relative z-50 flex-1 text-xs">
           <SelectMonth />
         </div>

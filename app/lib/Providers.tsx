@@ -1,7 +1,7 @@
 "use client";
 
-import QueryClientProvider from "./lib/QueryProvider";
-import DayProvider from "./store/DayContext";
+import QueryClientProvider from "./QueryProvider";
+import DayProvider from "../store/DayContext";
 
 interface Props {
   children: React.ReactNode;

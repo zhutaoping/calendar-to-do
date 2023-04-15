@@ -59,12 +59,12 @@
   }
 
   .day {
-    height: 40px;
-    width: 40px;
+    /* font-size: clamp(2.5rem, 2.2768rem + 0.8929vw, 3.125rem); */
+    height: clamp(2.5rem, 2.2768rem + 0.8929vw, 3.125rem);
+    aspect-ratio: 1/1;
     display: flex;
     justify-content: center;
     align-items: center;
-    @apply md:h-[45px] md:w-[45px] lg:h-[50px] lg:w-[50px]
   }
 
   .day.active {

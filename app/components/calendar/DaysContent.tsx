@@ -94,5 +94,5 @@ export default function DaysContent({
       </div>
     );
   }
-  return <div className="days grid grid-cols-7 px-8 py-4">{content}</div>;
+  return <div className="days grid grid-cols-7 px-4 pb-4">{content}</div>;
 }

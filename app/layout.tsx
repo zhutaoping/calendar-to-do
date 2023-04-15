@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import Providers from "./Providers";
+import Providers from "./lib/Providers";
+import BlackBoard from "./components/BlackBoard";
 
 const poppins = Poppins({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-bgContainer md:bg-slate-600`}>
+      <body
+        className={`${poppins.className} min-h-screen place-content-center bg-bgContainer md:grid md:bg-slate-600`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

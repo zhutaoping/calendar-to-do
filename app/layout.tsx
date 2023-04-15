@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import Providers from "./lib/Providers";
-import BlackBoard from "./components/BlackBoard";
 
 const poppins = Poppins({ weight: ["400", "700"], subsets: ["latin"] });
 

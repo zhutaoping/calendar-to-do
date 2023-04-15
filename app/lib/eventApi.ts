@@ -6,9 +6,14 @@ export async function getEvents() {
   return res.data;
 }
 
-export default async function addEvent(data: Partial<Event>) {
-  const res = await axios.post("/events/api", data);
+export default async function addEvent(event: Partial<Event>) {
+  const res = await axios.post("/events/api", event);
   return res.data;
+}
+
+export async function updateEvent(event: Partial<Event>) {
+  const res = await axios.patch(`/events/api/`, event);
+  return res.data; // from NextResponse
 }
 
 export async function deleteEvent(id: string) {

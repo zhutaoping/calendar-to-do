@@ -119,7 +119,7 @@ export default function AddEvent() {
       </Dialog>
 
       <button
-        className="focus-ring mx-auto mb-0 mt-4 flex focus-visible:ring-0 active:scale-95 md:mt-0"
+        className="focus-ring m-3 mx-auto flex focus-visible:ring-0 active:scale-95"
         type="button"
         onClick={() => setIsOpen(true)}
         title="Add event"

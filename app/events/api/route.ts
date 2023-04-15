@@ -23,6 +23,25 @@ export async function POST(req: Request, res: Response) {
   });
 }
 
+export async function PATCH(req: Request, res: Response) {
+  const event: Event = await req.json();
+  console.log(event);
+
+  const updatedEvent = await prisma.event.update({
+    where: {
+      id: event.id,
+    },
+    data: {
+      completed: event.completed,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Event updated successfully",
+    data: updatedEvent,
+  });
+}
+
 export async function DELETE(req: Request, res: Response) {
   const { id } = await req.json();
 

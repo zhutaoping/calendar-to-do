@@ -40,7 +40,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="calendar relative col-span-1 mx-auto my-2 min-w-max rounded-md bg-white p-6 md:max-h-[533px] md:min-w-fit ">
+    <div className="calendar relative col-span-1 mx-auto my-4 min-w-max rounded-md bg-white p-6 md:my-4 md:ml-4 md:max-h-[533px] md:min-w-fit">
       <div className="text-textOnPrimary flex items-center justify-between">
         <button
           onClick={handleChevronLeft}

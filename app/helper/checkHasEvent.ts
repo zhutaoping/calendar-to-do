@@ -4,7 +4,7 @@ export const checkHasEvent = (
   i: number,
   dayInView: Date,
   events: Event[],
-  plus: number
+  plus: number // which month to check
 ) => {
   const filteredEvents = events?.filter(
     (event) =>

@@ -1,11 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
-import { useDay } from "../../store/DayContext";
+import { useDay } from "@/app/store/DayContext";
 import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 
-export default function ToDoList() {
+export default function EventsBoard() {
   const { activeDate } = useDay();
 
   const dayOfWeek = activeDate

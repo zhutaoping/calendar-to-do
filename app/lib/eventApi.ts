@@ -2,17 +2,17 @@ import axios from "axios";
 import { Event } from "@prisma/client";
 
 export async function getEvents() {
-  const res = await axios.get("/api/events");
+  const res = await axios.get("/events/api");
   return res.data;
 }
 
 export default async function addEvent(data: Partial<Event>) {
-  const res = await axios.post("/api/events", data);
+  const res = await axios.post("/events/api", data);
   return res.data;
 }
 
 export async function deleteEvent(id: string) {
-  const res = await axios.delete(`/api/events/`, {
+  const res = await axios.delete(`/events/api`, {
     data: {
       id,
     },

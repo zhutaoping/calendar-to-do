@@ -68,9 +68,7 @@ export default function Events({ activeDate }: Props) {
             onClick={(e) => handleEditable(e)}
             className="flex w-full items-center justify-between"
           >
-            <p contentEditable="true" className="text-base text-white">
-              {evt.title}
-            </p>
+            <p className="text-base text-white">{evt.title}</p>
             <button
               className="active:scale-95"
               type="button"

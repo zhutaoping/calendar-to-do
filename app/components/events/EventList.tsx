@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CgRemove } from "react-icons/cg";
 import { Event } from "@prisma/client";
 import { deleteEvent, getEvents } from "@/app/lib/eventApi";
+import { MouseEvent } from "react";
 
 interface Props {
   activeDate: Date | null;
@@ -49,8 +50,13 @@ export default function Events({ activeDate }: Props) {
     );
   }
 
+  function handleEditable(e: MouseEvent) {
+    const element = e.target as HTMLDivElement;
+    element.contentEditable = "true";
+  }
+
   return (
-    <ul className="list-disc space-y-6 px-2 marker:text-primary">
+    <ul className="list-disc space-y-6 px-2  marker:text-primary">
       {deleteEventMutation.isError ? (
         <div className="text-sm text-red-500">
           An error occurred: {(deleteEventMutation.error as any).message}
@@ -58,10 +64,15 @@ export default function Events({ activeDate }: Props) {
       ) : null}
       {eventList.map((evt) => (
         <li className="mx-4" key={evt.id}>
-          <div className="flex w-full items-center justify-between">
-            <p className="text-base text-white">{evt.title}</p>
+          <div
+            onClick={(e) => handleEditable(e)}
+            className="flex w-full items-center justify-between"
+          >
+            <p contentEditable="true" className="text-base text-white">
+              {evt.title}
+            </p>
             <button
-              className="mx-2 active:scale-95"
+              className="active:scale-95"
               type="button"
               onClick={() => handleDelete(evt.id)}
             >

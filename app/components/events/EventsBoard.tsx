@@ -17,7 +17,7 @@ export default function ToDoList() {
     : format(new Date(), "d MMMM yyyy");
 
   return (
-    <div className="right-board relative col-span-1 flex min-h-full flex-col justify-between p-4 md:mt-0 md:h-fit md:pl-16 lg:pl-20">
+    <div className="right-board relative col-span-1 flex min-h-full flex-col justify-between p-4 md:mt-0 md:h-fit md:pl-10 lg:pl-12">
       <div className=" flex flex-col gap-4">
         <div className="flex items-baseline justify-between">
           <span className="text-xl text-white">{dayOfWeek}</span>

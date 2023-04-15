@@ -13,6 +13,11 @@
     --other-days: #b3b3b3;
     --bg-credits: #b38add;
   }
+
+  [contentEditable='true'] {
+    caret-color: red;
+    outline: none;
+  }
 }
 
 @layer components {

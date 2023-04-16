@@ -7,11 +7,10 @@ import { BsPlusCircle } from "react-icons/bs";
 import { Dialog } from "@headlessui/react";
 import { useDay } from "@/app/store/DayContext";
 import addEvent from "@/app/lib/eventApi";
-import { Event } from "@prisma/client";
 
 const schema = z
   .object({
-    title: z.string().min(1).max(100),
+    title: z.string().min(1).max(300),
     startTime: z.string().min(1).max(5),
     endTime: z.string().min(1).max(5),
   })
@@ -83,6 +82,9 @@ export default function AddEvent() {
               {...register("title")}
               className="focus-ring bg-bgInput mb-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
             />
+            {errors.title && (
+              <p className="text-sm text-red-500">{errors.title.message}</p>
+            )}
             <div className="mb-2 flex items-center gap-1">
               <label className="text-sm text-white" htmlFor="start-time">
                 Start:{" "}

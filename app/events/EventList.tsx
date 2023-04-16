@@ -71,15 +71,15 @@ export default function Events({ activeDate }: Props) {
     );
   }
 
-  function handleEditable(e: MouseEvent) {
-    const element = e.target as HTMLDivElement;
-    element.contentEditable = "true";
-  }
+  // function handleEditable(e: MouseEvent) {
+  //   const element = e.target as HTMLDivElement;
+  //   element.contentEditable = "true";
+  // }
 
   return (
-    <ul className="event-list text-textOnCalendar md:max-h-[380px] md:overflow-y-auto">
+    <ul className="event-list block text-textOnCalendar md:max-h-[390px] md:overflow-y-auto lg:max-h-[480px]">
       {deleteEventMutation.isError ? (
-        <div className="text-sm text-red-500">
+        <div className="p-2 text-sm text-red-500">
           An error occurred: {(deleteEventMutation.error as any).message}
         </div>
       ) : null}
@@ -89,12 +89,12 @@ export default function Events({ activeDate }: Props) {
           key={evt.id}
         >
           <div
-            onClick={(e) => handleEditable(e)}
+            // onClick={(e) => handleEditable(e)}
             className="flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
               <VscCircleFilled className="h-4 w-4 text-primary" />
-              <p className="text-base text-white">{evt.title}</p>
+              <p className="max-w-[250px] text-base text-white">{evt.title}</p>
             </div>
             <button onClick={() => handleCheckBox(evt)} title="completed">
               {evt.completed ? (

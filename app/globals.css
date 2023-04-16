@@ -59,7 +59,6 @@
   }
 
   .day {
-    /* font-size: clamp(2.5rem, 2.2768rem + 0.8929vw, 3.125rem); */
     /* font-size: clamp(2.5rem, 2.0536rem + 1.7857vw, 3.75rem); // 60px */
     height: clamp(2.5rem, 2.0536rem + 1.7857vw, 3.75rem);
     aspect-ratio: 1/1;

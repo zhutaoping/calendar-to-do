@@ -1,18 +1,20 @@
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { CgRemove } from "react-icons/cg";
 import { VscCircleFilled } from "react-icons/vsc";
 import { Event } from "@prisma/client";
-import { deleteEvent, getEvents, updateEvent } from "@/app/lib/eventApi";
-import { MouseEvent } from "react";
+import { deleteEvent, getEvents, updateEvent } from "@/app/utils/eventFetcher";
 
 interface Props {
   activeDate: Date | null;
 }
 
 export default function Events({ activeDate }: Props) {
+  const [eventList, setEventList] = useState<Event[]>([]);
+
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["events", "eventsOfDay"],
+    queryKey: ["events"],
     queryFn: getEvents,
   });
 
@@ -25,9 +27,6 @@ export default function Events({ activeDate }: Props) {
       console.log(data.message);
       queryClient.invalidateQueries(["events"]);
     },
-    onError: (error: any) => {
-      console.log(error);
-    },
   });
 
   const updateEventMutation = useMutation({
@@ -36,9 +35,6 @@ export default function Events({ activeDate }: Props) {
       // from NextResponse
       console.log(data.message);
       queryClient.invalidateQueries(["events"]);
-    },
-    onError: (error: any) => {
-      console.log(error);
     },
   });
 
@@ -53,22 +49,23 @@ export default function Events({ activeDate }: Props) {
     });
   }
 
+  const events = data as Event[];
+
+  useEffect(() => {
+    if (events && activeDate) {
+      const eventList = events.filter(
+        (evt) =>
+          evt.day === activeDate.getDate() &&
+          evt.month === activeDate.getMonth() + 1 &&
+          evt.year === activeDate.getFullYear()
+      );
+      setEventList(eventList);
+    }
+  }, [events, activeDate]);
+
   if (isLoading) return <p>Loading...</p>;
   if (isError) {
     return <pre>{JSON.stringify(error)}</pre>;
-  }
-
-  const events = data as Event[];
-
-  let eventList: Event[] = [];
-
-  if (events && activeDate) {
-    eventList = events.filter(
-      (evt) =>
-        evt.day === activeDate.getDate() &&
-        evt.month === activeDate.getMonth() + 1 &&
-        evt.year === activeDate.getFullYear()
-    );
   }
 
   // function handleEditable(e: MouseEvent) {
@@ -104,7 +101,7 @@ export default function Events({ activeDate }: Props) {
               )}
             </button>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between pl-6">
             <div className="">
               <span className="text-xs text-gray-400">{evt.startTime} - </span>
               <span className="text-xs text-gray-400">{evt.endTime}</span>

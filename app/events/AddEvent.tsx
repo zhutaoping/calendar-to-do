@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BsPlusCircle } from "react-icons/bs";
 import { Dialog } from "@headlessui/react";
 import { useDay } from "@/app/store/DayContext";
-import addEvent from "@/app/lib/eventApi";
+import addEvent from "../utils/eventFetcher";
 
 const schema = z
   .object({

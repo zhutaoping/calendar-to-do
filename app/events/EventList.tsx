@@ -68,13 +68,8 @@ export default function Events({ activeDate }: Props) {
     return <pre>{JSON.stringify(error)}</pre>;
   }
 
-  // function handleEditable(e: MouseEvent) {
-  //   const element = e.target as HTMLDivElement;
-  //   element.contentEditable = "true";
-  // }
-
   return (
-    <ul className="event-list block text-textOnCalendar md:max-h-[390px] md:overflow-y-auto lg:max-h-[480px]">
+    <ul className="event-list block text-textOnCalendar md:max-h-[380px] md:overflow-y-auto lg:max-h-[480px]">
       {deleteEventMutation.isError ? (
         <div className="p-2 text-sm text-red-500">
           An error occurred: {(deleteEventMutation.error as any).message}

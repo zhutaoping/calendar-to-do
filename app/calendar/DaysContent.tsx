@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
 import DayItem from "./DayItem";
-import { getEvents } from "@/app/lib/eventApi";
 import { useQuery } from "@tanstack/react-query";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/helper/checkHasEvent";
+import { getEvents } from "../utils/eventFetcher";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;

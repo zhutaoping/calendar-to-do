@@ -8,6 +8,7 @@ import {
   completedEvent,
   deleteEvent,
   editEvent,
+  getEvent,
   getEvents,
 } from "@/app/utils/eventFetcher";
 import EventModal from "./EventModal";
@@ -31,6 +32,14 @@ export default function Events({ activeDate }: Props) {
     queryFn: getEvents,
   });
 
+  const { data: event } = useQuery<Event>({
+    queryKey: ["events", eventId],
+    queryFn: () => getEvent(eventId),
+    enabled: !!eventId,
+  });
+
+  // if (event) console.log(event);
+
   const queryClient = useQueryClient();
 
   const deleteEventMutation = useMutation({
@@ -44,9 +53,43 @@ export default function Events({ activeDate }: Props) {
 
   const updateEventMutation = useMutation({
     mutationFn: completedEvent,
-    onSuccess: (data, variables, context) => {
-      console.log(data.message);
-      queryClient.invalidateQueries(["events"]);
+    // onSuccess: (data, variables, context) => {
+    //   console.log(data.message);
+    //   queryClient.invalidateQueries(["events"]);
+    // },
+    onMutate: async (newEvent) => {
+      console.log(
+        "🚀 ~ file: EventList.tsx:61 ~ onMutate: ~ newEvent:",
+        newEvent
+      );
+      await queryClient.cancelQueries(["events", newEvent.id]);
+
+      const previousEvent = queryClient.getQueryData<Event>([
+        "events",
+        newEvent.id,
+      ]);
+      console.log(
+        "🚀 ~ file: EventList.tsx:67 ~ onMutate: ~ previousEvent:",
+        previousEvent
+      );
+
+      queryClient.setQueryData<Partial<Event>>(
+        ["events", newEvent.id],
+        newEvent
+      );
+
+      return { previousEvent, newEvent };
+    },
+
+    onError: (err, newEvent, context) => {
+      queryClient.setQueryData(
+        ["events", context?.newEvent.id],
+        context?.previousEvent
+      );
+    },
+
+    onSettled: (newEvent) => {
+      queryClient.invalidateQueries({ queryKey: ["events", newEvent.id] });
     },
   });
 

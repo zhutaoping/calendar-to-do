@@ -44,28 +44,10 @@ export async function PATCH(req: Request, res: Response) {
   });
 }
 
-export async function PUT(req: Request, res: Response) {
-  const event: Event = await req.json();
-
-  const updatedEvent = await prisma.event.update({
-    where: {
-      id: event.id,
-    },
-    data: {
-      ...event,
-    },
-  });
-
-  return NextResponse.json({
-    message: "Event updated successfully",
-    data: updatedEvent,
-  });
-}
-
 export async function DELETE(req: Request, res: Response) {
   const { id } = await req.json();
 
-  if (!id) return NextResponse.json({ message: "No id provided" }); // return to axios(res)
+  if (!id) return NextResponse.json({ message: "No id provided" });
 
   const deletedEvent = await prisma.event.delete({
     where: {

@@ -1,19 +1,34 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { CgRemove } from "react-icons/cg";
 import { VscCircleFilled } from "react-icons/vsc";
 import { Event } from "@prisma/client";
-import { deleteEvent, getEvents, updateEvent } from "@/app/utils/eventFetcher";
+import {
+  completedEvent,
+  deleteEvent,
+  editEvent,
+  getEvent,
+  getEvents,
+} from "@/app/utils/eventFetcher";
+import EventModal from "./EventModal";
+import EventItem from "./api/[id]/page";
 
 interface Props {
   activeDate: Date | null;
 }
 
 export default function Events({ activeDate }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
-  const { data, isLoading, isError, error } = useQuery({
+  const {
+    data: events,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<Event[]>({
     queryKey: ["events"],
     queryFn: getEvents,
   });
@@ -30,26 +45,49 @@ export default function Events({ activeDate }: Props) {
   });
 
   const updateEventMutation = useMutation({
-    mutationFn: updateEvent,
+    mutationFn: completedEvent,
     onSuccess: (data, variables, context) => {
-      // from NextResponse
       console.log(data.message);
       queryClient.invalidateQueries(["events"]);
     },
   });
 
-  function handleDelete(id: string) {
+  const editEventMutation = useMutation({
+    mutationFn: editEvent,
+    onSuccess: (data, variables, context) => {
+      console.log(data.message);
+      queryClient.invalidateQueries(["events"]);
+      setIsOpen(false);
+    },
+  });
+
+  function handleDelete(e: MouseEvent, id: string) {
+    e.stopPropagation();
+
     deleteEventMutation.mutate(id);
   }
 
-  function handleCheckBox(evt: Event) {
+  function handleCheckBox(e: MouseEvent, evt: Event) {
+    e.stopPropagation();
+
     updateEventMutation.mutate({
-      ...evt,
+      id: evt.id,
       completed: !evt.completed,
     });
   }
 
-  const events = data as Event[];
+  function handleEdit(data: Partial<Event>) {
+    console.log("🚀 ~ file: EventList.tsx:74 ~ handleEdit ~ data:", data);
+
+    const { title, startTime, endTime } = data;
+
+    editEventMutation.mutate({
+      id: eventId,
+      title,
+      startTime,
+      endTime,
+    });
+  }
 
   useEffect(() => {
     if (events && activeDate) {
@@ -68,50 +106,77 @@ export default function Events({ activeDate }: Props) {
     return <pre>{JSON.stringify(error)}</pre>;
   }
 
+  const sortedEvents = eventList.sort((a, b) => {
+    if (a.startTime < b.startTime) {
+      return -1;
+    }
+    if (a.startTime > b.startTime) {
+      return 1;
+    }
+    return 0;
+  });
+
+  function handleClick(evt: Event) {
+    setEventId(evt.id);
+    setIsOpen(true);
+  }
+
   return (
-    <ul className="event-list block text-textOnCalendar md:max-h-[380px] md:overflow-y-auto lg:max-h-[480px]">
-      {deleteEventMutation.isError ? (
-        <div className="p-2 text-sm text-red-500">
-          An error occurred: {(deleteEventMutation.error as any).message}
-        </div>
-      ) : null}
-      {eventList.map((evt) => (
-        <li
-          className="mb-1 bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2"
-          key={evt.id}
-        >
-          <div
-            // onClick={(e) => handleEditable(e)}
-            className="flex items-center justify-between"
+    <>
+      <EventModal
+        id={eventId}
+        events={events}
+        heading="Edit Event"
+        isOpen={isOpen && !!eventId}
+        setIsOpen={setIsOpen}
+        handleMutateEvent={handleEdit}
+      />
+      <ul className="event-list block text-textOnCalendar md:max-h-[380px] md:overflow-y-auto lg:max-h-[480px]">
+        {deleteEventMutation.isError ? (
+          <div className="p-2 text-sm text-red-500">
+            An error occurred: {(deleteEventMutation.error as any).message}
+          </div>
+        ) : null}
+        {sortedEvents.map((evt) => (
+          <li
+            className="mb-1 bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2"
+            key={evt.id}
+            onClick={() => handleClick(evt)}
           >
-            <div className="flex items-center gap-2">
-              <VscCircleFilled className="h-4 w-4 text-primary" />
-              <p className="max-w-[250px] text-base text-white">{evt.title}</p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <VscCircleFilled className="h-4 w-4 text-primary" />
+                <p className="max-w-[250px] text-base text-white">
+                  {evt.title}
+                </p>
+              </div>
+              <button onClick={(e) => handleCheckBox(e, evt)} title="completed">
+                {evt.completed ? (
+                  <GrCheckboxSelected className="h-4 w-4 bg-gray-400" />
+                ) : (
+                  <GrCheckbox className="h-4 w-4 bg-gray-400" />
+                )}
+              </button>
             </div>
-            <button onClick={() => handleCheckBox(evt)} title="completed">
-              {evt.completed ? (
-                <GrCheckboxSelected className="h-4 w-4 bg-gray-400" />
-              ) : (
-                <GrCheckbox className="h-4 w-4 bg-gray-400" />
-              )}
-            </button>
-          </div>
-          <div className="flex justify-between pl-6">
-            <div className="">
-              <span className="text-xs text-gray-400">{evt.startTime} - </span>
-              <span className="text-xs text-gray-400">{evt.endTime}</span>
+            <div className="flex justify-between pl-6">
+              <div className="">
+                <span className="text-xs text-gray-400">
+                  {evt.startTime} -{" "}
+                </span>
+                <span className="text-xs text-gray-400">{evt.endTime}</span>
+              </div>
+              <button
+                className="active:scale-95"
+                type="button"
+                title="delete"
+                onClick={(e) => handleDelete(e, evt.id)}
+              >
+                <CgRemove className="h-4 w-4 text-gray-400" />
+              </button>
             </div>
-            <button
-              className="active:scale-95"
-              type="button"
-              title="delete"
-              onClick={() => handleDelete(evt.id)}
-            >
-              <CgRemove className="h-4 w-4 text-gray-400" />
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

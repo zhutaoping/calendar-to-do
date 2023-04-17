@@ -1,8 +1,18 @@
+import axios from "axios";
 import { Event } from "@prisma/client";
 
 export async function getEvents() {
   const res = await fetch("/events/api");
   return res.json(); // from NextResponse
+}
+
+export async function getEvent(id: string) {
+  try {
+    const res = await axios(`/events/api/${id}`);
+    return res.data;
+  } catch (error: any) {
+    console.error(error.response.data);
+  }
 }
 
 export default async function addEvent(event: Partial<Event>) {
@@ -14,10 +24,10 @@ export default async function addEvent(event: Partial<Event>) {
     body: JSON.stringify(event),
   });
 
-  return res.json(); // from NextResponse
+  return res.json();
 }
 
-export async function updateEvent(event: Partial<Event>) {
+export async function completedEvent(event: Partial<Event>) {
   const res = await fetch(`/events/api/`, {
     method: "PATCH",
     headers: {
@@ -25,7 +35,18 @@ export async function updateEvent(event: Partial<Event>) {
     },
     body: JSON.stringify(event),
   });
-  return res.json(); // from NextResponse
+  return res.json();
+}
+
+export async function editEvent(event: Partial<Event>) {
+  const res = await fetch(`/events/api/`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(event),
+  });
+  return res.json();
 }
 
 export async function deleteEvent(id: string) {
@@ -36,5 +57,5 @@ export async function deleteEvent(id: string) {
     },
     body: JSON.stringify({ id }),
   });
-  return res.json(); // from NextResponse
+  return res.json();
 }

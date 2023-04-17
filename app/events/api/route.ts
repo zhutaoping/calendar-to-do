@@ -31,7 +31,28 @@ export async function PATCH(req: Request, res: Response) {
       id: event.id,
     },
     data: {
+      title: event.title,
+      startTime: event.startTime,
+      endTime: event.endTime,
       completed: event.completed,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Event updated successfully",
+    data: updatedEvent,
+  });
+}
+
+export async function PUT(req: Request, res: Response) {
+  const event: Event = await req.json();
+
+  const updatedEvent = await prisma.event.update({
+    where: {
+      id: event.id,
+    },
+    data: {
+      ...event,
     },
   });
 

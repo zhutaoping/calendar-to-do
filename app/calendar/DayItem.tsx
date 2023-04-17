@@ -1,7 +1,7 @@
-import { checkHasEvent } from "@/app/helper/checkHasEvent";
+import { MouseEvent, useEffect, useState } from "react";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
-import { MouseEvent, useEffect, useState } from "react";
+import { checkHasEvent } from "@/app/utils/checkHasEvent";
 
 interface Props {
   i: number;

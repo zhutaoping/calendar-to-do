@@ -1,12 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog } from "@headlessui/react";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
-import { getEvent } from "../utils/eventFetcher";
-import { useEffect, useMemo, useState } from "react";
 
 const schema = z
   .object({

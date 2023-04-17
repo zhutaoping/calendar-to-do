@@ -8,11 +8,9 @@ import {
   completedEvent,
   deleteEvent,
   editEvent,
-  getEvent,
   getEvents,
 } from "@/app/utils/eventFetcher";
 import EventModal from "./EventModal";
-import EventItem from "./api/[id]/page";
 
 interface Props {
   activeDate: Date | null;
@@ -77,8 +75,6 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleEdit(data: Partial<Event>) {
-    console.log("🚀 ~ file: EventList.tsx:74 ~ handleEdit ~ data:", data);
-
     const { title, startTime, endTime } = data;
 
     editEventMutation.mutate({

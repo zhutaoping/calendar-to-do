@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Event } from "@prisma/client";
 
 export async function getEvents() {
@@ -7,12 +6,8 @@ export async function getEvents() {
 }
 
 export async function getEvent(id: string) {
-  try {
-    const res = await axios(`/events/api/${id}`);
-    return res.data;
-  } catch (error: any) {
-    console.error(error.response.data);
-  }
+  const res = await fetch(`/events/api/${id}`);
+  return res.json();
 }
 
 export default async function addEvent(event: Partial<Event>) {

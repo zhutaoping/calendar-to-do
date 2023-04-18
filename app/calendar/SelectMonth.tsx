@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
+import { motion } from "framer-motion";
+import { HiCheck } from "react-icons/hi2";
 import { useDay } from "@/app/store/DayContext";
-import { motion, Variants } from "framer-motion";
 
 type Month = {
   id: number;
@@ -23,15 +23,6 @@ const months = [
   { id: 10, name: "November" },
   { id: 11, name: "December" },
 ];
-
-const itemVariants: Variants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-  closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
-};
 
 export default function SelectMonth() {
   const [selectedMonth, setSelectedMonth] = useState(months[0]);

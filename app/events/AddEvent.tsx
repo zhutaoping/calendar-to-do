@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
 import addEvent from "../utils/eventFetcher";
@@ -34,14 +35,16 @@ export default function AddEvent({}: Props) {
         setIsOpen={setIsOpen}
         handleMutateEvent={handleAddEvent}
       />
-      <button
-        className="focus-ring m-3 mx-auto flex focus-visible:ring-0 active:scale-95"
+      <motion.button
+        className="focus-ring m-3 mx-auto flex focus-visible:ring-0 "
         type="button"
         onClick={() => setIsOpen(true)}
         title="Add event"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
         <BsPlusCircle color="white" size={30} />
-      </button>
+      </motion.button>
     </div>
   );
 }

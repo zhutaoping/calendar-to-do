@@ -38,8 +38,6 @@ export default function Events({ activeDate }: Props) {
     enabled: !!eventId,
   });
 
-  // if (event) console.log(event);
-
   const queryClient = useQueryClient();
 
   const deleteEventMutation = useMutation({
@@ -178,14 +176,20 @@ export default function Events({ activeDate }: Props) {
         ) : null}
         {sortedEvents.map((evt) => (
           <li
-            className="mb-1 bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2"
+            className="mb-1 cursor-pointer bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2"
             key={evt.id}
             onClick={() => handleClick(evt)}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <VscCircleFilled className="h-4 w-4 text-primary" />
-                <p className="max-w-[250px] text-base text-white">
+                <p
+                  className={`transition-color max-w-[250px] text-base ${
+                    evt.completed
+                      ? "text-textOnCalendar line-through"
+                      : "text-white"
+                  }`}
+                >
                   {evt.title}
                 </p>
               </div>

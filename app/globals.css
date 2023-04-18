@@ -143,6 +143,11 @@
     background: var(--primary);
     border-radius: 50px;
   }
+
+  .svg-btn {
+    appearance: button;
+    fill: var(--primary);
+  }
 }
 
 @layer utilities {

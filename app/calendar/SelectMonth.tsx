@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
 import { useDay } from "@/app/store/DayContext";
+import { motion, Variants } from "framer-motion";
 
 type Month = {
   id: number;
@@ -23,9 +24,19 @@ const months = [
   { id: 11, name: "December" },
 ];
 
+const itemVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+  closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
+};
+
 export default function SelectMonth() {
   const [selectedMonth, setSelectedMonth] = useState(months[0]);
   const { dayInView, setDayInView } = useDay();
+  const [isOpen, setIsOpen] = useState(false);
 
   const thisMonth = months[dayInView.getMonth()];
 
@@ -36,13 +47,26 @@ export default function SelectMonth() {
 
   return (
     <Listbox value={selectedMonth} onChange={(m) => handleChange(m)}>
-      <Listbox.Button className="focus-ring relative w-full cursor-default !rounded-lg bg-white py-2 pl-3 text-left shadow-md">
+      <Listbox.Button
+        className="focus-ring relative w-full cursor-pointer !rounded-lg bg-white py-2 pl-3 text-left shadow-md"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <span>{thisMonth.name}</span>
-        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-          <HiChevronUpDown
+        <span className="svg-btn absolute inset-y-0 right-0 flex items-center pr-2">
+          {/* <HiChevronUpDown
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"
-          />
+          /> */}
+          <motion.svg
+            animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ originY: 0.55 }}
+            width="13"
+            height="13"
+            viewBox="0 0 20 20"
+          >
+            <path d="M0 7 L 20 7 L 10 16" />
+          </motion.svg>
         </span>
       </Listbox.Button>
       <Transition

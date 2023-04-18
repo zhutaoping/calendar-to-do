@@ -65,50 +65,48 @@ export default function Form({ id, event, heading, handleMutateEvent }: Props) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-lg text-white">{heading}</h2>
-        <textarea
-          placeholder="New Event"
-          {...register("title")}
-          className="focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
-          autoFocus
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="text-lg text-white">{heading}</h2>
+      <textarea
+        placeholder="New Event"
+        {...register("title")}
+        className="focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
+        autoFocus
+      />
+      {errors.title && (
+        <p className="text-sm text-red-500">{errors.title.message}</p>
+      )}
+      <div className="mt-4 flex items-center gap-1">
+        <label className="text-sm text-white" htmlFor="start-time">
+          Start:{" "}
+        </label>
+        <input
+          id="start-time"
+          className="focus-ring mr-4 rounded-md p-1 text-xs focus-visible:ring-0"
+          type="time"
+          defaultValue="08:00"
+          {...register("startTime")}
         />
-        {errors.title && (
-          <p className="text-sm text-red-500">{errors.title.message}</p>
-        )}
-        <div className="mt-4 flex items-center gap-1">
-          <label className="text-sm text-white" htmlFor="start-time">
-            Start:{" "}
-          </label>
-          <input
-            id="start-time"
-            className="focus-ring mr-4 rounded-md p-1 text-xs focus-visible:ring-0"
-            type="time"
-            defaultValue="08:00"
-            {...register("startTime")}
-          />
-          <label className="text-sm text-white" htmlFor="end-time">
-            End:{" "}
-          </label>
-          <input
-            id="end-time"
-            className="focus-ring mr-4 rounded-md p-1 text-xs focus-visible:ring-0"
-            type="time"
-            defaultValue="09:00"
-            {...register("endTime")}
-          />
-        </div>
-        {errors.endTime && (
-          <p className="text-sm text-red-500">{errors.endTime.message}</p>
-        )}
-        <button
-          className="focus-ring mt-6 w-full rounded-md bg-primary p-2 text-base text-white hover:animate-pulse focus-visible:ring-0"
-          type="submit"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+        <label className="text-sm text-white" htmlFor="end-time">
+          End:{" "}
+        </label>
+        <input
+          id="end-time"
+          className="focus-ring mr-4 rounded-md p-1 text-xs focus-visible:ring-0"
+          type="time"
+          defaultValue="09:00"
+          {...register("endTime")}
+        />
+      </div>
+      {errors.endTime && (
+        <p className="text-sm text-red-500">{errors.endTime.message}</p>
+      )}
+      <button
+        className="focus-ring mt-6 w-full rounded-md bg-primary p-2 text-base text-white hover:animate-pulse focus-visible:ring-0"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
   );
 }

@@ -1,8 +1,6 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
-import { CgRemove } from "react-icons/cg";
-import { VscCircleFilled } from "react-icons/vsc";
+import { AnimatePresence, motion } from "framer-motion";
 import { Event } from "@prisma/client";
 import {
   completedEvent,
@@ -12,6 +10,7 @@ import {
   getEvents,
 } from "@/app/utils/eventFetcher";
 import Modal from "./Modal";
+import EventItem from "./EventItem";
 
 interface Props {
   activeDate: Date | null;
@@ -37,7 +36,7 @@ export default function Events({ activeDate }: Props) {
     queryFn: () => getEvent(eventId),
     enabled: !!eventId,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: Events.tsx:33 ~ onSuccess: ~ data", data);
+      // console.log("🚀 ~ file: Events.tsx:33 ~ onSuccess: ~ data", data);
     },
   });
 
@@ -47,7 +46,7 @@ export default function Events({ activeDate }: Props) {
     mutationFn: deleteEvent,
     onSuccess: (data, variables, context) => {
       // from NextResponse
-      console.log(data.message);
+      // console.log(data.message);
       queryClient.invalidateQueries(["events"]);
     },
   });
@@ -59,20 +58,12 @@ export default function Events({ activeDate }: Props) {
     //   queryClient.invalidateQueries(["events", data.id]);
     // },
     onMutate: async (newEvent) => {
-      console.log(
-        "🚀 ~ file: EventList.tsx:61 ~ onMutate: ~ newEvent:",
-        newEvent
-      );
       await queryClient.cancelQueries(["events", newEvent.id]);
 
       const previousEvent = queryClient.getQueryData<Event>([
         "events",
         newEvent.id,
       ]);
-      console.log(
-        "🚀 ~ file: EventList.tsx:67 ~ onMutate: ~ previousEvent:",
-        previousEvent
-      );
 
       queryClient.setQueryData<Partial<Event>>(
         ["events", newEvent.id],
@@ -97,17 +88,11 @@ export default function Events({ activeDate }: Props) {
   const editEventMutation = useMutation({
     mutationFn: editEvent,
     onSuccess: (data, variables, context) => {
-      console.log(data.message);
+      // console.log(data.message);
       queryClient.invalidateQueries(["events"]);
       setModalOpen(false);
     },
   });
-
-  function handleDelete(e: MouseEvent, id: string) {
-    e.stopPropagation();
-
-    deleteEventMutation.mutate(id);
-  }
 
   function handleCheckBox(e: MouseEvent, evt: Event) {
     e.stopPropagation();
@@ -116,6 +101,12 @@ export default function Events({ activeDate }: Props) {
       id: evt.id,
       completed: !evt.completed,
     });
+  }
+
+  function handleDelete(e: MouseEvent, id: string) {
+    e.stopPropagation();
+
+    deleteEventMutation.mutate(id);
   }
 
   function handleEdit(data: Partial<Event>) {
@@ -141,7 +132,8 @@ export default function Events({ activeDate }: Props) {
     }
   }, [events, activeDate]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return <p className="mx-auto text-lg text-white">Loading...</p>;
   if (isError) {
     return <pre>{JSON.stringify(error)}</pre>;
   }
@@ -173,59 +165,24 @@ export default function Events({ activeDate }: Props) {
           heading="Edit Event"
         />
       )}
-      <ul className="event-list block text-textOnCalendar md:max-h-[380px] md:overflow-y-auto lg:max-h-[480px]">
-        {deleteEventMutation.isError ? (
-          <div className="p-2 text-sm text-red-500">
-            An error occurred: {(deleteEventMutation.error as any).message}
-          </div>
-        ) : null}
-        {sortedEvents.map((evt) => (
-          <li
-            className={`mb-1 ${
-              evt.completed ? "" : "cursor-pointer"
-            } bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}
-            key={evt.id}
-            onClick={() => handleClick(evt)}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <VscCircleFilled className="h-4 w-4 text-primary" />
-                <p
-                  className={`transition-color max-w-[250px] text-base ${
-                    evt.completed
-                      ? "text-textOnCalendar line-through"
-                      : "text-white"
-                  }`}
-                >
-                  {evt.title}
-                </p>
-              </div>
-              <button onClick={(e) => handleCheckBox(e, evt)} title="completed">
-                {evt.completed ? (
-                  <GrCheckboxSelected className="h-4 w-4 bg-gray-400" />
-                ) : (
-                  <GrCheckbox className="h-4 w-4 bg-gray-400" />
-                )}
-              </button>
-            </div>
-            <div className="flex justify-between pl-6">
-              <div className="">
-                <span className="text-xs text-gray-400">
-                  {evt.startTime} -{" "}
-                </span>
-                <span className="text-xs text-gray-400">{evt.endTime}</span>
-              </div>
-              <button
-                className="active:scale-95"
-                type="button"
-                title="delete"
-                onClick={(e) => handleDelete(e, evt.id)}
-              >
-                <CgRemove className="h-4 w-4 text-gray-400" />
-              </button>
-            </div>
-          </li>
-        ))}
+      <ul
+        className={`event-list block text-textOnCalendar md:max-h-[380px] md:overflow-auto lg:max-h-[480px]`}
+      >
+        {sortedEvents.length > 0 ? (
+          sortedEvents.map((evt) => (
+            <EventItem
+              evt={evt}
+              key={evt.id}
+              handleClick={handleClick}
+              handleCheckBox={handleCheckBox}
+              handleDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p className="text-center text-lg text-white">
+            nothing to do, hooray...
+          </p>
+        )}
       </ul>
     </>
   );

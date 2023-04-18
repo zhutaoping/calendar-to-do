@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
 import addEvent from "../utils/eventFetcher";
@@ -39,14 +39,18 @@ export default function AddEvent({}: Props) {
       >
         <BsPlusCircle color="white" size={30} />
       </motion.button>
-
-      {modalOpen && (
-        <Modal
-          handleMutateEvent={handleAddEvent}
-          handleClose={() => setModalOpen(false)}
-          heading="Add New Event"
-        />
-      )}
+      <AnimatePresence
+        initial={false}
+        // onExitComplete={() => setModalOpen(false)}
+      >
+        {modalOpen && (
+          <Modal
+            handleMutateEvent={handleAddEvent}
+            handleClose={() => setModalOpen(false)}
+            heading="Add New Event"
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

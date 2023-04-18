@@ -8,7 +8,14 @@ interface Props {
 export default function Backdrop({ children, onClick }: Props) {
   return (
     <motion.div
-      className="backdrop absolute left-0 top-0 flex h-full w-full items-center justify-center"
+      drag
+      dragConstraints={{
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
+      className="backdrop absolute left-0 top-0 flex h-full w-full items-center justify-center "
       onClick={onClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

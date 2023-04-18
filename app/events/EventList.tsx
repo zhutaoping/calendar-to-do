@@ -11,14 +11,14 @@ import {
   getEvent,
   getEvents,
 } from "@/app/utils/eventFetcher";
-import EventModal from "./EventModal";
+import Modal from "./Modal";
 
 interface Props {
   activeDate: Date | null;
 }
 
 export default function Events({ activeDate }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
@@ -36,6 +36,9 @@ export default function Events({ activeDate }: Props) {
     queryKey: ["events", eventId],
     queryFn: () => getEvent(eventId),
     enabled: !!eventId,
+    onSuccess: (data) => {
+      console.log("🚀 ~ file: Events.tsx:33 ~ onSuccess: ~ data", data);
+    },
   });
 
   const queryClient = useQueryClient();
@@ -53,7 +56,7 @@ export default function Events({ activeDate }: Props) {
     mutationFn: completedEvent,
     // onSuccess: (data, variables, context) => {
     //   console.log(data.message);
-    //   queryClient.invalidateQueries(["events"]);
+    //   queryClient.invalidateQueries(["events", data.id]);
     // },
     onMutate: async (newEvent) => {
       console.log(
@@ -96,7 +99,7 @@ export default function Events({ activeDate }: Props) {
     onSuccess: (data, variables, context) => {
       console.log(data.message);
       queryClient.invalidateQueries(["events"]);
-      setIsOpen(false);
+      setModalOpen(false);
     },
   });
 
@@ -155,19 +158,21 @@ export default function Events({ activeDate }: Props) {
 
   function handleClick(evt: Event) {
     setEventId(evt.id);
-    setIsOpen(true);
+    if (evt.completed) return;
+    setModalOpen(true);
   }
 
   return (
     <>
-      <EventModal
-        id={eventId}
-        events={events}
-        heading="Edit Event"
-        isOpen={isOpen && !!eventId}
-        setIsOpen={setIsOpen}
-        handleMutateEvent={handleEdit}
-      />
+      {modalOpen && (
+        <Modal
+          id={eventId}
+          event={event}
+          handleMutateEvent={handleEdit}
+          handleClose={() => setModalOpen(false)}
+          heading="Edit Event"
+        />
+      )}
       <ul className="event-list block text-textOnCalendar md:max-h-[380px] md:overflow-y-auto lg:max-h-[480px]">
         {deleteEventMutation.isError ? (
           <div className="p-2 text-sm text-red-500">
@@ -176,7 +181,9 @@ export default function Events({ activeDate }: Props) {
         ) : null}
         {sortedEvents.map((evt) => (
           <li
-            className="mb-1 cursor-pointer bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2"
+            className={`mb-1 ${
+              evt.completed ? "" : "cursor-pointer"
+            } bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}
             key={evt.id}
             onClick={() => handleClick(evt)}
           >

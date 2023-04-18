@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
+import { Event } from "@prisma/client";
 import Backdrop from "./Backdrop";
 import Form from "./Form";
-import { Event } from "@prisma/client";
 
 const dropIn = {
   hidden: {
@@ -26,7 +26,7 @@ const dropIn = {
 
 interface Props {
   id?: string;
-  events?: Event[];
+  event?: Event;
   heading: string;
   handleClose: () => void;
   handleMutateEvent: (data: Partial<Event>) => void;
@@ -34,7 +34,7 @@ interface Props {
 
 export default function Modal({
   id,
-  events,
+  event,
   heading,
   handleClose,
   handleMutateEvent,
@@ -49,7 +49,11 @@ export default function Modal({
         animate="visible"
         exit="exit"
       >
-        <Form handleMutateEvent={handleMutateEvent} heading={heading} />
+        <Form
+          handleMutateEvent={handleMutateEvent}
+          heading={heading}
+          event={event}
+        />
       </motion.div>
     </Backdrop>
   );

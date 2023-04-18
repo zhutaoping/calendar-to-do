@@ -20,22 +20,17 @@ type Inputs = z.infer<typeof schema>;
 
 type Props = {
   id?: string;
-  events?: Event[];
+  event?: Event;
   heading: string;
   handleMutateEvent: (data: Partial<Event>) => void;
 };
 
-export default function Form({
-  id,
-  events,
-  heading,
-  handleMutateEvent,
-}: Props) {
+export default function Form({ id, event, heading, handleMutateEvent }: Props) {
   const { activeDate } = useDay();
 
-  const event = useMemo(() => {
-    return events?.find((event) => event.id === id);
-  }, [id, events]);
+  // const event = useMemo(() => {
+  //   return events?.find((event) => event.id === id);
+  // }, [id, events]);
 
   const {
     register,
@@ -67,10 +62,6 @@ export default function Form({
       month,
       day,
     });
-
-    // setTimeout(() => {
-    //   reset();
-    // }, 500);
   };
 
   return (
@@ -81,6 +72,7 @@ export default function Form({
           placeholder="New Event"
           {...register("title")}
           className="focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
+          autoFocus
         />
         {errors.title && (
           <p className="text-sm text-red-500">{errors.title.message}</p>

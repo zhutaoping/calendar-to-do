@@ -2,9 +2,15 @@ import { useEffect, useMemo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
+
+const variants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: "-100%" },
+};
 
 const schema = z
   .object({

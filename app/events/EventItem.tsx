@@ -1,9 +1,10 @@
 /* eslint-disable react/display-name */
+import { forwardRef } from "react";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { CgRemove } from "react-icons/cg";
 import { VscCircleFilled } from "react-icons/vsc";
+import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
-import { forwardRef } from "react";
 
 interface Props {
   evt: Event;
@@ -19,6 +20,7 @@ const EventItem = forwardRef<Ref, Props>(
     return (
       <li
         ref={ref}
+        style={{ fontSize: "1em" }}
         className={`mb-1 ${
           evt.completed ? "" : "cursor-pointer"
         } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}

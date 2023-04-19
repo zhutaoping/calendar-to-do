@@ -22,7 +22,7 @@ export default async function addEvent(event: Partial<Event>) {
   return res.json();
 }
 
-export async function completedEvent(event: Partial<Event>) {
+export async function completeEvent(event: Partial<Event>) {
   const res = await fetch(`/events/api/`, {
     method: "PATCH",
     headers: {

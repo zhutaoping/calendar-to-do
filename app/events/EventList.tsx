@@ -21,6 +21,8 @@ export default function Events({ activeDate }: Props) {
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const queryClient = useQueryClient();
 
   const { data: events, isLoading, isError, error } = useEventsQuery();
@@ -68,13 +70,13 @@ export default function Events({ activeDate }: Props) {
 
   useEffect(() => {
     if (events && activeDate) {
-      const eventList = events.filter(
+      const listOfDay = events.filter(
         (evt: Event) =>
           evt.day === activeDate.getDate() &&
           evt.month === activeDate.getMonth() + 1 &&
           evt.year === activeDate.getFullYear()
       );
-      setEventList(eventList);
+      setEventList(listOfDay);
     }
   }, [events, activeDate]);
 
@@ -107,31 +109,23 @@ export default function Events({ activeDate }: Props) {
       )}
       <motion.ul
         layout
-        initial={{ minHeight: "0px" }}
-        animate={{ minHeight: "480px" }}
-        className={`event-list block overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
+        initial={{ minHeight: 0 }}
+        animate={{
+          minHeight: "480px",
+        }}
+        onAnimationComplete={() => setIsAnimating(false)}
+        className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
-        {sortedEvents.length > 0 ? (
-          sortedEvents.map((evt) => (
-            <AnimatedEventItem
-              layout
-              evt={evt}
-              key={evt.id}
-              handleClick={handleClick}
-              handleCheckBox={handleCheckBox}
-              handleDelete={handleDelete}
-            />
-          ))
-        ) : (
-          <motion.p
+        {sortedEvents.map((evt) => (
+          <AnimatedEventItem
             layout
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center text-lg text-white"
-          >
-            nothing to do, hooray...
-          </motion.p>
-        )}
+            evt={evt}
+            key={evt.id}
+            handleClick={handleClick}
+            handleCheckBox={handleCheckBox}
+            handleDelete={handleDelete}
+          />
+        ))}
       </motion.ul>
     </>
   );

@@ -30,7 +30,7 @@ export default function AddEvent({}: Props) {
   return (
     <div>
       <motion.button
-        className="focus-ring m-3 mx-auto flex focus-visible:ring-0 "
+        className="focus-ring m-4 mx-auto flex focus-visible:ring-0 "
         type="button"
         onClick={() => setModalOpen(true)}
         title="Add event"

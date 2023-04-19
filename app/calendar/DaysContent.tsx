@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
@@ -10,29 +9,16 @@ import DayItem from "./DayItem";
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
   handleDaysOfLastMonth: (day: number) => void;
-  isSelected: boolean;
-  setIsSelected: (value: boolean) => void;
 }
 
 export default function DaysContent({
   handleDaysOfNextMonth,
   handleDaysOfLastMonth,
-  isSelected,
-  setIsSelected,
 }: Props) {
-  const { dayInView, activeDate, setActiveDate } = useDay();
+  const { dayInView, setActiveDate } = useDay();
 
   const { data } = useQuery(["events"], getEvents);
   const events = data as Event[];
-
-  // prevent multiple active date
-  useEffect(() => {
-    if (!isSelected) return;
-
-    if (activeDate) {
-      setIsSelected(false);
-    }
-  }, [activeDate, setIsSelected, isSelected]);
 
   const daysInMonth = getDaysInMonth(dayInView);
   const startDay = startOfMonth(dayInView).getDay();
@@ -74,9 +60,7 @@ export default function DaysContent({
   }
   // This month
   for (let i = 0; i < daysInMonth; i++) {
-    content.push(
-      <DayItem key={i + 32} i={i} isSelected={isSelected} events={events} />
-    );
+    content.push(<DayItem key={i + 32} i={i} events={events} />);
   }
   // Next month
   for (let i = 0; i < 6 - endDay; i++) {
@@ -94,5 +78,6 @@ export default function DaysContent({
       </div>
     );
   }
+
   return <div className="days grid grid-cols-7 px-4 pb-4">{content}</div>;
 }

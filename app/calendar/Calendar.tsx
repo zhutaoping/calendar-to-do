@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import DaysContent from "./DaysContent";
 import { useDay } from "@/app/store/DayContext";
+import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";
 
 export default function Calendar() {
-  const [isSelected, setIsSelected] = useState(false);
   const { dayInView, setDayInView, setActiveDate } = useDay();
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -29,14 +27,12 @@ export default function Calendar() {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
     );
-    setIsSelected(true);
   };
 
   const handleDaysOfLastMonth = (day: number) => {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
     );
-    setIsSelected(true);
   };
 
   return (
@@ -66,8 +62,6 @@ export default function Calendar() {
       <DaysContent
         handleDaysOfNextMonth={handleDaysOfNextMonth}
         handleDaysOfLastMonth={handleDaysOfLastMonth}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
       />
       <footer className="flex justify-between gap-24 px-4 md:pt-2 lg:gap-36">
         <div className="relative z-50 flex-1 text-xs">
@@ -78,7 +72,6 @@ export default function Calendar() {
           onClick={() => {
             setDayInView(new Date());
             setActiveDate(new Date());
-            setIsSelected(true);
           }}
         >
           Today

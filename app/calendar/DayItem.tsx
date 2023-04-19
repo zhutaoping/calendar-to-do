@@ -5,11 +5,10 @@ import { checkHasEvent } from "@/app/utils/checkHasEvent";
 
 interface Props {
   i: number;
-  isSelected: boolean;
   events: Event[];
 }
 
-const DayItem = ({ i, isSelected, events }: Props) => {
+const DayItem = ({ i, events }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const [isToday, setIsToday] = useState(false);
 
@@ -31,21 +30,13 @@ const DayItem = ({ i, isSelected, events }: Props) => {
     if (!activeDate) return;
 
     if (
-      i + 1 === activeDate.getDate() &&
+      activeDate.getDate() === i + 1 &&
       activeDate.getMonth() === dayInView.getMonth() &&
       activeDate.getFullYear() === dayInView.getFullYear()
     ) {
       setIsActive(true);
     }
-    if (
-      isSelected &&
-      i + 1 === dayInView.getDate() &&
-      activeDate.getMonth() === dayInView.getMonth() &&
-      activeDate.getFullYear() === dayInView.getFullYear()
-    ) {
-      setIsActive(true);
-    }
-  }, [activeDate, isSelected, dayInView, i]);
+  }, [activeDate, dayInView, i]);
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     const element = e.target as HTMLDivElement;

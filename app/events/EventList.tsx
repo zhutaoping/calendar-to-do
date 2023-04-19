@@ -12,6 +12,8 @@ import {
 import Modal from "./Modal";
 import EventItem from "./EventItem";
 
+const AnimatedEventItem = motion(EventItem);
+
 interface Props {
   activeDate: Date | null;
 }
@@ -165,12 +167,14 @@ export default function Events({ activeDate }: Props) {
           heading="Edit Event"
         />
       )}
-      <ul
+      <motion.ul
+        layout
         className={`event-list block text-textOnCalendar md:max-h-[380px] md:overflow-auto lg:max-h-[480px]`}
       >
         {sortedEvents.length > 0 ? (
           sortedEvents.map((evt) => (
-            <EventItem
+            <AnimatedEventItem
+              layout
               evt={evt}
               key={evt.id}
               handleClick={handleClick}
@@ -183,7 +187,7 @@ export default function Events({ activeDate }: Props) {
             nothing to do, hooray...
           </p>
         )}
-      </ul>
+      </motion.ul>
     </>
   );
 }

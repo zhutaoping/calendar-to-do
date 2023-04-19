@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
-import { getEvents } from "../utils/eventFetcher";
+import { getEvents } from "../../putAway/eventFetcher";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
 

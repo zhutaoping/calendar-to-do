@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        hideScroll: {
+          "0%, 100%": { overflow: "hidden" },
+        },
+      },
+      animation: {
+        hideScroll: "hideScroll 1.2s backwards",
+      },
       colors: {
         primary: "var(--primary)",
         bgContainer: "var(--bg-container)",
@@ -19,6 +27,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-		require("@headlessui/tailwindcss")({ prefix: "ui" })],
+  plugins: [require("@headlessui/tailwindcss")({ prefix: "ui" })],
 };

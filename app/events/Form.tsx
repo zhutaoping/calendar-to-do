@@ -28,10 +28,6 @@ type Props = {
 export default function Form({ id, event, heading, handleMutateEvent }: Props) {
   const { activeDate } = useDay();
 
-  // const event = useMemo(() => {
-  //   return events?.find((event) => event.id === id);
-  // }, [id, events]);
-
   const {
     register,
     handleSubmit,

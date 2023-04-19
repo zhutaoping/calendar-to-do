@@ -20,8 +20,7 @@ const EventItem = forwardRef<Ref, Props>(
     return (
       <li
         ref={ref}
-        style={{ fontSize: "1em" }}
-        className={`mb-1 ${
+        className={` mb-1 ${
           evt.completed ? "" : "cursor-pointer"
         } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}
         key={evt.id}

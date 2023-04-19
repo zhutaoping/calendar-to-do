@@ -15,7 +15,7 @@ export default function Backdrop({ children, onClick }: Props) {
         right: 0,
         bottom: 0,
       }}
-      className="backdrop absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center "
+      className="backdrop absolute left-0 top-0 z-10 flex h-full w-full items-start justify-center md:items-center "
       onClick={onClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

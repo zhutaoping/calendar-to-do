@@ -23,17 +23,28 @@ const EventItem = forwardRef<Ref, Props>(
 
     function handleChip(e: MouseEvent) {
       e.stopPropagation();
+      clearTimeout(timer);
       const element = cardsRef.current!;
 
       let degValue = 0;
 
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        element.style.transform = "";
-      }, 2000);
-
       if (element.style.transform) {
         degValue = parseInt(element.style.transform.split("(")[1]);
+      }
+      console.log(
+        "🚀 ~ file: EventItem.tsx:102 ~ handleChip ~ degValue:",
+        degValue
+      );
+
+      function isOdd(num: number) {
+        return num % 2;
+      }
+
+      if (!isOdd(degValue / 180)) {
+        timer = setTimeout(() => {
+          element.style.transform = "";
+          clearTimeout(timer);
+        }, 2000);
       }
       degValue += 180;
 

@@ -1,7 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+
 import { useDay } from "../store/DayContext";
 import { Event } from "@prisma/client";
 
@@ -23,9 +25,16 @@ type Props = {
   event?: Event;
   heading: string;
   handleMutateEvent: (data: Partial<Event>) => void;
+  handleClose: () => void;
 };
 
-export default function Form({ id, event, heading, handleMutateEvent }: Props) {
+export default function Form({
+  id,
+  event,
+  heading,
+  handleMutateEvent,
+  handleClose,
+}: Props) {
   const { activeDate } = useDay();
 
   const {
@@ -62,7 +71,12 @@ export default function Form({ id, event, heading, handleMutateEvent }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-lg text-white">{heading}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg text-white">{heading}</h2>
+        <button onClick={handleClose}>
+          <AiOutlineCloseCircle color="white" size={20} />
+        </button>
+      </div>
       <textarea
         placeholder="New Event"
         {...register("title")}

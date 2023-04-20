@@ -50,9 +50,10 @@ export default function Modal({
         exit="exit"
       >
         <Form
-          handleMutateEvent={handleMutateEvent}
-          heading={heading}
           event={event}
+          heading={heading}
+          handleMutateEvent={handleMutateEvent}
+          handleClose={handleClose}
         />
       </motion.div>
     </Backdrop>

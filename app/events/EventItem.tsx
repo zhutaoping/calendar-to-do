@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from "react";
-import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
-import { CgRemove } from "react-icons/cg";
+import { MouseEvent, forwardRef, useRef } from "react";
 import { VscCircleFilled } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
+import CheckCard from "./CheckCard";
+import DeleteCard from "./DeleteCard";
 
 interface Props {
   evt: Event;
@@ -13,24 +13,51 @@ interface Props {
   handleDelete: (e: React.MouseEvent, id: string) => void;
 }
 
-export type Ref = HTMLLIElement;
+type Ref = HTMLLIElement;
 
 const EventItem = forwardRef<Ref, Props>(
   ({ evt, handleClick, handleCheckBox, handleDelete }, ref) => {
+    const cardsRef = useRef<HTMLDivElement | null>(null);
+
+    let timer!: ReturnType<typeof setTimeout>;
+
+    function handleChip(e: MouseEvent) {
+      e.stopPropagation();
+      const element = cardsRef.current!;
+
+      let degValue = 0;
+
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        element.style.transform = "";
+      }, 2000);
+
+      if (element.style.transform) {
+        degValue = parseInt(element.style.transform.split("(")[1]);
+      }
+      degValue += 180;
+
+      element.style.transform = `rotateY(${degValue}deg)`;
+    }
+
     return (
       <li
         ref={ref}
-        className={` mb-1 ${
+        className={`mb-1 flex items-center justify-between ${
           evt.completed ? "" : "cursor-pointer"
         } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}
         key={evt.id}
         onClick={() => handleClick(evt)}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <VscCircleFilled className="h-4 w-4 text-primary" />
+            <VscCircleFilled
+              className={`${
+                evt.completed ? "" : "text-primary"
+              } h-4 w-4 shrink-0`}
+            />
             <p
-              className={`transition-color max-w-[250px] text-base ${
+              className={`transition-color pr-3 text-base md:max-w-[320px] md:p-0 ${
                 evt.completed
                   ? "text-textOnCalendar line-through"
                   : "text-white"
@@ -39,30 +66,38 @@ const EventItem = forwardRef<Ref, Props>(
               {evt.title}
             </p>
           </div>
-          <button onClick={(e) => handleCheckBox(e, evt)} title="completed">
-            {evt.completed ? (
-              <GrCheckboxSelected className="h-4 w-4 bg-gray-400" />
-            ) : (
-              <GrCheckbox className="h-4 w-4 bg-gray-400" />
-            )}
-          </button>
-        </div>
-        <div className="flex justify-between pl-6">
-          <div className="">
+
+          <div className="ml-6">
             <span className="text-xs text-gray-400">{evt.startTime} - </span>
             <span className="text-xs text-gray-400">{evt.endTime}</span>
           </div>
-          <button
-            className="active:scale-95"
-            type="button"
-            title="delete"
-            onClick={(e) => handleDelete(e, evt.id)}
-          >
-            <CgRemove className="h-4 w-4 text-gray-400" />
-          </button>
+        </div>
+        {/* flip board */}
+        <div className="flip-board relative h-10 w-10 cursor-pointer">
+          <div ref={cardsRef} className="flip-cards">
+            <CheckCard
+              evt={evt}
+              handleCheckBox={handleCheckBox}
+              handleChip={handleChip}
+            />
+            <DeleteCard
+              evt={evt}
+              handleDelete={handleDelete}
+              handleChip={handleChip}
+            />
+          </div>
         </div>
       </li>
     );
   }
 );
 export default EventItem;
+
+// const flipVariants = {
+//   stand: {
+//     rotate: 0,
+//   },
+//   flip: {
+//     rotateY: "180deg",
+//   },
+// };

@@ -1,7 +1,8 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
+// Hooks
 import { useEventsQuery } from "../hooks/useEventsQuery";
 import { useEventQuery } from "../hooks/useEventQuery";
 import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
@@ -20,8 +21,6 @@ export default function Events({ activeDate }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
-
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -113,7 +112,6 @@ export default function Events({ activeDate }: Props) {
         animate={{
           minHeight: "480px",
         }}
-        onAnimationComplete={() => setIsAnimating(false)}
         className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
         {sortedEvents.map((evt) => (

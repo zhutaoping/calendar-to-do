@@ -30,7 +30,7 @@ export default function EventsBoard() {
       setSmallScreen(false);
     }
   }
- 
+
   return (
     <div className="right-board relative col-span-1 flex min-h-full flex-col justify-between">
       <div className="flex flex-col">

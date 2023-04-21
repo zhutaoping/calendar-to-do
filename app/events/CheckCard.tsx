@@ -3,14 +3,14 @@ import { Event } from "@prisma/client";
 
 interface Props {
   evt: Event;
-  handleCheckBox: (e: React.MouseEvent, evt: Event) => void;
+  handleCompleted: (e: React.MouseEvent, evt: Event) => void;
   handleChip: (e: React.MouseEvent) => void;
 }
 
-export default function CheckCard({ evt, handleCheckBox, handleChip }: Props) {
+export default function CheckCard({ evt, handleCompleted, handleChip }: Props) {
   return (
     <div
-      onClick={(e) => handleCheckBox(e, evt)}
+      onClick={(e) => handleCompleted(e, evt)}
       title="check"
       className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
     >
@@ -28,7 +28,7 @@ function CheckIcon1(props: svgProps) {
   return (
     <svg
       {...props}
-      className="h-6 w-6"
+      className="svg h-6 w-6"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -49,7 +49,7 @@ function CheckIcon2(props: svgProps) {
   return (
     <svg
       {...props}
-      className="h-6 w-6"
+      className="svg h-6 w-6"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -58,7 +58,7 @@ function CheckIcon2(props: svgProps) {
       <motion.path
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1, color: "var(--primary)" }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5 13l4 4L19 7"

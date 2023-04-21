@@ -1,8 +1,10 @@
 import { Event } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
-async function fetchEvent(id: string) {
-  const res = await fetch(`/events/api/${id}`);
+async function fetchEvent(id: string, signal?: AbortSignal) {
+  const res = await fetch(`/events/api/${id}`, {
+    signal,
+  });
   return res.json();
 }
 

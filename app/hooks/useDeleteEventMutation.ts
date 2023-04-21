@@ -17,13 +17,17 @@ export const useDeleteEventMutation = () => {
 
   return useMutation({
     mutationFn: deleteEvent,
+    // onSuccess: (data) => {
+    //   console.log(
+    //     "🚀 ~ file: useDeleteEventMutation.ts:21 ~ useDeleteEventMutation ~ data:",
+    //     data
+    //   );
+    //   queryClient.invalidateQueries({ queryKey: ["events"] });
+    // },
     onMutate: async (deletedId) => {
       await queryClient.cancelQueries(["events", deletedId]);
 
-      const previousEvents = queryClient.getQueryData<Event>([
-        "events",
-        deletedId,
-      ]);
+      const previousEvents = queryClient.getQueryData(["events"]);
 
       queryClient.setQueryData<Event[]>(["events"], (old) =>
         old?.filter((evt) => evt.id !== deletedId)
@@ -33,11 +37,11 @@ export const useDeleteEventMutation = () => {
     },
 
     onError: (_err, deletedId, context) => {
-      queryClient.setQueryData<Event>(["events"], context?.previousEvents);
+      queryClient.setQueryData(["events"], context?.previousEvents);
     },
 
     onSettled: (deletedId) => {
-      queryClient.invalidateQueries({ queryKey: ["events", deletedId] });
+      queryClient.invalidateQueries({ queryKey: ["events"] });
     },
   });
 };

@@ -9,21 +9,21 @@ import DeleteCard from "./DeleteCard";
 interface Props {
   evt: Event;
   handleClick: (evt: Event) => void;
-  handleCheckBox: (e: React.MouseEvent, evt: Event) => void;
+  handleCompleted: (e: React.MouseEvent, evt: Event) => void;
   handleDelete: (e: React.MouseEvent, id: string) => void;
 }
 
 type Ref = HTMLLIElement;
 
 const EventItem = forwardRef<Ref, Props>(
-  ({ evt, handleClick, handleCheckBox, handleDelete }, ref) => {
+  ({ evt, handleClick, handleCompleted, handleDelete }, ref) => {
     const cardsRef = useRef<HTMLDivElement | null>(null);
 
     let timer!: ReturnType<typeof setTimeout>;
 
     function handleChip(e: MouseEvent) {
       e.stopPropagation();
-      clearTimeout(timer);
+      // clearTimeout(timer);
       const element = cardsRef.current!;
 
       let degValue = 0;
@@ -31,22 +31,21 @@ const EventItem = forwardRef<Ref, Props>(
       if (element.style.transform) {
         degValue = parseInt(element.style.transform.split("(")[1]);
       }
-      console.log(
-        "🚀 ~ file: EventItem.tsx:102 ~ handleChip ~ degValue:",
-        degValue
-      );
 
       function isOdd(num: number) {
         return num % 2;
       }
 
       if (!isOdd(degValue / 180)) {
+        degValue += 180;
         timer = setTimeout(() => {
           element.style.transform = "";
           clearTimeout(timer);
         }, 2000);
+      } else {
+        degValue = 0;
+        clearTimeout(timer);
       }
-      degValue += 180;
 
       element.style.transform = `rotateY(${degValue}deg)`;
     }
@@ -88,7 +87,7 @@ const EventItem = forwardRef<Ref, Props>(
           <div ref={cardsRef} className="flip-cards">
             <CheckCard
               evt={evt}
-              handleCheckBox={handleCheckBox}
+              handleCompleted={handleCompleted}
               handleChip={handleChip}
             />
             <DeleteCard

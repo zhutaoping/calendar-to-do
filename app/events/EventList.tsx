@@ -35,11 +35,11 @@ export default function Events({ activeDate }: Props) {
     },
   });
 
-  function handleCheckBox(e: MouseEvent, evt: Event) {
+  function handleCompleted(e: MouseEvent, evt: Event) {
     e.stopPropagation();
 
     completeEventMutation.mutate({
-      id: evt.id,
+      ...evt,
       completed: !evt.completed,
     });
   }
@@ -120,7 +120,7 @@ export default function Events({ activeDate }: Props) {
             evt={evt}
             key={evt.id}
             handleClick={handleClick}
-            handleCheckBox={handleCheckBox}
+            handleCompleted={handleCompleted}
             handleDelete={handleDelete}
           />
         ))}

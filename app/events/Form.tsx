@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
@@ -73,9 +74,13 @@ export default function Form({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center justify-between">
         <h2 className="text-lg text-white">{heading}</h2>
-        <button onClick={handleClose}>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleClose}
+        >
           <AiOutlineCloseCircle color="white" size={20} />
-        </button>
+        </motion.button>
       </div>
       <textarea
         placeholder="New Event"

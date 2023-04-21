@@ -1,7 +1,7 @@
 import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-async function completeEvent(event: Partial<Event>) {
+async function completeEvent(event: Event) {
   const res = await fetch(`/events/api/`, {
     method: "PATCH",
     headers: {
@@ -17,33 +17,38 @@ export const useCompleteEventMutation = () => {
 
   return useMutation({
     mutationFn: completeEvent,
-    onSuccess: (newEvent) => {
-      queryClient.invalidateQueries({
-        queryKey: ["events", newEvent.id],
+    onMutate: async (updatedEvent) => {
+      await queryClient.cancelQueries(["events", updatedEvent.id]);
+
+      const previousEvent = queryClient.getQueryData([
+        "events",
+        updatedEvent.id,
+      ]);
+
+      queryClient.setQueryData<Event[]>(["events"], (old) => {
+        const newEvents = old?.map((event) => {
+          if (event.id === updatedEvent.id) {
+            return updatedEvent;
+          }
+          return event;
+        });
+        return newEvents;
       });
+
+      return { previousEvent, updatedEvent };
     },
 
-    // onMutate: async (newEvent) => {
-    //   await queryClient.cancelQueries(["events", newEvent.id]);
+    onError: (_err, updatedEvent, context) => {
+      queryClient.setQueryData(
+        ["events", context?.updatedEvent.id],
+        context?.previousEvent
+      );
+    },
 
-    //   const previousEvent = queryClient.getQueryData(["events", newEvent.id]);
-
-    //   queryClient.setQueryData(["events", newEvent.id], newEvent);
-
-    //   return { previousEvent, newEvent };
-    // },
-
-    // onError: (_err, newEvent, context) => {
-    //   queryClient.setQueryData(
-    //     ["events", context?.newEvent.id],
-    //     context?.previousEvent
-    //   );
-    // },
-
-    // onSettled: (newEvent) => {
-    //   queryClient.invalidateQueries({
-    //     queryKey: ["events", newEvent.id],
-    //   });
-    // },
+    onSettled: (resData) => {
+      queryClient.invalidateQueries({
+        queryKey: ["events", resData.id],
+      });
+    },
   });
 };

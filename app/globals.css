@@ -152,7 +152,7 @@
     position: relative;
     height: 100%;
     width: 100%;  
-    transition: all 0.3s ;
+    transition: transform 0.3s ;
     transform-style: preserve-3d;
   }
 
@@ -162,7 +162,6 @@
     inset: 0;
     backface-visibility: hidden;
     transform-style: preserve-3d;
-    transition: transform 0.5s;
   }
 
   .delete-card {

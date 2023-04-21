@@ -35,7 +35,7 @@ export default function AddEvent({}: Props) {
         onClick={() => setModalOpen(true)}
         title="Add event"
         whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        whileTap={{ scale: 0.95 }}
       >
         <BsPlusCircle color="white" size={30} />
       </motion.button>

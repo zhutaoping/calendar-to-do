@@ -38,10 +38,7 @@ export async function PATCH(req: Request, res: Response) {
     },
   });
 
-  return NextResponse.json({
-    message: "Event updated successfully",
-    data: updatedEvent,
-  });
+  return NextResponse.json(updatedEvent);
 }
 
 export async function DELETE(req: Request, res: Response) {

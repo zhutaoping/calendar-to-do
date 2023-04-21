@@ -179,6 +179,9 @@
     background-color: var(--primary);
     animation: pulse 2s ease-in-out infinite;
   }
+  .chip.red {
+    animation: pulse 1s ease-in-out infinite;
+  }
 
   
   @keyframes pulse {

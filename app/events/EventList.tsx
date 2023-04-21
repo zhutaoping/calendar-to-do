@@ -45,7 +45,9 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleEdit(data: Partial<Event>) {
-    const { title, startTime, endTime } = data;
+    const { title, startTime, endTime, id } = data;
+
+    if (id) setEventId(id);
 
     editEventMutation.mutate({
       id: eventId,

@@ -3,22 +3,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
-import addEvent from "../../putAway/eventFetcher";
 import Modal from "./Modal";
+import { useCreateEventMutation } from "../hooks/useCreateEventMutation";
 
 type Props = {};
 
 export default function AddEvent({}: Props) {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const queryClient = useQueryClient();
-
-  const createEventMutation = useMutation({
-    mutationFn: addEvent,
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(["events"]);
-    },
-  });
+  const createEventMutation = useCreateEventMutation();
 
   const handleAddEvent = (data: Partial<Event>) => {
     createEventMutation.mutate({

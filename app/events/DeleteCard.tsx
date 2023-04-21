@@ -15,7 +15,11 @@ export default function DeleteCard({ evt, handleDelete, handleChip }: Props) {
       className="delete-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
     >
       <MdOutlineDelete size={20} color="#ed5e68" />
-      <div title="flip" className="chip" onClick={(e) => handleChip(e)}></div>
+      <div
+        title="flip"
+        className="chip red bg-[#ed5e68]"
+        onClick={(e) => handleChip(e)}
+      ></div>
     </div>
   );
 }

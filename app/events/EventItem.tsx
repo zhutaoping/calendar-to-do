@@ -23,7 +23,6 @@ const EventItem = forwardRef<Ref, Props>(
 
     function handleChip(e: MouseEvent) {
       e.stopPropagation();
-      // clearTimeout(timer);
       const element = cardsRef.current!;
 
       let degValue = 0;
@@ -41,7 +40,7 @@ const EventItem = forwardRef<Ref, Props>(
         timer = setTimeout(() => {
           element.style.transform = "";
           clearTimeout(timer);
-        }, 2000);
+        }, 5000);
       } else {
         degValue = 0;
         clearTimeout(timer);
@@ -55,7 +54,7 @@ const EventItem = forwardRef<Ref, Props>(
         ref={ref}
         className={`mb-1 flex items-center justify-between ${
           evt.completed ? "" : "cursor-pointer"
-        } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2`}
+        } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6`}
         key={evt.id}
         onClick={() => handleClick(evt)}
       >

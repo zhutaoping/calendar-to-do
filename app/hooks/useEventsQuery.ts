@@ -11,7 +11,7 @@ export const useEventsQuery = () => {
     queryKey: ["events"],
     queryFn: fetchEvents,
     onSuccess: (data) => {
-      console.log("🚀 ~ file: EventList.tsx:44 ~ Events ~ data:", data);
+      console.log("🚀 ~ useEventsQuery ~ data:", data);
     },
   });
 };

@@ -38,6 +38,8 @@ export default function Events({ activeDate }: Props) {
   function handleCompleted(e: MouseEvent, evt: Event) {
     e.stopPropagation();
 
+    setEventId(evt.id);
+
     completeEventMutation.mutate({
       ...evt,
       completed: !evt.completed,

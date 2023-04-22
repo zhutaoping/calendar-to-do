@@ -201,7 +201,6 @@
     100% {
       transform: translateX(80%);
     }
-    
   }
 
   /* parent selector */
@@ -214,4 +213,6 @@
   .focus-ring {
     @apply focus:outline-none focus-visible:border-orange-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 rounded;
   }
+
+  
 }

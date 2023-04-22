@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
-import Modal from "./Modal";
+import Modal from "./formModal/Modal";
 import { useCreateEventMutation } from "../hooks/useCreateEventMutation";
 
 type Props = {};

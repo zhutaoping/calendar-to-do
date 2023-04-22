@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
@@ -5,17 +6,41 @@ import { Event } from "@prisma/client";
 import { getEvents } from "../../putAway/eventFetcher";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
+import { forwardRef, useEffect, useRef, useState } from "react";
+
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
   handleDaysOfLastMonth: (day: number) => void;
+  setHeight: React.Dispatch<React.SetStateAction<number>>;
+  direction: number;
 }
 
-export default function DaysContent({
+// type Ref = HTMLDivElement;
+
+const DaysContent = ({
   handleDaysOfNextMonth,
   handleDaysOfLastMonth,
-}: Props) {
+  setHeight,
+  direction,
+}: Props) => {
   const { dayInView, setActiveDate } = useDay();
+  const divRef = useRef<HTMLDivElement>(null);
+  // const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const size = divRef.current?.getBoundingClientRect();
+    setHeight(size?.height ?? 0);
+  }, [dayInView, setHeight]);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      const size = divRef.current?.getBoundingClientRect();
+      setHeight(size?.height ?? 0);
+    });
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setHeight]);
 
   const { data } = useQuery(["events"], getEvents);
   const events = data as Event[];
@@ -27,6 +52,10 @@ export default function DaysContent({
   const lastDaysInMonth = getDaysInMonth(
     new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, 1)
   );
+
+  function handleResize(this: Window, ev: UIEvent) {
+    throw new Error("Function not implemented.");
+  }
 
   function handleDaysOfLastMonthClick(day: number) {
     handleDaysOfLastMonth(day);
@@ -79,5 +108,47 @@ export default function DaysContent({
     );
   }
 
-  return <div className="days grid grid-cols-7 px-4 pb-4">{content}</div>;
-}
+  return (
+    <AnimatePresence initial={false} custom={direction}>
+      <motion.div
+        key={`${dayInView.getFullYear}-${dayInView.getMonth()}`}
+        custom={direction}
+        variants={variants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.2 },
+        }}
+        ref={divRef}
+        className="days absolute grid grid-cols-7 px-4 pb-4"
+      >
+        {content}
+        {/* <h2>{height}</h2> */}
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+export default DaysContent;
+
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+    };
+  },
+  center: {
+    zIndex: 10,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? 50 : -50,
+      opacity: 0,
+    };
+  },
+};

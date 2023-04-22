@@ -3,8 +3,8 @@ import { MouseEvent, forwardRef, useRef } from "react";
 import { VscCircleFilled } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
-import CheckCard from "./CheckCard";
-import DeleteCard from "./DeleteCard";
+import CheckCard from "./cards/CheckCard";
+import DeleteCard from "./cards/DeleteCard";
 
 interface Props {
   evt: Event;
@@ -101,12 +101,3 @@ const EventItem = forwardRef<Ref, Props>(
   }
 );
 export default EventItem;
-
-// const flipVariants = {
-//   stand: {
-//     rotate: 0,
-//   },
-//   flip: {
-//     rotateY: "180deg",
-//   },
-// };

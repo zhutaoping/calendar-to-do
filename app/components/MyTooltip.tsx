@@ -14,7 +14,6 @@ export default function MyTooltip({ children }: Props) {
           <TooltipPrimitive.Content
             className={styles.TooltipContent}
             sideOffset={5}
-            data-side="bottom"
           >
             Flip the card
             <TooltipPrimitive.Arrow className={styles.TooltipArrow} />

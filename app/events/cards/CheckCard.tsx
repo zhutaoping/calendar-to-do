@@ -1,9 +1,6 @@
-import styles from "./CheckCard.module.css";
-import * as Tooltip from "@radix-ui/react-tooltip";
-
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
-import MyTooltip from "../components/MyTooltip";
+import MyTooltip from "../../components/MyTooltip";
 
 interface Props {
   evt: Event;

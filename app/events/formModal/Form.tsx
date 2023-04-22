@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-import { useDay } from "../store/DayContext";
+import { useDay } from "../../store/DayContext";
 import { Event } from "@prisma/client";
 
 const schema = z
@@ -117,7 +117,7 @@ export default function Form({
         <p className="text-sm text-red-500">{errors.endTime.message}</p>
       )}
       <button
-        className="focus-ring mt-6 w-full rounded-md bg-primary p-2 text-base text-white hover:animate-pulse focus-visible:ring-0"
+        className="focus-ring mt-6 box-border w-full rounded-md bg-primary px-4 py-2 text-center text-base text-white hover:animate-pulse focus-visible:ring-0"
         type="submit"
       >
         Submit

@@ -8,7 +8,7 @@ import { useEventQuery } from "../hooks/useEventQuery";
 import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
 import { useCompleteEventMutation } from "../hooks/useCompleteEventMutation";
 import { useEditEventMutation } from "../hooks/useEditEventMutation";
-import Modal from "./Modal";
+import Modal from "./formModal/Modal";
 import EventItem from "./EventItem";
 
 const AnimatedEventItem = motion(EventItem);

@@ -40,7 +40,7 @@ const EventItem = forwardRef<Ref, Props>(
         timer = setTimeout(() => {
           element.style.transform = "";
           clearTimeout(timer);
-        }, 5000);
+        }, 3000);
       } else {
         degValue = 0;
         clearTimeout(timer);

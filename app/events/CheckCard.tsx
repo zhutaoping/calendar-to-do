@@ -1,5 +1,9 @@
+import styles from "./CheckCard.module.css";
+import * as Tooltip from "@radix-ui/react-tooltip";
+
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
+import MyTooltip from "../components/MyTooltip";
 
 interface Props {
   evt: Event;
@@ -11,11 +15,12 @@ export default function CheckCard({ evt, handleCompleted, handleChip }: Props) {
   return (
     <div
       onClick={(e) => handleCompleted(e, evt)}
-      title="check"
       className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
     >
       {evt.completed ? <CheckIcon2 /> : <CheckIcon1 />}
-      <div title="flip" className="chip" onClick={(e) => handleChip(e)}></div>
+      <MyTooltip>
+        <div className="chip" onClick={(e) => handleChip(e)}></div>
+      </MyTooltip>
     </div>
   );
 }

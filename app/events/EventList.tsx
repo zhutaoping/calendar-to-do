@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Event } from "@prisma/client";
 // Hooks
 import { useEventsQuery } from "../hooks/useEventsQuery";
@@ -118,16 +118,18 @@ export default function Events({ activeDate }: Props) {
         }}
         className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
-        {sortedEvents.map((evt) => (
-          <AnimatedEventItem
-            layout="position"
-            evt={evt}
-            key={evt.id}
-            handleClick={handleClick}
-            handleCompleted={handleCompleted}
-            handleDelete={handleDelete}
-          />
-        ))}
+        <AnimatePresence>
+          {sortedEvents.map((evt) => (
+            <AnimatedEventItem
+              layout="position"
+              evt={evt}
+              key={evt.id}
+              handleClick={handleClick}
+              handleCompleted={handleCompleted}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </AnimatePresence>
       </motion.ul>
     </>
   );

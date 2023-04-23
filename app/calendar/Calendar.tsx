@@ -43,12 +43,14 @@ export default function Calendar() {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
     );
+    setDirection(1);
   };
 
   const handleDaysOfLastMonth = (day: number) => {
     setDayInView(
       new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
     );
+    setDirection(-1);
   };
 
   return (
@@ -114,11 +116,18 @@ export default function Calendar() {
           <SelectMonth setDirection={setDirection} />
         </div>
         <motion.button
-          className="focus-ring select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
+          className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
           whileHover={{ scale: 1.1 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           onClick={() => {
-            setDayInView(new Date());
+            const today = new Date();
+            console.log("🚀 ~ Calendar ~ today:", today);
+            if (dayInView < new Date()) {
+              setDirection(1);
+            } else {
+              setDirection(-1);
+            }
+            setDayInView(today);
             setActiveDate(new Date());
           }}
         >

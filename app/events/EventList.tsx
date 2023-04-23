@@ -112,6 +112,7 @@ export default function Events({ activeDate }: Props) {
       )}
       <motion.ul
         layout="position"
+        initial={{ minHeight: 0 }}
         animate={{
           minHeight: "480px",
         }}

@@ -13,6 +13,8 @@ interface Props {
   handleDaysOfLastMonth: (day: number) => void;
   setHeight: React.Dispatch<React.SetStateAction<number>>;
   direction: number;
+  handleChevronLeft: () => void;
+  handleChevronRight: () => void;
 }
 
 const DaysContent = ({
@@ -20,6 +22,8 @@ const DaysContent = ({
   handleDaysOfLastMonth,
   setHeight,
   direction,
+  handleChevronLeft,
+  handleChevronRight,
 }: Props) => {
   const { dayInView, setActiveDate } = useDay();
   const divRef = useRef<HTMLDivElement>(null);
@@ -119,6 +123,18 @@ const DaysContent = ({
           x: { type: "spring", stiffness: 300, damping: 30 },
           opacity: { duration: 0.2 },
         }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={1}
+        onDragEnd={(e, { offset, velocity }) => {
+          const swipe = swipePower(offset.x, velocity.x);
+
+          if (swipe < -swipeConfidenceThreshold) {
+            handleChevronRight();
+          } else if (swipe > swipeConfidenceThreshold) {
+            handleChevronLeft();
+          }
+        }}
         ref={divRef}
         id="divRef"
         className="days absolute grid grid-cols-7 px-4 pb-4"
@@ -135,12 +151,14 @@ const variants = {
     return {
       x: direction > 0 ? 50 : -50,
       opacity: 0,
+      blur: 10,
     };
   },
   center: {
     zIndex: 10,
     x: 0,
     opacity: 1,
+    blur: 0,
   },
   exit: (direction: number) => {
     return {
@@ -149,4 +167,9 @@ const variants = {
       opacity: 0,
     };
   },
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
 };

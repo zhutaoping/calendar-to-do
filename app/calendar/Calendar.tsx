@@ -101,6 +101,8 @@ export default function Calendar() {
         <div ref={containerRef} className="slide-container relative">
           <DaysContent
             direction={direction}
+            handleChevronLeft={handleChevronLeft}
+            handleChevronRight={handleChevronRight}
             setHeight={setHeight}
             handleDaysOfNextMonth={handleDaysOfNextMonth}
             handleDaysOfLastMonth={handleDaysOfLastMonth}

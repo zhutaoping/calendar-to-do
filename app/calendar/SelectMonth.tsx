@@ -24,7 +24,11 @@ const months = [
   { id: 11, name: "December" },
 ];
 
-export default function SelectMonth() {
+interface Props {
+  setDirection: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function SelectMonth({ setDirection }: Props) {
   const [selectedMonth, setSelectedMonth] = useState(months[0]);
   const { dayInView, setDayInView } = useDay();
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +38,12 @@ export default function SelectMonth() {
   const handleChange = (m: Month) => {
     setSelectedMonth(m);
     setDayInView(new Date(dayInView.getFullYear(), m.id));
+
+    if (m.id > thisMonth.id) {
+      setDirection(1);
+    } else if (m.id < thisMonth.id) {
+      setDirection(-1);
+    }
   };
 
   return (

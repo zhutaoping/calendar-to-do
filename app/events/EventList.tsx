@@ -111,8 +111,7 @@ export default function Events({ activeDate }: Props) {
         />
       )}
       <motion.ul
-        layout
-        initial={{ minHeight: 0 }}
+        layout="position"
         animate={{
           minHeight: "480px",
         }}
@@ -120,7 +119,7 @@ export default function Events({ activeDate }: Props) {
       >
         {sortedEvents.map((evt) => (
           <AnimatedEventItem
-            layout
+            layout="position"
             evt={evt}
             key={evt.id}
             handleClick={handleClick}

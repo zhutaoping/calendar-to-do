@@ -52,13 +52,14 @@ const EventItem = forwardRef<Ref, Props>(
     return (
       <li
         ref={ref}
-        className={`mb-1 flex items-center justify-between ${
-          evt.completed ? "" : "cursor-pointer"
-        } w-full bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6`}
+        className="mb-1 flex w-full 
+        items-center justify-between bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6"
         key={evt.id}
-        onClick={() => handleClick(evt)}
       >
-        <div className="flex flex-col">
+        <div
+          onClick={() => handleClick(evt)}
+          className={`flex flex-col ${evt.completed ? "" : "cursor-pointer"}`}
+        >
           <div className="flex items-center gap-2">
             <VscCircleFilled
               className={`${

@@ -75,6 +75,7 @@ export default function Form({
       <div className="flex items-center justify-between">
         <h2 className="text-lg text-white">{heading}</h2>
         <motion.button
+          type="button"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleClose}

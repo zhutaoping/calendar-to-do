@@ -12,7 +12,7 @@ export const useEventQuery = (eventId: string) => {
     queryFn: () => fetchEvent(eventId),
     enabled: !!eventId,
     onSuccess: (data) => {
-      console.log("🚀 ~ useEventQuery ~ data:", data);
+      // console.log("🚀 ~ useEventQuery ~ data:", data);
     },
   });
 };

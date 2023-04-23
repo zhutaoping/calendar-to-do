@@ -3,9 +3,10 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 interface Props {
   children: React.ReactNode;
+  title: string;
 }
 
-export default function MyTooltip({ children }: Props) {
+export default function MyTooltip({ children, title }: Props) {
   return (
     <TooltipPrimitive.Provider>
       <TooltipPrimitive.Root>
@@ -15,7 +16,7 @@ export default function MyTooltip({ children }: Props) {
             className={styles.TooltipContent}
             sideOffset={5}
           >
-            Flip the card
+            {title}
             <TooltipPrimitive.Arrow className={styles.TooltipArrow} />
           </TooltipPrimitive.Content>
         </TooltipPrimitive.Portal>

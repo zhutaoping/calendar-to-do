@@ -3,27 +3,6 @@ import { Event } from "@prisma/client";
 import Backdrop from "./Backdrop";
 import Form from "./Form";
 
-const dropIn = {
-  hidden: {
-    y: "-100vh",
-    opacity: 0,
-  },
-  visible: {
-    y: "0",
-    opacity: 1,
-    transition: {
-      delay: 0.1,
-      type: "spring",
-      damping: 20,
-      stiffness: 300,
-    },
-  },
-  exit: {
-    y: "-100vh",
-    opacity: 0,
-  },
-};
-
 interface Props {
   id?: string;
   event?: Event;
@@ -59,3 +38,24 @@ export default function Modal({
     </Backdrop>
   );
 }
+
+const dropIn = {
+  hidden: {
+    y: "-100vh",
+    opacity: 0,
+  },
+  visible: {
+    y: "0",
+    opacity: 1,
+    transition: {
+      delay: 0.1,
+      type: "spring",
+      damping: 20,
+      stiffness: 300,
+    },
+  },
+  exit: {
+    y: "-100vh",
+    opacity: 0,
+  },
+};

@@ -1,5 +1,4 @@
 "use client";
-
 import { format } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
 import EventList from "./EventList";

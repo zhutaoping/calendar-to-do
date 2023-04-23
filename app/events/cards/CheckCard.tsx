@@ -15,7 +15,7 @@ export default function CheckCard({ evt, handleCompleted, handleChip }: Props) {
       className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
     >
       {evt.completed ? <CheckIcon2 /> : <CheckIcon1 />}
-      <MyTooltip>
+      <MyTooltip title="Flip the card">
         <div className="chip" onClick={(e) => handleChip(e)}></div>
       </MyTooltip>
     </div>

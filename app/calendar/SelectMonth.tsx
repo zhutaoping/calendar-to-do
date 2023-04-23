@@ -44,10 +44,6 @@ export default function SelectMonth() {
       >
         <span>{thisMonth.name}</span>
         <span className="svg-btn absolute inset-y-0 right-0 flex items-center pr-2">
-          {/* <HiChevronUpDown
-            className="h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          /> */}
           <motion.svg
             animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
             transition={{ duration: 0.2 }}

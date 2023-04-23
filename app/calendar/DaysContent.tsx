@@ -6,7 +6,13 @@ import { Event } from "@prisma/client";
 import { getEvents } from "../../putAway/eventFetcher";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -27,7 +33,6 @@ const DaysContent = ({
 }: Props) => {
   const { dayInView, setActiveDate } = useDay();
   const divRef = useRef<HTMLDivElement>(null);
-  // const [height, setHeight] = useState(0);
 
   useEffect(() => {
     const size = divRef.current?.getBoundingClientRect();
@@ -36,10 +41,13 @@ const DaysContent = ({
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      const size = divRef.current?.getBoundingClientRect();
-      setHeight(size?.height ?? 0);
+      const divRef = document.getElementById("divRef");
+      const size = divRef?.getBoundingClientRect();
+      setHeight(size?.height ?? 300);
     });
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [setHeight]);
 
   const { data } = useQuery(["events"], getEvents);
@@ -122,10 +130,10 @@ const DaysContent = ({
           opacity: { duration: 0.2 },
         }}
         ref={divRef}
+        id="divRef"
         className="days absolute grid grid-cols-7 px-4 pb-4"
       >
         {content}
-        {/* <h2>{height}</h2> */}
       </motion.div>
     </AnimatePresence>
   );

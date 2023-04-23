@@ -1,14 +1,11 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDay } from "@/app/store/DayContext";
+import { useEventsQuery } from "../hooks/useEventsQuery";
 import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";
-import { useEventsQuery } from "../hooks/useEventsQuery";
-
-const AnimatedDaysContent = motion(DaysContent);
 
 export default function Calendar() {
   const { isSuccess } = useEventsQuery();

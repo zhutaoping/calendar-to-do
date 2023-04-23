@@ -1,20 +1,12 @@
-/* eslint-disable react/display-name */
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
-import { getEvents } from "../../putAway/eventFetcher";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
-import {
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useEventsQuery } from "../hooks/useEventsQuery";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
@@ -22,8 +14,6 @@ interface Props {
   setHeight: React.Dispatch<React.SetStateAction<number>>;
   direction: number;
 }
-
-// type Ref = HTMLDivElement;
 
 const DaysContent = ({
   handleDaysOfNextMonth,
@@ -50,7 +40,7 @@ const DaysContent = ({
     };
   }, [setHeight]);
 
-  const { data } = useQuery(["events"], getEvents);
+  const { data } = useEventsQuery();
   const events = data as Event[];
 
   const daysInMonth = getDaysInMonth(dayInView);

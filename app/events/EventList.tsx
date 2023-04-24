@@ -8,7 +8,8 @@ import { useEventQuery } from "../hooks/useEventQuery";
 import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
 import { useCompleteEventMutation } from "../hooks/useCompleteEventMutation";
 import { useEditEventMutation } from "../hooks/useEditEventMutation";
-import Modal from "./formModal/Modal";
+import useEventModalStore from "../hooks/useEventModalStore";
+import EventModal from "./modals/EventModal";
 import EventItem from "./EventItem";
 
 const AnimatedEventItem = motion(EventItem);
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export default function Events({ activeDate }: Props) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const eventModal = useEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
@@ -31,7 +32,7 @@ export default function Events({ activeDate }: Props) {
   const editEventMutation = useEditEventMutation({
     onSuccess: () => {
       queryClient.invalidateQueries(["events"]);
-      setModalOpen(false);
+      eventModal.onClose();
     },
   });
 
@@ -68,7 +69,7 @@ export default function Events({ activeDate }: Props) {
   function handleClick(evt: Event) {
     setEventId(evt.id);
     if (evt.completed) return;
-    setModalOpen(true);
+    eventModal.onOpen();
   }
 
   useEffect(() => {
@@ -101,15 +102,13 @@ export default function Events({ activeDate }: Props) {
 
   return (
     <>
-      {modalOpen && (
-        <Modal
-          id={eventId}
-          event={event}
-          heading="Edit Event"
-          handleMutateEvent={handleEdit}
-          handleClose={() => setModalOpen(false)}
-        />
-      )}
+      {/* Opened by Modal.tsx */}
+      <EventModal
+        id={eventId}
+        event={event}
+        header="Edit Event"
+        handleMutateEvent={handleEdit}
+      />
       <motion.ul
         layout="position"
         initial={{ minHeight: 0 }}

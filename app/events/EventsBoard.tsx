@@ -4,6 +4,7 @@ import { useDay } from "@/app/store/DayContext";
 import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function EventsBoard() {
   const { activeDate } = useDay();
@@ -35,7 +36,17 @@ export default function EventsBoard() {
       <div className="flex flex-col">
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
-          <span className="text-sm text-textOnCalendar">{dayOfMonth}</span>
+          <div className="text-sm text-white">
+            <Link href="/signup">
+              <span>Sign Up / </span>
+            </Link>
+            <Link href="/login">
+              <span>Log In</span>
+            </Link>
+            <span className="ml-4 text-sm text-textOnCalendar">
+              {dayOfMonth}
+            </span>
+          </div>
         </div>
         {smallScreen && <AddEvent />}
         <EventList activeDate={activeDate} />

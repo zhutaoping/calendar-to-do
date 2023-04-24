@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-
 import { useDay } from "../../store/DayContext";
 import { Event } from "@prisma/client";
 
@@ -24,18 +21,10 @@ type Inputs = z.infer<typeof schema>;
 type Props = {
   id?: string;
   event?: Event;
-  heading: string;
   handleMutateEvent: (data: Partial<Event>) => void;
-  handleClose: () => void;
 };
 
-export default function Form({
-  id,
-  event,
-  heading,
-  handleMutateEvent,
-  handleClose,
-}: Props) {
+export default function EventForm({ id, event, handleMutateEvent }: Props) {
   const { activeDate } = useDay();
 
   const {
@@ -72,17 +61,6 @@ export default function Form({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg text-white">{heading}</h2>
-        <motion.button
-          type="button"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleClose}
-        >
-          <AiOutlineCloseCircle color="white" size={20} />
-        </motion.button>
-      </div>
       <textarea
         placeholder="New Event"
         {...register("title")}

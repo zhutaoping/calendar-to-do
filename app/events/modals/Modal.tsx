@@ -1,23 +1,40 @@
+import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
 import Backdrop from "./Backdrop";
-import Form from "./Form";
 
 interface Props {
   id?: string;
   event?: Event;
-  heading: string;
-  handleClose: () => void;
-  handleMutateEvent: (data: Partial<Event>) => void;
+  header: string;
+  handleMutateEvent?: (data: Partial<Event>) => void;
+  onSubmit?: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  body: JSX.Element;
+  footer?: JSX.Element;
+  disabled?: boolean;
 }
 
 export default function Modal({
   id,
   event,
-  heading,
-  handleClose,
+  header,
   handleMutateEvent,
+  isOpen,
+  onClose,
+  onSubmit,
+  body,
+  footer,
+  disabled,
 }: Props) {
+  if (!isOpen) return null;
+
+  function handleClose() {
+    if (disabled) return;
+    onClose();
+  }
+
   return (
     <Backdrop onClick={handleClose}>
       <motion.div
@@ -28,12 +45,19 @@ export default function Modal({
         animate="visible"
         exit="exit"
       >
-        <Form
-          event={event}
-          heading={heading}
-          handleMutateEvent={handleMutateEvent}
-          handleClose={handleClose}
-        />
+        {/* Header */}
+        <div className="flex w-full items-center justify-between">
+          <h2 className="text-lg text-white">{header}</h2>
+          <motion.button
+            type="button"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onClose()}
+          >
+            <AiOutlineClose color="white" size={20} />
+          </motion.button>
+        </div>
+        {body}
       </motion.div>
     </Backdrop>
   );

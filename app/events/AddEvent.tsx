@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
-import Modal from "./formModal/Modal";
+import Modal from "./modals/EventModal";
 import { useCreateEventMutation } from "../hooks/useCreateEventMutation";
 import MyTooltip from "../components/MyTooltip";
 
@@ -39,7 +39,7 @@ export default function AddEvent({}: Props) {
       >
         {modalOpen && (
           <Modal
-            heading="Add New Event"
+            header="Add New Event"
             handleMutateEvent={handleAddEvent}
             handleClose={() => setModalOpen(false)}
           />

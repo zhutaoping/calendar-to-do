@@ -54,86 +54,87 @@ export default function Calendar() {
   };
 
   return (
-    <div className="calendar relative col-span-1 mx-auto my-4 min-w-max rounded-md bg-white p-6 md:my-4 md:ml-4 md:min-w-fit">
-      <div className="text-textOnPrimary flex items-center justify-between">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleChevronLeft}
-          className="focus-ring rounded p-2 text-sm hover:bg-borderDays"
-        >
-          <FaChevronLeft />
-        </motion.button>
-        <div className="relative flex h-5 w-1/2 items-center justify-center">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.h4
-              key={`${dayInView.getFullYear}-${dayInView.getMonth()}`}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-              className="absolute text-sm"
-            >
-              {yearAndMonth}
-            </motion.h4>
-          </AnimatePresence>
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleChevronRight}
-          className="focus-ring p-2 text-sm hover:bg-borderDays"
-        >
-          <FaChevronRight className="text-sm" />
-        </motion.button>
-      </div>
-      <div className="grid grid-cols-7 px-4 md:py-3">
-        {days.map((day) => (
-          <div key={day} className="day text-center text-xs">
-            {day}
+    <div className="wrapper relative m-4 mx-auto h-fit w-fit md:ml-4">
+      <div className="calendar col-span-1 overflow-hidden rounded-md bg-white p-6 md:my-0 md:ml-0 md:min-w-fit">
+        <div className="text-textOnPrimary flex items-center justify-between">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleChevronLeft}
+            className="focus-ring rounded p-2 text-sm hover:bg-borderDays"
+          >
+            <FaChevronLeft />
+          </motion.button>
+          <div className="relative flex h-5 w-1/2 items-center justify-center">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.h4
+                key={`${dayInView.getFullYear}-${dayInView.getMonth()}`}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
+                className="absolute text-sm"
+              >
+                {yearAndMonth}
+              </motion.h4>
+            </AnimatePresence>
           </div>
-        ))}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleChevronRight}
+            className="focus-ring p-2 text-sm hover:bg-borderDays"
+          >
+            <FaChevronRight className="text-sm" />
+          </motion.button>
+        </div>
+        <div className="grid grid-cols-7 px-4 md:py-3">
+          {days.map((day) => (
+            <div key={day} className="day text-center text-xs">
+              {day}
+            </div>
+          ))}
+        </div>
+        {isSuccess && (
+          <div ref={containerRef} className="slide-container relative">
+            <DaysContent
+              direction={direction}
+              handleChevronLeft={handleChevronLeft}
+              handleChevronRight={handleChevronRight}
+              setHeight={setHeight}
+              handleDaysOfNextMonth={handleDaysOfNextMonth}
+              handleDaysOfLastMonth={handleDaysOfLastMonth}
+            />
+          </div>
+        )}
+        <footer className="flex justify-between gap-24 px-4 md:pt-4 lg:gap-36">
+          <div className="relative z-50 flex-1 text-xs">
+            <SelectMonth setDirection={setDirection} />
+          </div>
+          <motion.button
+            className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            onClick={() => {
+              const d = new Date();
+              if (dayInView < d) {
+                setDirection(1);
+              } else {
+                setDirection(-1);
+              }
+              setDayInView(d);
+              setActiveDate(d);
+            }}
+          >
+            Today
+          </motion.button>
+        </footer>
       </div>
-      {isSuccess && (
-        <div ref={containerRef} className="slide-container relative">
-          <DaysContent
-            direction={direction}
-            handleChevronLeft={handleChevronLeft}
-            handleChevronRight={handleChevronRight}
-            setHeight={setHeight}
-            handleDaysOfNextMonth={handleDaysOfNextMonth}
-            handleDaysOfLastMonth={handleDaysOfLastMonth}
-          />
-        </div>
-      )}
-      <footer className="flex justify-between gap-24 px-4 md:pt-4 lg:gap-36">
-        <div className="relative z-50 flex-1 text-xs">
-          <SelectMonth setDirection={setDirection} />
-        </div>
-        <motion.button
-          className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
-          whileHover={{ scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          onClick={() => {
-            const today = new Date();
-            console.log("🚀 ~ Calendar ~ today:", today);
-            if (dayInView < new Date()) {
-              setDirection(1);
-            } else {
-              setDirection(-1);
-            }
-            setDayInView(today);
-            setActiveDate(new Date());
-          }}
-        >
-          Today
-        </motion.button>
-      </footer>
     </div>
   );
 }

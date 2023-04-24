@@ -37,7 +37,7 @@ const DaysContent = ({
     window.addEventListener("resize", () => {
       const divRef = document.getElementById("divRef");
       const size = divRef?.getBoundingClientRect();
-      setHeight(size?.height ?? 300);
+      setHeight(size?.height ?? 0);
     });
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -149,7 +149,7 @@ export default DaysContent;
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 50 : -50,
+      x: direction > 0 ? 200 : -200,
       opacity: 0,
       blur: 10,
     };
@@ -163,7 +163,7 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 50 : -50,
+      x: direction < 0 ? 200 : -200,
       opacity: 0,
     };
   },

@@ -37,10 +37,10 @@ export default function EventsBoard() {
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="text-sm text-white">
-            <Link href="/signup">
+            <Link href="/">
               <span>Sign Up / </span>
             </Link>
-            <Link href="/login">
+            <Link href="/">
               <span>Log In</span>
             </Link>
             <span className="ml-4 text-sm text-textOnCalendar">

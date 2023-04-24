@@ -1,34 +1,29 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
-import { Event } from "@prisma/client";
 import Backdrop from "./Backdrop";
 
 interface Props {
-  id?: string;
-  event?: Event;
   header: string;
-  handleMutateEvent?: (data: Partial<Event>) => void;
-  onSubmit?: () => void;
   isOpen: boolean;
   onClose: () => void;
   body: JSX.Element;
   footer?: JSX.Element;
   disabled?: boolean;
+  onSubmit?: () => void;
 }
 
 export default function Modal({
-  id,
-  event,
   header,
-  handleMutateEvent,
   isOpen,
   onClose,
-  onSubmit,
   body,
   footer,
   disabled,
+  onSubmit,
 }: Props) {
   if (!isOpen) return null;
+
+  console.log("header", header);
 
   function handleClose() {
     if (disabled) return;

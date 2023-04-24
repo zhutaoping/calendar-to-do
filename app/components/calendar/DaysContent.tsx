@@ -6,7 +6,7 @@ import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEventsQuery } from "../../hooks/useEventsQuery";
+import { useEventsQuery } from "../../hooks/events/useEventsQuery";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;

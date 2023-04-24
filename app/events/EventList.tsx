@@ -3,14 +3,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { Event } from "@prisma/client";
 // Hooks
-import { useEventsQuery } from "../hooks/useEventsQuery";
-import { useEventQuery } from "../hooks/useEventQuery";
-import { useDeleteEventMutation } from "../hooks/useDeleteEventMutation";
-import { useCompleteEventMutation } from "../hooks/useCompleteEventMutation";
-import { useEditEventMutation } from "../hooks/useEditEventMutation";
-import useEventModalStore from "../hooks/useEventModalStore";
-import EventModal from "./modals/EventModal";
+import { useEventsQuery } from "../hooks/events/useEventsQuery";
+import { useEventQuery } from "../hooks/events/useEventQuery";
+import { useDeleteEventMutation } from "../hooks/events/useDeleteEventMutation";
+import { useCompleteEventMutation } from "../hooks/events/useCompleteEventMutation";
+import { useEditEventMutation } from "../hooks/events/useEditEventMutation";
+import useEventModalStore from "../hooks/modals/useUpdateEventModalStore";
+import EventModal from "./modals/UpdateEventModal";
 import EventItem from "./EventItem";
+import EventForm from "./forms/EventForm";
+import Modal from "./modals/Modal";
+import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
+import UpdateEventModal from "./modals/UpdateEventModal";
 
 const AnimatedEventItem = motion(EventItem);
 
@@ -19,7 +23,7 @@ interface Props {
 }
 
 export default function Events({ activeDate }: Props) {
-  const eventModal = useEventModalStore();
+  const updateEventModal = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
@@ -32,7 +36,7 @@ export default function Events({ activeDate }: Props) {
   const editEventMutation = useEditEventMutation({
     onSuccess: () => {
       queryClient.invalidateQueries(["events"]);
-      eventModal.onClose();
+      updateEventModal.onClose();
     },
   });
 
@@ -67,9 +71,10 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleClick(evt: Event) {
+    console.log("HHHEEERRREEE");
     setEventId(evt.id);
     if (evt.completed) return;
-    eventModal.onOpen();
+    updateEventModal.onOpen();
   }
 
   useEffect(() => {
@@ -102,8 +107,7 @@ export default function Events({ activeDate }: Props) {
 
   return (
     <>
-      {/* Opened by Modal.tsx */}
-      <EventModal
+      <UpdateEventModal
         id={eventId}
         event={event}
         header="Edit Event"

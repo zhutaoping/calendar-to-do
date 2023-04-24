@@ -2,22 +2,26 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
-import Modal from "./modals/EventModal";
-import { useCreateEventMutation } from "../hooks/useCreateEventMutation";
+import { useCreateEventMutation } from "../hooks/events/useCreateEventMutation";
 import MyTooltip from "../components/MyTooltip";
+import EventForm from "./forms/EventForm";
+import Modal from "./modals/Modal";
+import EventModal from "./modals/UpdateEventModal";
+import useEventModalStore from "../hooks/modals/useUpdateEventModalStore";
+import AddEventModal from "./modals/AddEventModal";
+import useAddEventModalStore from "../hooks/modals/useAddEventModalStore";
 
 type Props = {};
 
 export default function AddEvent({}: Props) {
-  const [modalOpen, setModalOpen] = useState(false);
-
   const createEventMutation = useCreateEventMutation();
+  const { isOpen, onOpen, onClose } = useAddEventModalStore();
 
   const handleAddEvent = (data: Partial<Event>) => {
     createEventMutation.mutate({
       ...data,
     });
-    setModalOpen(false);
+    onClose();
   };
 
   return (
@@ -25,7 +29,7 @@ export default function AddEvent({}: Props) {
       <MyTooltip title="Add New Event">
         <motion.button
           className="focus-ring m-4 mx-auto flex focus-visible:ring-0 "
-          onClick={() => setModalOpen(true)}
+          onClick={() => onOpen()}
           type="button"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -33,17 +37,11 @@ export default function AddEvent({}: Props) {
           <BsPlusCircle color="white" size={30} />
         </motion.button>
       </MyTooltip>
-      <AnimatePresence
-        initial={false}
-        // onExitComplete={() => setModalOpen(false)}
-      >
-        {modalOpen && (
-          <Modal
-            header="Add New Event"
-            handleMutateEvent={handleAddEvent}
-            handleClose={() => setModalOpen(false)}
-          />
-        )}
+      <AnimatePresence initial={false}>
+        <AddEventModal
+          header="Add New Event"
+          handleMutateEvent={handleAddEvent}
+        />
       </AnimatePresence>
     </div>
   );

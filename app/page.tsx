@@ -1,4 +1,4 @@
-import Calendar from "./calendar/Calendar";
+import Calendar from "./components/calendar/Calendar";
 import EventsBoard from "./events/EventsBoard";
 
 export default function Home() {

@@ -8,11 +8,7 @@ import { useEventQuery } from "../hooks/events/useEventQuery";
 import { useDeleteEventMutation } from "../hooks/events/useDeleteEventMutation";
 import { useCompleteEventMutation } from "../hooks/events/useCompleteEventMutation";
 import { useEditEventMutation } from "../hooks/events/useEditEventMutation";
-import useEventModalStore from "../hooks/modals/useUpdateEventModalStore";
-import EventModal from "./modals/UpdateEventModal";
 import EventItem from "./EventItem";
-import EventForm from "./forms/EventForm";
-import Modal from "./modals/Modal";
 import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
 import UpdateEventModal from "./modals/UpdateEventModal";
 
@@ -23,7 +19,7 @@ interface Props {
 }
 
 export default function Events({ activeDate }: Props) {
-  const updateEventModal = useUpdateEventModalStore();
+  const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
@@ -36,7 +32,7 @@ export default function Events({ activeDate }: Props) {
   const editEventMutation = useEditEventMutation({
     onSuccess: () => {
       queryClient.invalidateQueries(["events"]);
-      updateEventModal.onClose();
+      onClose();
     },
   });
 
@@ -71,10 +67,9 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleClick(evt: Event) {
-    console.log("HHHEEERRREEE");
     setEventId(evt.id);
     if (evt.completed) return;
-    updateEventModal.onOpen();
+    onOpen();
   }
 
   useEffect(() => {

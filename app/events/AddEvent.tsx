@@ -1,15 +1,11 @@
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Event } from "@prisma/client";
 import { BsPlusCircle } from "react-icons/bs";
 import { useCreateEventMutation } from "../hooks/events/useCreateEventMutation";
 import MyTooltip from "../components/MyTooltip";
-import EventForm from "./forms/EventForm";
-import Modal from "./modals/Modal";
-import EventModal from "./modals/UpdateEventModal";
-import useEventModalStore from "../hooks/modals/useUpdateEventModalStore";
-import AddEventModal from "./modals/AddEventModal";
+
 import useAddEventModalStore from "../hooks/modals/useAddEventModalStore";
+import AddEventModal from "./modals/AddEventModal";
 
 type Props = {};
 

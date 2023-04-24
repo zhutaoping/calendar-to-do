@@ -23,8 +23,6 @@ export default function Modal({
 }: Props) {
   if (!isOpen) return null;
 
-  console.log("header", header);
-
   function handleClose() {
     if (disabled) return;
     onClose();

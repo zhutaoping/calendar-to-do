@@ -198,6 +198,19 @@
       transform: translateX(80%);
     }
   }
+
+  .auth-input {
+    @apply w-full rounded-md px-5 py-2 text-sm text-black outline-none
+  }
+  .auth-input + span {
+    @apply flex items-center px-3 text-gray-300
+  }
+  .auth-input:focus ~ * {
+    @apply text-violet-600;
+  }
+  .auth-input[type=password] ~ span:hover * {
+    @apply text-violet-600 cursor-pointer select-none
+  }
 }
 
 @layer utilities {

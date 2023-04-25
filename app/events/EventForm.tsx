@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDay } from "../store/DayContext";
 import { Event } from "@prisma/client";
+import SubmitButton from "../components/SubmitButton";
 
 const schema = z
   .object({
@@ -95,12 +96,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
       {errors.endTime && (
         <p className="text-sm text-red-500">{errors.endTime.message}</p>
       )}
-      <button
-        className="focus-ring mt-6 box-border w-full rounded-md bg-primary px-4 py-2 text-center text-base text-white hover:animate-pulse focus-visible:ring-0"
-        type="submit"
-      >
-        Submit
-      </button>
+      <SubmitButton />
     </form>
   );
 }

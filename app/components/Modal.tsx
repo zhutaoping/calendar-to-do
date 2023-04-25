@@ -35,8 +35,8 @@ export default function Modal({
     <Backdrop onClick={handleClose} fullPage={fullPage}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800  ${
-          fullPage ? "px-8 py-6" : "p-4"
+        className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10  ${
+          fullPage ? "px-12 py-10" : "p-4"
         }`}
         variants={dropIn}
         initial="hidden"
@@ -45,7 +45,7 @@ export default function Modal({
       >
         {/* Header */}
         <div className="flex w-full items-center justify-between">
-          <h2 className="text-lg text-white">{header}</h2>
+          <h2 className="text-lg font-bold text-white">{header}</h2>
           <motion.button
             type="button"
             whileHover={{ scale: 1.1 }}

@@ -41,14 +41,14 @@ export default function EventsBoard() {
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="text-sm text-white">
-            <Link href="/" onClick={() => signUpModal.onOpen()}>
+            <button type="button" onClick={() => signUpModal.onOpen()}>
               <span>Sign Up / </span>
-            </Link>
-            <Link href="/" onClick={() => loginModal.onOpen()}>
-              <span className="text-primary underline underline-offset-2">
+            </button>
+            <button type="button" onClick={() => loginModal.onOpen()}>
+              <span className="text-violet-300 underline underline-offset-2">
                 Log In
               </span>
-            </Link>
+            </button>
             <span className="ml-4 text-sm text-textOnCalendar">
               {dayOfMonth}
             </span>

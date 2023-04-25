@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
+import Input from "../components/Input";
+import SubmitButton from "../components/SubmitButton";
+import AuthModalFooter from "../components/calendar/AuthModalFooter";
 
 const schema = z
   .object({
@@ -30,6 +34,11 @@ export default function LoginForm({ id, user }: Props) {
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
 
+  const [show, setShow] = useState({
+    password: false,
+    cPassword: false,
+  });
+
   const {
     register,
     handleSubmit,
@@ -44,63 +53,33 @@ export default function LoginForm({ id, user }: Props) {
   };
 
   return (
-    <div className="">
-      <form className="" onSubmit={handleSubmit(onSubmit)}>
-        {/* Email */}
-        <label
-          className="mt-4 inline-block text-base text-white"
-          htmlFor="email"
-        >
-          email
-        </label>
-        <input
+    <div>
+      <form className="my-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <Input
           id="email"
-          type="email"
-          placeholder="john@adc.com"
-          className="focus-ring bg-bgInput w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
-          {...register("email")}
+          placeholder="email"
+          register={register}
+          errors={errors}
+          type="text"
+          icon="HiAtSymbol"
         />
-        {errors.email && (
-          <span className="text-xs text-red-500">{errors.email.message}</span>
-        )}
-        {/* Password */}
-        <label
-          className="mt-4 inline-block text-base text-white"
-          htmlFor="password"
-        >
-          password
-        </label>
-        <input
+        <Input
           id="password"
-          className="focus-ring bg-bgInput w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
-          type="password"
-          {...register("password")}
+          placeholder="password"
+          register={register}
+          errors={errors}
+          setShow={setShow}
+          type={show.password ? "text" : "password"}
+          icon="HiFingerPrint"
         />
-        {errors.password && (
-          <span className="text-xs text-red-500">
-            {errors.password.message}
-          </span>
-        )}
-
-        <button
-          className="focus-ring mt-6 box-border w-full rounded-md bg-primary px-4 py-2 text-center text-base text-white hover:animate-pulse focus-visible:ring-0"
-          type="submit"
-        >
-          Submit
-        </button>
+        <SubmitButton />
       </form>
-      <p className="mt-1 text-center text-xs text-gray-400">
-        Don&apos;t have an account?{" "}
-        <button
-          onClick={() => {
-            loginModal.onClose();
-            signUpModal.onOpen();
-          }}
-          type="button"
-        >
-          <span className="text-purple-500">Sign Up</span>
-        </button>
-      </p>
+      <AuthModalFooter
+        loginModal={loginModal}
+        signUpModal={signUpModal}
+        ask="First time being here?"
+        action="Sign Up"
+      />
     </div>
   );
 }

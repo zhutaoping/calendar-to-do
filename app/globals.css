@@ -198,20 +198,6 @@
       transform: translateX(80%);
     }
   }
-
-  /* parent selector */
-  /* .flip-cards:has(.chip:hover) {
-     transform: rotateY(180deg);
-   } */
-
-   /* .modal {
-    container-type: block-size;
-   }
-   @container (min-width: 300px) {
-    .modal {
-      padding: 32px;
-    }
-   } */
 }
 
 @layer utilities {

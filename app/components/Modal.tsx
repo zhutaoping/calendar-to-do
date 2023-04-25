@@ -33,10 +33,10 @@ export default function Modal({
   console.log("fullPage: ", fullPage);
 
   return (
-    <Backdrop onClick={handleClose}>
+    <Backdrop onClick={handleClose} fullPage={fullPage}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className={`modal mx-4 flex max-w-sm flex-col items-center justify-center rounded-lg bg-slate-800  ${
+        className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800  ${
           fullPage ? "px-8 py-6" : "p-4"
         }`}
         variants={dropIn}

@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 interface Props {
   children: React.ReactNode;
   onClick: () => void;
+  fullPage?: boolean;
 }
 
-export default function Backdrop({ children, onClick }: Props) {
+export default function Backdrop({ children, onClick, fullPage }: Props) {
   return (
     <motion.div
       // drag
@@ -15,7 +16,9 @@ export default function Backdrop({ children, onClick }: Props) {
       //   right: 0,
       //   bottom: 0,
       // }}
-      className="backdrop absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center md:items-center "
+      className={`backdrop absolute left-0 top-0 z-50 flex h-full w-full ${
+        fullPage ? "items-center" : "items-start"
+      } justify-center md:items-center`}
       onClick={onClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

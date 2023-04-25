@@ -1,6 +1,5 @@
 import Calendar from "./components/calendar/Calendar";
 import EventsBoard from "./events/EventsBoard";
-import useSignUpModalStore from "./hooks/modals/useSignUpModalStore";
 import SignUpModal from "./users/SignUpModal";
 
 export default function Home() {

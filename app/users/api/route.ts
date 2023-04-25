@@ -6,7 +6,7 @@ export async function GET() {
   const users = await prisma.user.findMany();
 
   if (!users) {
-    // return NextResponse.redirect("/login");
+    return NextResponse.redirect("/login");
   }
 
   console.log("users", users);

@@ -49,7 +49,8 @@ export default function EventsBoard() {
                 Log In
               </span>
             </button>
-            <span className="ml-4 text-sm text-textOnCalendar">
+
+            <span className="ml-4 hidden text-sm text-textOnCalendar lg:inline-block">
               {dayOfMonth}
             </span>
           </div>

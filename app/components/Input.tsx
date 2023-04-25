@@ -28,7 +28,7 @@ export default function Input({
         <input
           type={type}
           placeholder={placeholder}
-          className="auth-input"
+          className="auth-input w-full rounded-md px-5 py-2 text-sm text-black outline-none"
           {...register(id)}
         />
         {icon === "HiOutlineUser" && (
@@ -65,6 +65,8 @@ export default function Input({
 
 const Span = ({ children }: { children: React.ReactNode }) => {
   return (
-    <span className="flex items-center px-3 text-gray-300">{children}</span>
+    <span className="flex cursor-pointer select-none items-center px-3 text-gray-300">
+      {children}
+    </span>
   );
 };

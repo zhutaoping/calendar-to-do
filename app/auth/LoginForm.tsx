@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
+import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +9,8 @@ import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/calendar/AuthModalFooter";
+
+import { signIn, signOut } from "next-auth/react";
 
 const schema = z
   .object({
@@ -52,6 +55,12 @@ export default function LoginForm({ id, user }: Props) {
     console.log(data);
   };
 
+  function handleGitHubSignIn() {
+    signIn("github", {
+      callbackUrl: "http://localhost:3000",
+    });
+  }
+
   return (
     <div>
       <form className="my-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +83,16 @@ export default function LoginForm({ id, user }: Props) {
         />
         <SubmitButton />
       </form>
+      <div className="text-sm">
+        <button
+          type="button"
+          className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200"
+          onClick={handleGitHubSignIn}
+        >
+          Sign In with GitHub{" "}
+          <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}
+        </button>
+      </div>
       <AuthModalFooter
         loginModal={loginModal}
         signUpModal={signUpModal}

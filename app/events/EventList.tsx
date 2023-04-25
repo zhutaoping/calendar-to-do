@@ -111,12 +111,10 @@ export default function Events({ activeDate }: Props) {
       <motion.ul
         layout="position"
         initial={{ minHeight: 0 }}
-        animate={{
-          minHeight: "480px",
-        }}
+        animate={{ minHeight: "480px" }}
         className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {sortedEvents.map((evt) => (
             <AnimatedEventItem
               layout="position"

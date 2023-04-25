@@ -1,5 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
+import LocalBackdrop from "./Backdrop";
 import Backdrop from "./Backdrop";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   footer?: JSX.Element;
   disabled?: boolean;
   onSubmit?: () => void;
+  fullPage?: boolean;
 }
 
 export default function Modal({
@@ -20,6 +22,7 @@ export default function Modal({
   footer,
   disabled,
   onSubmit,
+  fullPage,
 }: Props) {
   if (!isOpen) return null;
 
@@ -27,12 +30,15 @@ export default function Modal({
     if (disabled) return;
     onClose();
   }
+  console.log("fullPage: ", fullPage);
 
   return (
     <Backdrop onClick={handleClose}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="modal flex flex-col items-center justify-center rounded-lg bg-slate-800 p-4"
+        className={`modal mx-4 flex max-w-sm flex-col items-center justify-center rounded-lg bg-slate-800  ${
+          fullPage ? "px-8 py-6" : "p-4"
+        }`}
         variants={dropIn}
         initial="hidden"
         animate="visible"

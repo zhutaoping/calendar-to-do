@@ -1,6 +1,6 @@
 import { Event } from "@prisma/client";
-import EventForm from "../forms/EventForm";
-import Modal from "./Modal";
+import EventForm from "../EventForm";
+import Modal from "../../components/Modal";
 import useAddEventModalStore from "@/app/hooks/modals/useAddEventModalStore";
 
 interface Props {

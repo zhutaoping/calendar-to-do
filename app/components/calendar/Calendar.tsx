@@ -113,7 +113,7 @@ export default function Calendar() {
           </div>
         )}
         <footer className="flex justify-between gap-24 px-4 md:pt-4 lg:gap-36">
-          <div className="relative z-50 flex-1 text-xs">
+          <div className="relative z-10 flex-1 text-xs">
             <SelectMonth setDirection={setDirection} />
           </div>
           <motion.button

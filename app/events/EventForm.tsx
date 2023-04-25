@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDay } from "../../store/DayContext";
+import { useDay } from "../store/DayContext";
 import { Event } from "@prisma/client";
 
 const schema = z

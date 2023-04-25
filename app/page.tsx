@@ -1,11 +1,12 @@
 import Calendar from "./components/calendar/Calendar";
 import EventsBoard from "./events/EventsBoard";
-import SignUpModal from "./events/modals/SignUpModal";
+import useSignUpModalStore from "./hooks/modals/useSignUpModalStore";
+import SignUpModal from "./users/SignUpModal";
 
 export default function Home() {
   return (
     <main className="blackboard grid min-h-screen gap-5 bg-bgContainer md:min-h-min md:grid-cols-2 md:rounded-md">
-      {false && <SignUpModal />}
+      <SignUpModal header="Sign Up" />
       <Calendar />
       <EventsBoard />
     </main>

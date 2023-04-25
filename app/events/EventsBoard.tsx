@@ -5,9 +5,11 @@ import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 
 export default function EventsBoard() {
   const { activeDate } = useDay();
+  const { isOpen, onClose, onOpen } = useSignUpModalStore();
   const [smallScreen, setSmallScreen] = useState(false);
 
   const dayOfWeek = activeDate
@@ -37,7 +39,7 @@ export default function EventsBoard() {
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="text-sm text-white">
-            <Link href="/">
+            <Link href="/" onClick={() => onOpen()}>
               <span>Sign Up / </span>
             </Link>
             <Link href="/">

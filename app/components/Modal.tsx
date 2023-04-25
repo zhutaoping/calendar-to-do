@@ -30,7 +30,6 @@ export default function Modal({
     if (disabled) return;
     onClose();
   }
-  console.log("fullPage: ", fullPage);
 
   return (
     <Backdrop onClick={handleClose} fullPage={fullPage}>

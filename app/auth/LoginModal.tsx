@@ -1,5 +1,24 @@
-interface Props {}
+"use client";
+import Modal from "@/app/components/Modal";
+import LoginForm from "./LoginForm";
+import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 
-export default function LoginModal({}: Props) {
-  return <div>LoginModal</div>;
+interface Props {
+  header: string;
+}
+
+export default function SignUpModal({ header }: Props) {
+  const { isOpen, onClose } = useLoginModalStore();
+
+  const bodyContent = <LoginForm />;
+
+  return (
+    <Modal
+      header={header}
+      isOpen={isOpen}
+      onClose={onClose}
+      body={bodyContent}
+      fullPage={true}
+    />
+  );
 }

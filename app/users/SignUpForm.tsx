@@ -3,6 +3,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
 import Link from "next/link";
+import useLoginModalStore from "../hooks/modals/useLoginModalStore";
+import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 
 const schema = z
   .object({
@@ -26,6 +28,9 @@ type Props = {
 };
 
 export default function SignUpForm({ id, user }: Props) {
+  const loginModal = useLoginModalStore();
+  const signUpModal = useSignUpModalStore();
+
   const {
     register,
     handleSubmit,
@@ -120,9 +125,15 @@ export default function SignUpForm({ id, user }: Props) {
       </form>
       <p className="mt-1 text-center text-xs text-gray-400">
         Have an account?{" "}
-        <Link href="/">
-          <span className="text-indigo-500">Log In</span>
-        </Link>
+        <button
+          type="button"
+          onClick={() => {
+            loginModal.onOpen();
+            signUpModal.onClose();
+          }}
+        >
+          <span className="text-purple-500">Log In</span>
+        </button>
       </p>
     </div>
   );

@@ -6,10 +6,12 @@ import AddEvent from "./AddEvent";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
+import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 
 export default function EventsBoard() {
   const { activeDate } = useDay();
-  const { isOpen, onClose, onOpen } = useSignUpModalStore();
+  const signUpModal = useSignUpModalStore();
+  const loginModal = useLoginModalStore();
   const [smallScreen, setSmallScreen] = useState(false);
 
   const dayOfWeek = activeDate
@@ -39,11 +41,13 @@ export default function EventsBoard() {
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="text-sm text-white">
-            <Link href="/" onClick={() => onOpen()}>
+            <Link href="/" onClick={() => signUpModal.onOpen()}>
               <span>Sign Up / </span>
             </Link>
-            <Link href="/">
-              <span>Log In</span>
+            <Link href="/" onClick={() => loginModal.onOpen()}>
+              <span className="text-primary underline underline-offset-2">
+                Log In
+              </span>
             </Link>
             <span className="ml-4 text-sm text-textOnCalendar">
               {dayOfMonth}

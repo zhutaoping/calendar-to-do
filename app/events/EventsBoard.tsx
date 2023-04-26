@@ -7,14 +7,24 @@ import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
+import { Event } from "@prisma/client";
 
 export default function EventsBoard() {
+  const [localEvents, setLocalEvents] = useState<Event[]>([]);
+  const [smallScreen, setSmallScreen] = useState(false);
+
   const { activeDate } = useDay();
   const signUpModal = useSignUpModalStore();
   const loginModal = useLoginModalStore();
-  const [smallScreen, setSmallScreen] = useState(false);
 
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    const localEvents = localStorage.getItem("events");
+    if (localEvents) {
+      setLocalEvents(JSON.parse(localEvents));
+    }
+  }, []);
 
   const dayOfWeek = activeDate
     ? format(activeDate, "EEEE")
@@ -86,10 +96,18 @@ export default function EventsBoard() {
             </span>
           </div>
         </div>
-        {smallScreen && <AddEvent />}
-        <EventList activeDate={activeDate} />
+        {smallScreen && (
+          <AddEvent localEvents={localEvents} setLocalEvents={setLocalEvents} />
+        )}
+        <EventList
+          activeDate={activeDate}
+          localEvents={localEvents}
+          setLocalEvents={setLocalEvents}
+        />
       </div>
-      {!smallScreen && <AddEvent />}
+      {!smallScreen && (
+        <AddEvent localEvents={localEvents} setLocalEvents={setLocalEvents} />
+      )}
     </div>
   );
 }

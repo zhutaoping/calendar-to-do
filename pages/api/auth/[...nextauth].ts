@@ -32,11 +32,31 @@ export const authOptions: AuthOptions = {
         if (!isValid) {
           throw new Error("Invalid password");
         }
-
         return user;
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
+  // session: {
+  //   strategy: "jwt", // "database" is the default
+  // },
+  // jwt: {
+  //   secret: process.env.NEXTAUTH_JWT_SECRET, // for signing tokens
+  // },
+  // secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

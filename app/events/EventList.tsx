@@ -12,16 +12,26 @@ import EventItem from "./EventItem";
 import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
 import UpdateEventModal from "./modals/UpdateEventModal";
 
+import { useSession } from "next-auth/react";
+
 const AnimatedEventItem = motion(EventItem);
 
 interface Props {
   activeDate: Date | null;
+  localEvents: Event[];
+  setLocalEvents: React.Dispatch<React.SetStateAction<Event[]>>;
 }
 
-export default function Events({ activeDate }: Props) {
+export default function Events({
+  activeDate,
+  localEvents,
+  setLocalEvents,
+}: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
+
+  const { data: session, status } = useSession();
 
   const queryClient = useQueryClient();
 
@@ -39,6 +49,23 @@ export default function Events({ activeDate }: Props) {
   function handleCompleted(e: MouseEvent, evt: Event) {
     e.stopPropagation();
 
+    if (status === "unauthenticated") {
+      const updatedEvents = localEvents.map((event) => {
+        if (event.id === evt.id) {
+          return {
+            ...event,
+            completed: !event.completed,
+          };
+        }
+        return event;
+      });
+      onClose();
+      setLocalEvents(updatedEvents);
+      localStorage.setItem("events", JSON.stringify(updatedEvents));
+
+      return;
+    }
+
     setEventId(evt.id);
 
     completeEventMutation.mutate({
@@ -49,6 +76,23 @@ export default function Events({ activeDate }: Props) {
 
   function handleEdit(data: Partial<Event>) {
     const { title, startTime, endTime, id } = data;
+
+    if (status === "unauthenticated") {
+      const updatedEvents = localEvents.map((event) => {
+        if (event.id === id) {
+          return {
+            ...event,
+            ...data,
+          };
+        }
+        return event;
+      });
+      setLocalEvents(updatedEvents as Event[]);
+      localStorage.setItem("events", JSON.stringify(updatedEvents));
+
+      onClose();
+      return;
+    }
 
     if (id) setEventId(id);
 
@@ -62,6 +106,14 @@ export default function Events({ activeDate }: Props) {
 
   function handleDelete(e: MouseEvent, id: string) {
     e.stopPropagation();
+
+    if (status === "unauthenticated") {
+      const filteredEvents = localEvents.filter((evt) => evt.id !== id);
+      setLocalEvents(filteredEvents);
+      localStorage.setItem("events", JSON.stringify(filteredEvents));
+
+      return;
+    }
 
     deleteEventMutation.mutate(id);
   }
@@ -100,11 +152,22 @@ export default function Events({ activeDate }: Props) {
     return <pre>{JSON.stringify(error)}</pre>;
   }
 
+  let showEvents = sortedEvents;
+  if (status === "unauthenticated") {
+    showEvents = localEvents;
+  }
+
+  let whichEvent = event;
+  if (status === "unauthenticated") {
+    whichEvent = localEvents.find((evt) => evt.id === eventId);
+    console.log("whichEvent", whichEvent);
+  }
+
   return (
     <>
       <UpdateEventModal
         id={eventId}
-        event={event}
+        event={whichEvent}
         header="Edit Event"
         handleMutateEvent={handleEdit}
       />
@@ -115,7 +178,7 @@ export default function Events({ activeDate }: Props) {
         className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
         <AnimatePresence mode="popLayout">
-          {sortedEvents.map((evt) => (
+          {showEvents.map((evt) => (
             <AnimatedEventItem
               layout="position"
               evt={evt}

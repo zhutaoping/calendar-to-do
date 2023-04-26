@@ -1,8 +1,23 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import { Event } from "@prisma/client";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-export async function GET() {
+export async function GET(req: Request, res: Response) {
+  const session = await getServerSession(authOptions);
+  console.log("🚀 ~ Page ~ session:", session);
+
+  if (session?.user.id) {
+    const allEvents = await prisma.event.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
+    return NextResponse.json(allEvents);
+  }
+
   const allEvents = await prisma.event.findMany();
 
   return NextResponse.json(allEvents);
@@ -10,6 +25,7 @@ export async function GET() {
 
 export async function POST(req: Request, res: Response) {
   const event: Event = await req.json();
+  console.log("🚀 ~ POST ~ event:", event);
 
   const newEvent = await prisma.event.create({
     data: {

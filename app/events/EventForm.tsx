@@ -54,6 +54,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
 
     handleMutateEvent({
       ...data,
+      id,
       year,
       month,
       day,

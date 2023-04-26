@@ -10,32 +10,27 @@ import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/calendar/AuthModalFooter";
 
-import { signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const schema = z
-  .object({
-    name: z.string().min(1, { message: "Name cannot be empty." }),
-    email: z.string().email({ message: "Invalid email." }),
-    password: z
-      .string()
-      .min(7, { message: "Password must be at least 7 chars." }),
-    cPassword: z.string(),
-  })
-  .refine((data) => data.password === data.cPassword, {
-    message: "Passwords do not match.",
-    path: ["cPassword"],
-  });
+const schema = z.object({
+  email: z.string().email({ message: "Invalid email." }),
+  password: z
+    .string()
+    .min(7, { message: "Password must be at least 7 chars." }),
+});
 
 type Inputs = z.infer<typeof schema>;
 
-type Props = {
-  id?: string;
-  user?: User;
-};
+// type Props = {
+//   id?: string;
+//   user?: User;
+// };
 
-export default function LoginForm({ id, user }: Props) {
+export default function LoginForm() {
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
+
+  const { data: session, status } = useSession();
 
   const [show, setShow] = useState({
     password: false,
@@ -52,10 +47,22 @@ export default function LoginForm({ id, user }: Props) {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    const loginStatus = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+      callbackUrl: `${window.location.origin}`,
+    });
+
+    // From [...nextauth].ts: throw new Error("No user found");
+    if (loginStatus?.error) {
+      console.log("🚀 ~ loginStatus.error:", loginStatus.error);
+    }
+
+    loginModal.onClose();
   };
 
-  function handleGitHubSignIn() {
+  async function handleGitHubSignIn() {
     signIn("github", {
       callbackUrl: "http://localhost:3000",
     });
@@ -63,7 +70,7 @@ export default function LoginForm({ id, user }: Props) {
 
   return (
     <div>
-      <form className="my-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="loginForm my-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="email"
           placeholder="email"
@@ -81,17 +88,21 @@ export default function LoginForm({ id, user }: Props) {
           type={show.password ? "text" : "password"}
           icon="HiFingerPrint"
         />
-        <SubmitButton />
+        {/* <SubmitButton /> */}
+        <button className="focus-ring mt-6 box-border w-full rounded-md bg-primary px-4 py-2 text-center text-sm text-white hover:animate-pulse focus-visible:ring-0">
+          Submit
+        </button>
       </form>
       <div className="text-sm">
-        <button
+        {/* <button
           type="button"
-          className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200"
+          className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:bg-opacity-50"
           onClick={handleGitHubSignIn}
+          disabled={status === "loading"}
         >
           Sign In with GitHub{" "}
           <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}
-        </button>
+        </button> */}
       </div>
       <AuthModalFooter
         loginModal={loginModal}

@@ -24,7 +24,7 @@ export default function Input({
 }: Props) {
   return (
     <>
-      <div className="mb-4 flex rounded-md bg-slate-50">
+      <div className="mt-4 flex rounded-md bg-slate-50">
         <input
           type={type}
           placeholder={placeholder}
@@ -57,7 +57,7 @@ export default function Input({
         )}
       </div>
       {errors[id] && (
-        <p className="-mt-2 text-xs text-red-500">{errors[id].message}</p>
+        <p className="mt-1 text-xs text-red-500">{errors[id].message}</p>
       )}
     </>
   );

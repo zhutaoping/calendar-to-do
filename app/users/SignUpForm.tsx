@@ -8,6 +8,8 @@ import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/calendar/AuthModalFooter";
+import { signIn } from "next-auth/react";
+import { useCreateUserMutation } from "../hooks/users/useCreateUserMutation";
 
 const schema = z
   .object({
@@ -48,8 +50,29 @@ export default function SignUpForm({ id, user }: Props) {
     resolver: zodResolver(schema),
   });
 
+  const createUserMutation = useCreateUserMutation();
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    const response = await fetch("/users/api", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    // message is the response from NextResponse.json
+    const { message } = await response.json();
+    console.log("🚀 ~ SubmitHandler<Inputs>= ~ message:", message);
+
+    signUpModal.onClose();
+
+    await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+      callbackUrl: `${window.location.origin}`,
+    });
   };
 
   return (

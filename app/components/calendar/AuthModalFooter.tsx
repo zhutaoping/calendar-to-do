@@ -17,8 +17,13 @@ export default function AuthModalFooter({
       <button
         type="button"
         onClick={() => {
-          loginModal.onOpen();
-          signUpModal.onClose();
+          if (action === "Log In") {
+            loginModal.onOpen();
+            signUpModal.onClose();
+          } else {
+            signUpModal.onOpen();
+            loginModal.onClose();
+          }
         }}
       >
         <span className="text-violet-300">{action}</span>

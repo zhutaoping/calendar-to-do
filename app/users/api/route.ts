@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
 
 export async function GET() {
@@ -15,18 +16,44 @@ export async function GET() {
 }
 
 export async function POST(req: Request, res: Response) {
-  const user: User = await req.json();
+  const { name, email, password } = await req.json();
+
+  if (req.method !== "POST") {
+    return NextResponse.json({
+      message: "Invalid request method",
+    });
+  }
+
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingUser) {
+    return NextResponse.json({
+      message: "User already exists",
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await prisma.user.create({
     data: {
-      ...user,
+      name,
+      email,
+      password: hashedPassword,
     },
   });
 
-  return NextResponse.json({
-    message: "User created successfully",
-    data: newUser,
-  });
+  if (newUser) {
+    return NextResponse.json({
+      message: "User created successfully",
+      data: newUser,
+    });
+  } else {
+    return NextResponse.json({
+      message: "Invalid user data",
+    });
+  }
 }
 
 export async function DELETE(req: Request, res: Response) {

@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcrypt";
-import { User } from "@prisma/client";
 
 export async function GET() {
   const users = await prisma.user.findMany();
 
   if (!users) {
-    return NextResponse.redirect("/login");
+    return NextResponse.json({
+      message: "No users found",
+    });
   }
-
-  console.log("users", users);
-
   return NextResponse.json(users);
 }
 
@@ -30,7 +28,8 @@ export async function POST(req: Request, res: Response) {
 
   if (existingUser) {
     return NextResponse.json({
-      message: "User already exists",
+      status: 409, // Conflict
+      error: "User already exists",
     });
   }
 

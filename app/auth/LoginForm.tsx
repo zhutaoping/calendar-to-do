@@ -21,12 +21,9 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-// type Props = {
-//   id?: string;
-//   user?: User;
-// };
-
 export default function LoginForm() {
+  const [error, setError] = useState("");
+
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
 
@@ -47,7 +44,7 @@ export default function LoginForm() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const loginStatus = await signIn("credentials", {
+    const result = await signIn("credentials", {
       redirect: false,
       email: data.email,
       password: data.password,
@@ -55,11 +52,14 @@ export default function LoginForm() {
     });
 
     // From [...nextauth].ts: throw new Error("No user found");
-    if (loginStatus?.error) {
-      console.log("🚀 ~ loginStatus.error:", loginStatus.error);
+    if (result?.error) {
+      console.log("🚀 ~ loginStatus.error:", result?.error);
+      setError(result.error);
     }
 
-    loginModal.onClose();
+    if (result?.ok) {
+      loginModal.onClose();
+    }
   };
 
   async function handleGitHubSignIn() {
@@ -70,6 +70,9 @@ export default function LoginForm() {
 
   return (
     <div>
+      {error && (
+        <div className="mb-4 text-sm text-red-500">{error.toString()}</div>
+      )}
       <form className="loginForm my-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="email"
@@ -88,13 +91,10 @@ export default function LoginForm() {
           type={show.password ? "text" : "password"}
           icon="HiFingerPrint"
         />
-        {/* <SubmitButton /> */}
-        <button className="focus-ring mt-6 box-border w-full rounded-md bg-primary px-4 py-2 text-center text-sm text-white hover:animate-pulse focus-visible:ring-0">
-          Submit
-        </button>
+        <SubmitButton />
       </form>
       <div className="text-sm">
-        {/* <button
+        <button
           type="button"
           className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:bg-opacity-50"
           onClick={handleGitHubSignIn}
@@ -102,7 +102,7 @@ export default function LoginForm() {
         >
           Sign In with GitHub{" "}
           <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}
-        </button> */}
+        </button>
       </div>
       <AuthModalFooter
         loginModal={loginModal}

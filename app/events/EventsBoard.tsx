@@ -38,7 +38,6 @@ export default function EventsBoard() {
   }
 
   let sessionContent;
-
   if (status === "loading") {
     sessionContent = <div>Hang on there...</div>;
   }
@@ -50,7 +49,10 @@ export default function EventsBoard() {
         </span>
         <button
           type="button"
-          onClick={() => signOut()}
+          onClick={(e) => {
+            e.preventDefault();
+            signOut();
+          }}
           className="text-sm text-white"
         >
           Log Out

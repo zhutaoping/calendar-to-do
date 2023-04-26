@@ -2,13 +2,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+
 import { User } from "@prisma/client";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/calendar/AuthModalFooter";
-import { signIn } from "next-auth/react";
 import { useCreateUserMutation } from "../hooks/users/useCreateUserMutation";
 
 const schema = z
@@ -36,6 +37,8 @@ export default function SignUpForm({ id, user }: Props) {
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
 
+  const [error, setError] = useState("");
+
   const [show, setShow] = useState({
     password: false,
     cPassword: false,
@@ -50,33 +53,38 @@ export default function SignUpForm({ id, user }: Props) {
     resolver: zodResolver(schema),
   });
 
-  const createUserMutation = useCreateUserMutation();
+  const createUserMutation = useCreateUserMutation({
+    onSuccess: (data, variables, context) => {
+      // data: response from the server
+      // variables: variables passed into the mutate(name, email, password)
+
+      setError("");
+      if (data.error) {
+        setError(data.error);
+      }
+      if (!data.error) {
+        signUpModal.onClose();
+
+        signIn("credentials", {
+          redirect: false,
+          email: variables.email,
+          password: variables.password,
+          callbackUrl: `${window.location.origin}`,
+        });
+      }
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const response = await fetch("/users/api", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-    // message is the response from NextResponse.json
-    const { message } = await response.json();
-    console.log("🚀 ~ SubmitHandler<Inputs>= ~ message:", message);
-
-    signUpModal.onClose();
-
-    await signIn("credentials", {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-      callbackUrl: `${window.location.origin}`,
+    createUserMutation.mutate({
+      ...data,
     });
   };
 
   return (
     <div>
+      {error && <div className="text-red-500">{error}</div>}
+
       <form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="name"

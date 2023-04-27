@@ -47,7 +47,7 @@ export default function SelectMonth({ setDirection }: Props) {
   };
 
   return (
-    <Listbox value={selectedMonth} onChange={(m) => handleChange(m)}>
+    <Listbox value={thisMonth} onChange={(m) => handleChange(m)}>
       <Listbox.Button
         className="focus-ring relative w-full cursor-pointer !rounded-lg bg-white py-2 pl-3 text-left shadow-md"
         onClick={() => setIsOpen(!isOpen)}

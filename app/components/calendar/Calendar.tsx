@@ -93,6 +93,7 @@ export default function Calendar() {
             <FaChevronRight className="text-sm" />
           </motion.button>
         </div>
+        {/* days */}
         <div className="grid grid-cols-7 px-4 md:py-3">
           {days.map((day) => (
             <div key={day} className="day text-center text-xs">

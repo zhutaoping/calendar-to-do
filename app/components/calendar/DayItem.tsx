@@ -5,7 +5,7 @@ import { checkHasEvent } from "@/app/utils/checkHasEvent";
 
 interface Props {
   i: number;
-  events: Event[];
+  events: Event[] | null;
 }
 
 const DayItem = ({ i, events }: Props) => {

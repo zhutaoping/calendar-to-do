@@ -1,16 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useDay } from "@/app/store/DayContext";
 import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
-import { Event } from "@prisma/client";
 
 export default function EventsBoard() {
-  const [localEvents, setLocalEvents] = useState<Event[]>([]);
   const [smallScreen, setSmallScreen] = useState(false);
 
   const { activeDate } = useDay();
@@ -19,12 +17,12 @@ export default function EventsBoard() {
 
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    const localEvents = localStorage.getItem("events");
-    if (localEvents) {
-      setLocalEvents(JSON.parse(localEvents));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const localEvents = localStorage.getItem("events");
+  //   if (localEvents) {
+  //     setLocalEvents(JSON.parse(localEvents));
+  //   }
+  // }, []);
 
   const dayOfWeek = activeDate
     ? format(activeDate, "EEEE")
@@ -96,18 +94,10 @@ export default function EventsBoard() {
             </span> */}
           </div>
         </div>
-        {smallScreen && (
-          <AddEvent localEvents={localEvents} setLocalEvents={setLocalEvents} />
-        )}
-        <EventList
-          activeDate={activeDate}
-          localEvents={localEvents}
-          setLocalEvents={setLocalEvents}
-        />
+        {smallScreen && <AddEvent />}
+        <EventList activeDate={activeDate} />
       </div>
-      {!smallScreen && (
-        <AddEvent localEvents={localEvents} setLocalEvents={setLocalEvents} />
-      )}
+      {!smallScreen && <AddEvent />}
     </div>
   );
 }

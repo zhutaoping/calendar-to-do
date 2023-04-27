@@ -3,7 +3,7 @@ import { Event } from "@prisma/client";
 export const checkHasEvent = (
   i: number,
   dayInView: Date,
-  events: Event[],
+  events: Event[] | null,
   plus: number // which month to check
 ) => {
   const filteredEvents = events?.filter(

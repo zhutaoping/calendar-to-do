@@ -5,9 +5,26 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export async function GET(req: Request, res: Response) {
-  const allEvents = await prisma.event.findMany();
+  const session = await getServerSession(authOptions);
+  console.log("🚀 ~ GET ~ session:", session);
 
-  return NextResponse.json(allEvents);
+  let events: Event[] = [];
+  if (!session) {
+    events = await prisma.event.findMany({
+      where: {
+        userId: null,
+      },
+    });
+  } else {
+    events = await prisma.event.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+  }
+  console.log("🚀 ~ GET ~ events:", events);
+
+  return NextResponse.json(events);
 }
 
 export async function POST(req: Request, res: Response) {
@@ -20,10 +37,7 @@ export async function POST(req: Request, res: Response) {
     },
   });
 
-  return NextResponse.json({
-    message: "Event created successfully",
-    data: newEvent,
-  });
+  return NextResponse.json(newEvent);
 }
 
 export async function PATCH(req: Request, res: Response) {

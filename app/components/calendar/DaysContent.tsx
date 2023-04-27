@@ -8,6 +8,8 @@ import DayItem from "./DayItem";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEventsQuery } from "../../hooks/events/useEventsQuery";
 
+import { useSession } from "next-auth/react";
+
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
   handleDaysOfLastMonth: (day: number) => void;
@@ -28,6 +30,8 @@ const DaysContent = ({
   const { dayInView, setActiveDate } = useDay();
   const divRef = useRef<HTMLDivElement>(null);
 
+  const { status } = useSession();
+
   useEffect(() => {
     const size = divRef.current?.getBoundingClientRect();
     setHeight(size?.height ?? 0);
@@ -45,7 +49,7 @@ const DaysContent = ({
   }, [setHeight]);
 
   const { data } = useEventsQuery();
-  const events = data as Event[];
+  const events = data as Event[] | null;
 
   const daysInMonth = getDaysInMonth(dayInView);
   const startDay = startOfMonth(dayInView).getDay();

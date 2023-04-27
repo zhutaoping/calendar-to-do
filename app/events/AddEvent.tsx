@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPlusCircle } from "react-icons/bs";
@@ -8,28 +7,15 @@ import MyTooltip from "../components/MyTooltip";
 import useAddEventModalStore from "../hooks/modals/useAddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 
-type Props = {
-  localEvents: Event[];
-  setLocalEvents: React.Dispatch<React.SetStateAction<Event[]>>;
-};
-
-export default function AddEvent({ localEvents, setLocalEvents }: Props) {
+export default function AddEvent() {
   const createEventMutation = useCreateEventMutation();
-  const { isOpen, onOpen, onClose } = useAddEventModalStore();
+  const { onOpen, onClose } = useAddEventModalStore();
 
   const { data: session, status } = useSession();
-  const userId = session?.user?.id;
+  const userId = session?.user?.id || null;
 
   const handleAddEvent = (data: Partial<Event>) => {
     const newData = { ...data, id: Date.now().toString() };
-
-    if (status === "unauthenticated") {
-      setLocalEvents([...localEvents, newData as Event]);
-      localStorage.setItem("events", JSON.stringify(localEvents));
-      onClose();
-      return;
-    }
-    console.log("Authenticated");
     createEventMutation.mutate({
       ...data,
       userId,

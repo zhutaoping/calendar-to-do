@@ -1,6 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 import { Event } from "@prisma/client";
 // Hooks
 import { useEventsQuery } from "../hooks/events/useEventsQuery";
@@ -12,30 +13,21 @@ import EventItem from "./EventItem";
 import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
 import UpdateEventModal from "./modals/UpdateEventModal";
 
-import { useSession } from "next-auth/react";
-
 const AnimatedEventItem = motion(EventItem);
 
 interface Props {
   activeDate: Date | null;
-  localEvents: Event[];
-  setLocalEvents: React.Dispatch<React.SetStateAction<Event[]>>;
 }
 
-export default function Events({
-  activeDate,
-  localEvents,
-  setLocalEvents,
-}: Props) {
-  const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
+export default function Events({ activeDate }: Props) {
+  const { onClose, onOpen } = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
 
-  const { data: session, status } = useSession();
-
   const queryClient = useQueryClient();
+  const { status } = useSession();
 
-  const { data: events, isLoading, isError, error } = useEventsQuery();
+  const { data: events, isLoading, isError, error, refetch } = useEventsQuery();
   const { data: event } = useEventQuery(eventId);
   const deleteEventMutation = useDeleteEventMutation();
   const completeEventMutation = useCompleteEventMutation();
@@ -46,26 +38,12 @@ export default function Events({
     },
   });
 
+  useEffect(() => {
+    refetch();
+  }, [status, refetch]);
+
   function handleCompleted(e: MouseEvent, evt: Event) {
     e.stopPropagation();
-
-    if (status === "unauthenticated") {
-      const updatedEvents = localEvents.map((event) => {
-        if (event.id === evt.id) {
-          return {
-            ...event,
-            completed: !event.completed,
-          };
-        }
-        return event;
-      });
-      onClose();
-      setLocalEvents(updatedEvents);
-      localStorage.setItem("events", JSON.stringify(updatedEvents));
-
-      return;
-    }
-
     setEventId(evt.id);
 
     completeEventMutation.mutate({
@@ -76,24 +54,6 @@ export default function Events({
 
   function handleEdit(data: Partial<Event>) {
     const { title, startTime, endTime, id } = data;
-
-    if (status === "unauthenticated") {
-      const updatedEvents = localEvents.map((event) => {
-        if (event.id === id) {
-          return {
-            ...event,
-            ...data,
-          };
-        }
-        return event;
-      });
-      setEventId("");
-      setLocalEvents(updatedEvents as Event[]);
-      localStorage.setItem("events", JSON.stringify(updatedEvents));
-
-      onClose();
-      return;
-    }
 
     if (id) setEventId(id);
 
@@ -107,15 +67,6 @@ export default function Events({
 
   function handleDelete(e: MouseEvent, id: string) {
     e.stopPropagation();
-
-    if (status === "unauthenticated") {
-      const filteredEvents = localEvents.filter((evt) => evt.id !== id);
-      setLocalEvents(filteredEvents);
-      localStorage.setItem("events", JSON.stringify(filteredEvents));
-
-      return;
-    }
-
     deleteEventMutation.mutate(id);
   }
 
@@ -153,21 +104,11 @@ export default function Events({
     return <pre>{JSON.stringify(error)}</pre>;
   }
 
-  let showEvents = sortedEvents;
-  if (status === "unauthenticated") {
-    showEvents = localEvents;
-  }
-
-  let whichEvent = event;
-  if (status === "unauthenticated") {
-    whichEvent = localEvents.find((evt) => evt.id === eventId);
-  }
-
   return (
     <>
       <UpdateEventModal
         id={eventId}
-        event={whichEvent}
+        event={event}
         header="Edit Event"
         handleMutateEvent={handleEdit}
       />
@@ -178,7 +119,7 @@ export default function Events({
         className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
       >
         <AnimatePresence mode="popLayout">
-          {showEvents.map((evt) => (
+          {sortedEvents.map((evt) => (
             <AnimatedEventItem
               layout="position"
               evt={evt}

@@ -11,7 +11,7 @@ export const useEventsQuery = () => {
     queryKey: ["events"],
     queryFn: fetchEvents,
     onSuccess: (data) => {
-      // console.log("🚀 ~ useEventsQuery ~ data:", data);
+      console.log("🚀 ~ useEventsQuery ~ data:", data);
     },
   });
 };

@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import GithubProvider from "next-auth/providers/github";
 import CredentialProvider from "next-auth/providers/credentials";
@@ -53,8 +53,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log("session: ", session);
-      console.log("token: ", token);
       if (token) {
         return {
           ...session,

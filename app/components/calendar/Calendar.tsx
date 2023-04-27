@@ -54,8 +54,8 @@ export default function Calendar() {
   };
 
   return (
-    <div className="wrapper relative m-4 mx-auto h-fit w-fit md:ml-4">
-      <div className="calendar col-span-1 overflow-hidden rounded-md bg-white p-6 md:my-0 md:ml-0 md:min-w-fit">
+    <div className="wrapper relative m-4 mx-auto h-fit w-fit transition-transform md:ml-4">
+      <div className="calendar col-span-1 min-h-[360px] overflow-hidden rounded-md bg-white p-6 md:my-0 md:ml-0 md:min-h-[550px] md:min-w-fit">
         <div className="text-textOnPrimary flex items-center justify-between">
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -100,40 +100,46 @@ export default function Calendar() {
             </div>
           ))}
         </div>
+        <div ref={containerRef} className="slide-container relative">
+          <DaysContent
+            direction={direction}
+            handleChevronLeft={handleChevronLeft}
+            handleChevronRight={handleChevronRight}
+            setHeight={setHeight}
+            handleDaysOfNextMonth={handleDaysOfNextMonth}
+            handleDaysOfLastMonth={handleDaysOfLastMonth}
+          />
+        </div>
         {isSuccess && (
-          <div ref={containerRef} className="slide-container relative">
-            <DaysContent
-              direction={direction}
-              handleChevronLeft={handleChevronLeft}
-              handleChevronRight={handleChevronRight}
-              setHeight={setHeight}
-              handleDaysOfNextMonth={handleDaysOfNextMonth}
-              handleDaysOfLastMonth={handleDaysOfLastMonth}
-            />
-          </div>
-        )}
-        <footer className="flex justify-between gap-24 px-4 md:pt-4 lg:gap-36">
-          <div className="relative z-10 flex-1 text-xs">
-            <SelectMonth setDirection={setDirection} />
-          </div>
-          <motion.button
-            className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            onClick={() => {
-              const d = new Date();
-              if (dayInView < d) {
-                setDirection(1);
-              } else {
-                setDirection(-1);
-              }
-              setDayInView(d);
-              setActiveDate(d);
-            }}
+          <motion.footer
+            layout
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex justify-between gap-24 px-4 md:pt-4 lg:gap-36"
           >
-            Today
-          </motion.button>
-        </footer>
+            <div className="relative z-10 flex-1 text-xs">
+              <SelectMonth setDirection={setDirection} />
+            </div>
+            <motion.button
+              className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              onClick={() => {
+                const d = new Date();
+                if (dayInView < d) {
+                  setDirection(1);
+                } else {
+                  setDirection(-1);
+                }
+                setDayInView(d);
+                setActiveDate(d);
+              }}
+            >
+              Today
+            </motion.button>
+          </motion.footer>
+        )}
       </div>
     </div>
   );

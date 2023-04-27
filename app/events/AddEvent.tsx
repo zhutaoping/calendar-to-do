@@ -41,7 +41,7 @@ export default function AddEvent({ localEvents, setLocalEvents }: Props) {
     <div>
       <MyTooltip title="Add New Event">
         <motion.button
-          className="focus-ring m-4 mx-auto flex focus-visible:ring-0 "
+          className="focus-ring mx-auto my-6 flex focus-visible:ring-0 md:absolute md:bottom-4 md:left-1/2 md:my-0 md:-translate-x-1/2 md:-translate-y-1/2 md:transform"
           onClick={() => onOpen()}
           type="button"
           whileHover={{ scale: 1.1 }}

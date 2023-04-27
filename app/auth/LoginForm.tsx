@@ -26,7 +26,7 @@ export default function LoginForm() {
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const [show, setShow] = useState({
     password: false,

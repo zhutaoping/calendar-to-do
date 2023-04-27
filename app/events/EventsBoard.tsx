@@ -91,9 +91,9 @@ export default function EventsBoard() {
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="space-x-4 text-sm text-white">
             {sessionContent}
-            <span className="ml-4 hidden text-sm text-textOnCalendar lg:inline-block">
+            {/* <span className="ml-4 hidden text-sm text-textOnCalendar lg:inline-block">
               {dayOfMonth}
-            </span>
+            </span> */}
           </div>
         </div>
         {smallScreen && (

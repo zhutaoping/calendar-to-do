@@ -8,7 +8,7 @@ import { prisma } from "@/app/lib/prisma";
 import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -30,11 +30,12 @@ export const authOptions: NextAuthOptions = {
 
         const isValid = await bcrypt.compare(
           credentials!.password,
-          user.password
+          user.password!
         );
         if (!isValid) {
           throw new Error("Invalid password");
         }
+        console.log("Authenticated user: ", user);
         return user;
       },
     }),
@@ -52,6 +53,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log("session: ", session);
+      console.log("token: ", token);
       if (token) {
         return {
           ...session,
@@ -64,9 +67,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // session: {
-  //   strategy: "jwt", // "database" is the default
-  // },
+  session: {
+    strategy: "jwt", // "database" is the default
+  },
   // jwt: {
   //   secret: process.env.NEXTAUTH_JWT_SECRET, // for signing tokens
   // },

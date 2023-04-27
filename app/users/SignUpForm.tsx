@@ -54,24 +54,21 @@ export default function SignUpForm({ id, user }: Props) {
   });
 
   const createUserMutation = useCreateUserMutation({
-    onSuccess: (data, variables, context) => {
-      // data: response from the server
-      // variables: variables passed into the mutate(name, email, password)
+    // data: response from the server
+    // variables: variables passed into the mutate(name, email, password)
 
+    onSuccess: async (data, variables, context) => {
       setError("");
-      if (data.error) {
-        setError(data.error);
-      }
-      if (!data.error) {
-        signUpModal.onClose();
-
-        signIn("credentials", {
-          redirect: false,
-          email: variables.email,
-          password: variables.password,
-          callbackUrl: `${window.location.origin}`,
-        });
-      }
+      await signIn("credentials", {
+        redirect: false,
+        email: variables.email,
+        password: variables.password,
+        callbackUrl: "/",
+      });
+      signUpModal.onClose();
+    },
+    onError: async (error, variables, context) => {
+      setError(error.response.data.message);
     },
   });
 

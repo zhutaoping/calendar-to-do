@@ -2,7 +2,7 @@ import { Event } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchEvents() {
-  const res = await fetch("/events/api", {});
+  const res = await fetch("/events/api");
   return res.json(); // from NextResponse
 }
 

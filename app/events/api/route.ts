@@ -5,19 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export async function GET(req: Request, res: Response) {
-  const session = await getServerSession(authOptions);
-  console.log("🚀 ~ Page ~ session:", session);
-
-  if (session?.user.id) {
-    const allEvents = await prisma.event.findMany({
-      where: {
-        userId: session.user.id,
-      },
-    });
-
-    return NextResponse.json(allEvents);
-  }
-
   const allEvents = await prisma.event.findMany();
 
   return NextResponse.json(allEvents);

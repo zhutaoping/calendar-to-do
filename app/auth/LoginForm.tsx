@@ -1,16 +1,15 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "@prisma/client";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/calendar/AuthModalFooter";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),

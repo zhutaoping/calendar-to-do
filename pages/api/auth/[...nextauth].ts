@@ -1,11 +1,14 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 import GithubProvider from "next-auth/providers/github";
 import CredentialProvider from "next-auth/providers/credentials";
 
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/app/lib/prisma";
+import { User } from "@prisma/client";
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
+  // adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -38,14 +41,25 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     jwt({ token, user }) {
+      // means user just logged in)
       if (user) {
-        token.id = user.id;
+        const u = user as unknown as User;
+        return {
+          ...token,
+          id: u.id,
+        };
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id;
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: token.id,
+          },
+        };
       }
       return session;
     },

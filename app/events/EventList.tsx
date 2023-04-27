@@ -87,6 +87,7 @@ export default function Events({
         }
         return event;
       });
+      setEventId("");
       setLocalEvents(updatedEvents as Event[]);
       localStorage.setItem("events", JSON.stringify(updatedEvents));
 
@@ -160,7 +161,6 @@ export default function Events({
   let whichEvent = event;
   if (status === "unauthenticated") {
     whichEvent = localEvents.find((evt) => evt.id === eventId);
-    console.log("whichEvent", whichEvent);
   }
 
   return (

@@ -205,7 +205,6 @@
   .auth-input[type=password] ~ span:hover * {
     @apply text-violet-600
   }
-
 }
 
 @layer utilities {

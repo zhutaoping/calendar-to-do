@@ -32,17 +32,17 @@ export default function Input({
           {...register(id)}
         />
         {icon === "HiOutlineUser" && (
-          <Span>
+          <span className="flex select-none items-center px-3 text-gray-300">
             <HiOutlineUser size={16} />
-          </Span>
+          </span>
         )}
         {icon === "HiAtSymbol" && (
-          <Span>
+          <span className="flex select-none items-center px-3 text-gray-300">
             <HiAtSymbol size={16} />
-          </Span>
+          </span>
         )}
         {icon === "HiFingerPrint" && (
-          <Span>
+          <span className="flex cursor-pointer select-none items-center px-3 text-gray-300">
             <HiFingerPrint
               size={16}
               onClick={() => {
@@ -53,7 +53,7 @@ export default function Input({
                 }
               }}
             />
-          </Span>
+          </span>
         )}
       </div>
       {errors[id] && (
@@ -62,11 +62,3 @@ export default function Input({
     </>
   );
 }
-
-const Span = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <span className="flex cursor-pointer select-none items-center px-3 text-gray-300">
-      {children}
-    </span>
-  );
-};

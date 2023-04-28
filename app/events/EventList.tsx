@@ -117,7 +117,7 @@ export default function Events({ activeDate }: Props) {
   } else if (isXL) {
     variants = {
       initial: { minHeight: 0 },
-      animate: { minHeight: "480px" },
+      animate: { minHeight: "475px" },
     };
   } else {
     variants = {
@@ -139,7 +139,7 @@ export default function Events({ activeDate }: Props) {
         variants={variants}
         initial="initial"
         animate="animate"
-        className={`event-list mb-8 overflow-auto text-textOnCalendar md:mb-0 md:max-h-[380px] lg:max-h-[420px] xl:max-h-[480px]`}
+        className={`event-list mb-8 overflow-y-auto text-textOnCalendar md:mb-0 md:max-h-[380px] lg:max-h-[420px] xl:max-h-[475px]`}
       >
         <AnimatePresence mode="popLayout">
           {sortedEvents.map((evt) => (

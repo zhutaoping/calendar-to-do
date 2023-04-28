@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -7,7 +7,7 @@ import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
-import AuthModalFooter from "../components/calendar/AuthModalFooter";
+import AuthModalFooter from "../components/AuthModalFooter";
 
 import { useSession, signIn } from "next-auth/react";
 
@@ -22,6 +22,7 @@ type Inputs = z.infer<typeof schema>;
 
 export default function LoginForm() {
   const [error, setError] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
@@ -33,10 +34,15 @@ export default function LoginForm() {
     cPassword: false,
   });
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      setDisabled(false);
+    }
+  }, [status]);
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
@@ -62,7 +68,9 @@ export default function LoginForm() {
   };
 
   async function handleGitHubSignIn() {
-    signIn("github", {
+    setDisabled(true);
+
+    await signIn("github", {
       callbackUrl: "http://localhost:3000",
     });
   }
@@ -95,9 +103,9 @@ export default function LoginForm() {
       <div className="text-sm">
         <button
           type="button"
-          className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200 disabled:cursor-not-allowed disabled:bg-opacity-50"
+          className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200 disabled:animate-pulse disabled:cursor-wait"
           onClick={handleGitHubSignIn}
-          disabled={status === "loading"}
+          disabled={disabled}
         >
           Sign In with GitHub{" "}
           <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}

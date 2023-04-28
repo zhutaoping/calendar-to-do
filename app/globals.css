@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@radix-ui/colors/blackA.css';
-@import '@radix-ui/colors/violet.css';
+@import "@radix-ui/colors/blackA.css";
+@import "@radix-ui/colors/violet.css";
 
 @layer base {
   :root {
@@ -18,7 +18,7 @@
     --gradient: linear-gradient(10deg, #ffaa0072, #ff6a00);
   }
 
-  [contentEditable='true'] {
+  [contentEditable="true"] {
     caret-color: red;
     outline: none;
   }
@@ -62,7 +62,8 @@
     }
   }
 
-  .day {
+  .day,
+  .square {
     /* font-size: clamp(2.5rem, 2.0536rem + 1.7857vw, 3.75rem); // 60px */
     height: clamp(2.5rem, 2.0536rem + 1.7857vw, 3.75rem);
     aspect-ratio: 1/1;
@@ -87,11 +88,11 @@
     height: 100%;
     box-shadow: 0 0 10px 2px var(--primary);
   }
-  
+
   .day.hasEvent {
     position: relative;
   }
-  
+
   .day.hasEvent::after {
     content: "";
     position: absolute;
@@ -101,14 +102,15 @@
     bottom: 5px;
     background-color: var(--primary);
   }
-  
+
   .day.active.hasEvent::after {
     background-color: white;
   }
+
   .day:not(.other-day):hover.hasEvent::after {
     background-color: white;
   }
-  
+
   /* prevent double border; */
   .calendar .days .day {
     cursor: pointer;
@@ -154,12 +156,12 @@
   .flip-cards {
     position: relative;
     height: 100%;
-    width: 100%;  
-    transition: transform 0.3s ;
+    width: 100%;
+    transition: transform 0.3s;
     transform-style: preserve-3d;
   }
 
-  .check-card, 
+  .check-card,
   .delete-card {
     position: absolute;
     inset: 0;
@@ -182,18 +184,20 @@
     background-color: var(--primary);
     animation: pulse 2s ease-in-out infinite;
   }
+
   .chip.red {
     animation: pulse 1s ease-in-out infinite;
   }
 
-  
   @keyframes pulse {
     0% {
       transform: translateX(80%);
     }
+
     50% {
       transform: translateX(0%);
     }
+
     100% {
       transform: translateX(80%);
     }
@@ -202,13 +206,14 @@
   .auth-input:focus ~ * {
     @apply text-violet-600;
   }
-  .auth-input[type=password] ~ span:hover * {
-    @apply text-violet-600
+
+  .auth-input[type="password"] ~ span:hover * {
+    @apply text-violet-600;
   }
 }
 
 @layer utilities {
   .focus-ring {
-    @apply focus:outline-none focus-visible:border-orange-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 rounded;
+    @apply rounded focus:outline-none focus-visible:border-orange-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300;
   }
 }

@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Event } from "@prisma/client";
 
 async function addEvent(event: Partial<Event>) {
-  console.log("🚀 ~ addEvent ~ event", event);
   const res = await fetch("/events/api", {
     method: "POST",
     headers: {

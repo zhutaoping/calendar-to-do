@@ -1,7 +1,8 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
+import { motion } from "framer-motion";
 
 interface Props {
   i: number;
@@ -11,6 +12,8 @@ interface Props {
 const DayItem = ({ i, events }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const [isToday, setIsToday] = useState(false);
+
+  const daysGridRef = useRef<HTMLDivElement>(null);
 
   const { activeDate, setActiveDate, dayInView } = useDay();
 
@@ -51,15 +54,31 @@ const DayItem = ({ i, events }: Props) => {
   const hasEvent = checkHasEvent(i, dayInView, events, 1);
 
   return (
-    <div
+    <motion.div
+      data-grid
+      ref={daysGridRef}
       onClick={handleClick}
       className={`day text-primary hover:bg-primary hover:text-white ${
         isToday ? "text-lg font-bold" : "text-xs"
       } ${isActive ? "active" : ""} ${hasEvent ? "hasEvent" : ""}`}
     >
-      {i + 1}
-    </div>
+      <span className="day-text">{i + 1}</span>
+    </motion.div>
   );
 };
-
 export default DayItem;
+
+const variants = {
+  initial: {
+    // rotateX: 0,
+  },
+  animate: {
+    rotateX: 360,
+    rotateY: [-30, 0, 30, 0, -30],
+    // rotateZ: [0, 30, 0, -30, 0],
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};

@@ -22,7 +22,7 @@ export default function Calendar() {
     }
   }, [height]);
 
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const yearAndMonth = dayInView.toLocaleDateString("en-US", {
     year: "numeric",
@@ -93,14 +93,15 @@ export default function Calendar() {
             <FaChevronRight className="text-sm" />
           </motion.button>
         </div>
-        {/* days */}
+        {/* Days Of Week */}
         <div className="grid grid-cols-7 px-4 md:py-3">
-          {days.map((day) => (
-            <div key={day} className="day text-center text-xs">
+          {daysOfWeek.map((day) => (
+            <div key={day} className="square text-center text-xs">
               {day}
             </div>
           ))}
         </div>
+        {/* Days Of Month */}
         <div ref={containerRef} className="slide-container relative">
           <DaysContent
             direction={direction}

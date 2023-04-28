@@ -9,7 +9,7 @@ import useLoginModalStore from "../hooks/modals/useLoginModalStore";
 import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
-import AuthModalFooter from "../components/calendar/AuthModalFooter";
+import AuthModalFooter from "../components/AuthModalFooter";
 import { useCreateUserMutation } from "../hooks/users/useCreateUserMutation";
 
 const schema = z

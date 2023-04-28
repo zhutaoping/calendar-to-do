@@ -53,20 +53,3 @@ export async function POST(req: Request, res: Response) {
     });
   }
 }
-
-export async function DELETE(req: Request, res: Response) {
-  const { id } = await req.json();
-
-  if (!id) return NextResponse.json({ message: "No id provided" });
-
-  const deletedUser = await prisma.user.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  return NextResponse.json({
-    message: "User deleted successfully",
-    data: deletedUser,
-  });
-}

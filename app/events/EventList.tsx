@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { Event } from "@prisma/client";
+import UpdateEventModal from "./modals/UpdateEventModal";
 // Hooks
 import { useEventsQuery } from "../hooks/events/useEventsQuery";
 import { useEventQuery } from "../hooks/events/useEventQuery";
@@ -11,7 +12,7 @@ import { useCompleteEventMutation } from "../hooks/events/useCompleteEventMutati
 import { useEditEventMutation } from "../hooks/events/useEditEventMutation";
 import EventItem from "./EventItem";
 import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
-import UpdateEventModal from "./modals/UpdateEventModal";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 const AnimatedEventItem = motion(EventItem);
 
@@ -37,6 +38,9 @@ export default function Events({ activeDate }: Props) {
       onClose();
     },
   });
+
+  const isLarge = useMediaQuery("(min-width: 1024px)");
+  const isXL = useMediaQuery("(min-width: 1280px)");
 
   useEffect(() => {
     refetch();
@@ -104,6 +108,24 @@ export default function Events({ activeDate }: Props) {
     return <pre>{JSON.stringify(error)}</pre>;
   }
 
+  let variants;
+  if (isLarge) {
+    variants = {
+      initial: { minHeight: 0 },
+      animate: { minHeight: "420px" },
+    };
+  } else if (isXL) {
+    variants = {
+      initial: { minHeight: 0 },
+      animate: { minHeight: "480px" },
+    };
+  } else {
+    variants = {
+      initial: { minHeight: 0 },
+      animate: { minHeight: "380px" },
+    };
+  }
+
   return (
     <>
       <UpdateEventModal
@@ -114,9 +136,10 @@ export default function Events({ activeDate }: Props) {
       />
       <motion.ul
         layout="position"
-        initial={{ minHeight: 0 }}
-        animate={{ minHeight: "480px" }}
-        className={`event-list overflow-auto text-textOnCalendar md:max-h-[380px] lg:max-h-[480px]`}
+        variants={variants}
+        initial="initial"
+        animate="animate"
+        className={`event-list mb-8 overflow-auto text-textOnCalendar md:mb-0 md:max-h-[380px] lg:max-h-[420px] xl:max-h-[480px]`}
       >
         <AnimatePresence mode="popLayout">
           {sortedEvents.map((evt) => (

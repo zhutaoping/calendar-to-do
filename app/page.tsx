@@ -7,7 +7,7 @@ import { User } from "./users/User";
 export default async function Home() {
   return (
     <>
-      <User />
+      {/* <User /> */}
       <main className="blackboard grid min-h-screen gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">
         <SignUpModal header="Sign Up" />
         <LoginModal header="Log In" />

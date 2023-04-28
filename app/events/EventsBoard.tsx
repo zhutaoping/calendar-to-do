@@ -17,13 +17,6 @@ export default function EventsBoard() {
 
   const { data: session, status } = useSession();
 
-  // useEffect(() => {
-  //   const localEvents = localStorage.getItem("events");
-  //   if (localEvents) {
-  //     setLocalEvents(JSON.parse(localEvents));
-  //   }
-  // }, []);
-
   const dayOfWeek = activeDate
     ? format(activeDate, "EEEE")
     : format(new Date(), "EEEE");

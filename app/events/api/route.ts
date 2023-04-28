@@ -6,7 +6,6 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export async function GET(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
-  console.log("🚀 ~ GET ~ session:", session);
 
   let events: Event[] = [];
   if (!session) {
@@ -22,8 +21,6 @@ export async function GET(req: Request, res: Response) {
       },
     });
   }
-  console.log("🚀 ~ GET ~ events:", events);
-
   return NextResponse.json(events);
 }
 

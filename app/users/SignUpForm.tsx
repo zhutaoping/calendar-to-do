@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
 import { User } from "@prisma/client";
-import useLoginModalStore from "../hooks/modals/useLoginModalStore";
-import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
+import useLoginModalStore from "../store/LoginModalStore";
+import useSignUpModalStore from "../store/SignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
-import { useCreateUserMutation } from "../hooks/users/useCreateUserMutation";
+import { useCreateUser } from "../hooks/users/useCreateUser";
 
 const schema = z
   .object({
@@ -53,7 +53,7 @@ export default function SignUpForm({ id, user }: Props) {
     resolver: zodResolver(schema),
   });
 
-  const createUserMutation = useCreateUserMutation({
+  const createUserMutation = useCreateUser({
     // data: response from the server
     // variables: variables passed into the mutate(name, email, password)
 

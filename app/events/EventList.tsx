@@ -5,13 +5,13 @@ import { useSession } from "next-auth/react";
 import { Event } from "@prisma/client";
 import UpdateEventModal from "./modals/UpdateEventModal";
 // Hooks
-import { useEventsQuery } from "../hooks/events/useEventsQuery";
-import { useEventQuery } from "../hooks/events/useEventQuery";
-import { useDeleteEventMutation } from "../hooks/events/useDeleteEventMutation";
-import { useCompleteEventMutation } from "../hooks/events/useCompleteEventMutation";
-import { useEditEventMutation } from "../hooks/events/useEditEventMutation";
+import { useEvents } from "../hooks/events/useEvents";
+import { useEvent } from "../hooks/events/useEvent";
+import { useDeleteEvent } from "../hooks/events/useDeleteEvent";
+import { useCompleteEvent } from "../hooks/events/useCompleteEvent";
+import { useEditEvent } from "../hooks/events/useEditEvent";
 import EventItem from "./EventItem";
-import useUpdateEventModalStore from "../hooks/modals/useUpdateEventModalStore";
+import useUpdateEventModalStore from "../store/UpdateEventModalStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 const AnimatedEventItem = motion(EventItem);
@@ -28,11 +28,11 @@ export default function Events({ activeDate }: Props) {
   const queryClient = useQueryClient();
   const { status } = useSession();
 
-  const { data: events, isLoading, isError, error, refetch } = useEventsQuery();
-  const { data: event } = useEventQuery(eventId);
-  const deleteEventMutation = useDeleteEventMutation();
-  const completeEventMutation = useCompleteEventMutation();
-  const editEventMutation = useEditEventMutation({
+  const { data: events, isLoading, isError, error, refetch } = useEvents();
+  const { data: event } = useEvent(eventId);
+  const deleteEventMutation = useDeleteEvent();
+  const completeEventMutation = useCompleteEvent();
+  const editEventMutation = useEditEvent({
     onSuccess: () => {
       queryClient.invalidateQueries(["events"]);
       onClose();

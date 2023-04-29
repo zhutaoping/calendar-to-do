@@ -3,15 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useSession } from "next-auth/react";
 
-async function fetchEvent(id: string) {
-  const res = await fetch(`/events/api/${id}`);
-  return res.json();
-}
-
-export const useEventQuery = (eventId: string) => {
+export const useEvent = (eventId: string) => {
   const { status } = useSession();
 
-  return useQuery<Event>({
+  async function fetchEvent(id: string) {
+    const res = await fetch(`/events/api/${id}`);
+    return res.json();
+  }
+
+  return useQuery<Event, Error>({
     queryKey: ["events", eventId],
     queryFn: () => fetchEvent(eventId),
     enabled: !!eventId && status === "authenticated",

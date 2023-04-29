@@ -1,19 +1,19 @@
 import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export async function deleteEvent(id: string) {
-  const res = await fetch(`/events/api`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id }),
-  });
-  return res.json();
-}
-
-export const useDeleteEventMutation = () => {
+export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
+
+  async function deleteEvent(id: string) {
+    const res = await fetch(`/events/api`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+    return res.json();
+  }
 
   return useMutation({
     mutationFn: deleteEvent,

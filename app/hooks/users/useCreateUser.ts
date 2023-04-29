@@ -2,19 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { User } from "@prisma/client";
 
-async function addUser(user: Partial<User>) {
-  const res = await axios.post("/users/api", user);
-  return res.data;
-  // const res = await fetch("/api/users", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(user),
-  // });
-  // return res.json();
-}
-
 interface Props {
   onSuccess?: (
     data: any,
@@ -24,8 +11,21 @@ interface Props {
   onError?: (error: any, variables: Partial<User>, context: unknown) => unknown;
 }
 
-export const useCreateUserMutation = ({ onSuccess, onError }: Props) => {
+export const useCreateUser = ({ onSuccess, onError }: Props) => {
   const queryClient = useQueryClient();
+
+  async function addUser(user: Partial<User>) {
+    const res = await axios.post("/users/api", user);
+    return res.data;
+    // const res = await fetch("/api/users", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(user),
+    // });
+    // return res.json();
+  }
 
   return useMutation({
     mutationFn: addUser,

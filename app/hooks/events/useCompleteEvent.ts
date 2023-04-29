@@ -1,19 +1,19 @@
 import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-async function completeEvent(event: Event) {
-  const res = await fetch(`/events/api/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(event),
-  });
-  return res.json();
-}
-
-export const useCompleteEventMutation = () => {
+export const useCompleteEvent = () => {
   const queryClient = useQueryClient();
+
+  async function completeEvent(event: Event) {
+    const res = await fetch(`/events/api/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(event),
+    });
+    return res.json();
+  }
 
   return useMutation({
     mutationFn: completeEvent,

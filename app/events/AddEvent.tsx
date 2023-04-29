@@ -2,13 +2,13 @@ import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPlusCircle } from "react-icons/bs";
 import { Event } from "@prisma/client";
-import { useCreateEventMutation } from "../hooks/events/useCreateEventMutation";
+import { useCreateEvent } from "../hooks/events/useCreateEvent";
 import MyTooltip from "../components/MyTooltip";
-import useAddEventModalStore from "../hooks/modals/useAddEventModalStore";
+import useAddEventModalStore from "../store/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 
 export default function AddEvent() {
-  const createEventMutation = useCreateEventMutation();
+  const createEventMutation = useCreateEvent();
   const { onOpen, onClose } = useAddEventModalStore();
 
   const { data: session, status } = useSession();

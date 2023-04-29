@@ -5,8 +5,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useDay } from "@/app/store/DayContext";
 import EventList from "./EventList";
 import AddEvent from "./AddEvent";
-import useSignUpModalStore from "../hooks/modals/useSignUpModalStore";
-import useLoginModalStore from "../hooks/modals/useLoginModalStore";
+import useSignUpModalStore from "../store/SignUpModalStore";
+import useLoginModalStore from "../store/LoginModalStore";
 
 export default function EventsBoard() {
   const [smallScreen, setSmallScreen] = useState(false);

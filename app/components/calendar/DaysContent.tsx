@@ -6,7 +6,7 @@ import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEventsQuery } from "../../hooks/events/useEventsQuery";
+import { useEvents } from "../../hooks/events/useEvents";
 
 import { useSession } from "next-auth/react";
 
@@ -48,7 +48,7 @@ const DaysContent = ({
     };
   }, [setHeight]);
 
-  const { data } = useEventsQuery();
+  const { data } = useEvents();
   const events = data as Event[] | null;
 
   const daysInMonth = getDaysInMonth(dayInView);

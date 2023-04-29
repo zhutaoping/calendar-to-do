@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDay } from "@/app/store/DayContext";
-import { useEventsQuery } from "../../hooks/events/useEventsQuery";
+import { useEvents } from "../../hooks/events/useEvents";
 import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";
 
 export default function Calendar() {
-  const { isSuccess } = useEventsQuery();
+  const { isSuccess } = useEvents();
   const { dayInView, setDayInView, setActiveDate } = useDay();
 
   const [direction, setDirection] = useState(0);

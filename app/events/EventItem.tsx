@@ -24,7 +24,6 @@ const EventItem = forwardRef<Ref, Props>(
     let timer!: ReturnType<typeof setTimeout>;
 
     function handleChip(e: MouseEvent) {
-      console.log("drag");
       e.stopPropagation();
       const element = cardsRef.current!;
 

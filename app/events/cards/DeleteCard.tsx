@@ -4,7 +4,7 @@ import { Event } from "@prisma/client";
 interface Props {
   evt: Event;
   handleDelete: (e: React.MouseEvent, id: string) => void;
-  handleChip: (e: React.MouseEvent) => void;
+  handleChip: (e: any) => void;
 }
 
 export default function DeleteCard({ evt, handleDelete, handleChip }: Props) {

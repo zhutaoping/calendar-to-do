@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
 import MyTooltip from "../../components/MyTooltip";
+import { useEffect, useRef } from "react";
 
 interface Props {
   evt: Event;
@@ -9,10 +10,37 @@ interface Props {
 }
 
 export default function CheckCard({ evt, handleCompleted, handleChip }: Props) {
+  const dragRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = dragRef.current as HTMLDivElement;
+
+    element.addEventListener(
+      "dragstart",
+      (e) => {
+        e.dataTransfer?.setDragImage(element, -99999, -99999);
+      },
+      false
+    );
+
+    return () => {
+      element.removeEventListener(
+        "dragstart",
+        (e) => {
+          e.dataTransfer?.setDragImage(element, -99999, -99999);
+        },
+        false
+      );
+    };
+  }, []);
+
   return (
     <div
+      ref={dragRef}
+      draggable
+      onDrag={(e) => handleChip(e)}
       onClick={(e) => handleCompleted(e, evt)}
-      className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
+      className="check-card flex h-10 w-10 items-center justify-center overflow-hidden  border border-gray-500/20"
     >
       {evt.completed ? <CheckIcon2 /> : <CheckIcon1 />}
       <MyTooltip title="Flip the card">

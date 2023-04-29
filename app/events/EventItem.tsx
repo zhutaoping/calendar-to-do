@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { MouseEvent, forwardRef, useRef } from "react";
+import { MouseEvent, forwardRef, useEffect, useRef } from "react";
 import { VscCircleFilled } from "react-icons/vsc";
 import { Event } from "@prisma/client";
 import CheckCard from "./cards/CheckCard";
@@ -24,6 +24,7 @@ const EventItem = forwardRef<Ref, Props>(
     let timer!: ReturnType<typeof setTimeout>;
 
     function handleChip(e: MouseEvent) {
+      console.log("drag");
       e.stopPropagation();
       const element = cardsRef.current!;
 

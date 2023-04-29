@@ -142,11 +142,12 @@ export default function Events({ activeDate }: Props) {
         className={`event-list mb-8 overflow-y-auto text-textOnCalendar md:mb-0 md:max-h-[380px] lg:max-h-[420px] xl:max-h-[475px]`}
       >
         <AnimatePresence mode="popLayout">
-          {sortedEvents.map((evt) => (
+          {sortedEvents.map((evt, index) => (
             <AnimatedEventItem
               layout="position"
               evt={evt}
               key={evt.id}
+              index={index}
               handleClick={handleClick}
               handleCompleted={handleCompleted}
               handleDelete={handleDelete}

@@ -5,8 +5,11 @@ import { Event } from "@prisma/client";
 import CheckCard from "./cards/CheckCard";
 import DeleteCard from "./cards/DeleteCard";
 
+import { motion } from "framer-motion";
+
 interface Props {
   evt: Event;
+  index: number;
   handleClick: (evt: Event) => void;
   handleCompleted: (e: React.MouseEvent, evt: Event) => void;
   handleDelete: (e: React.MouseEvent, id: string) => void;
@@ -15,7 +18,7 @@ interface Props {
 type Ref = HTMLLIElement;
 
 const EventItem = forwardRef<Ref, Props>(
-  ({ evt, handleClick, handleCompleted, handleDelete }, ref) => {
+  ({ evt, index, handleClick, handleCompleted, handleDelete }, ref) => {
     const cardsRef = useRef<HTMLDivElement | null>(null);
 
     let timer!: ReturnType<typeof setTimeout>;
@@ -49,7 +52,10 @@ const EventItem = forwardRef<Ref, Props>(
     }
 
     return (
-      <li
+      <motion.li
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: index * 0.1 }}
         ref={ref}
         className="mb-1 flex w-full 
         items-center justify-between bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6"
@@ -96,7 +102,7 @@ const EventItem = forwardRef<Ref, Props>(
             />
           </div>
         </div>
-      </li>
+      </motion.li>
     );
   }
 );

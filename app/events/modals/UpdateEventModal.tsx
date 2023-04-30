@@ -2,12 +2,15 @@ import { Event } from "@prisma/client";
 import EventForm from "../EventForm";
 import Modal from "../../components/Modal";
 import useUpdateEventModalStore from "@/app/store/UpdateEventModalStore";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 interface Props {
   id: string;
   event?: Event;
   header: string;
   handleMutateEvent: (data: Partial<Event>) => void;
+  isMobile: boolean;
 }
 
 export default function UpdateEventModal({
@@ -15,8 +18,9 @@ export default function UpdateEventModal({
   event,
   header,
   handleMutateEvent,
+  isMobile,
 }: Props) {
-  const { isOpen, onClose } = useUpdateEventModalStore();
+  const { onClose } = useUpdateEventModalStore();
 
   const bodyContent = (
     <EventForm id={id} event={event} handleMutateEvent={handleMutateEvent} />
@@ -25,9 +29,10 @@ export default function UpdateEventModal({
   return (
     <Modal
       header={header}
-      isOpen={isOpen}
       onClose={onClose}
       body={bodyContent}
+      fullPage={false}
+      isMobile={isMobile}
     />
   );
 }

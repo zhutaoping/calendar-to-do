@@ -6,16 +6,25 @@ import { useCreateEvent } from "../hooks/events/useCreateEvent";
 import MyTooltip from "../components/MyTooltip";
 import useAddEventModalStore from "../store/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
+import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useEffect, useState } from "react";
 
 export default function AddEvent() {
   const createEventMutation = useCreateEvent();
-  const { onOpen, onClose } = useAddEventModalStore();
+  const { isOpen, onOpen, onClose } = useAddEventModalStore();
+  const [isMobile, setIsMobile] = useState(false);
 
-  const { data: session, status } = useSession();
+  const isSmall = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    setIsMobile(isSmall);
+  }, [isSmall]);
+
+  const { data: session } = useSession();
   const userId = session?.user?.id || null;
 
   const handleAddEvent = (data: Partial<Event>) => {
-    const newData = { ...data, id: Date.now().toString() };
+    // const newData = { ...data, id: Date.now().toString() };
     createEventMutation.mutate({
       ...data,
       userId,
@@ -36,11 +45,15 @@ export default function AddEvent() {
           <BsPlusCircle color="white" size={30} />
         </motion.button>
       </MyTooltip>
-      <AnimatePresence initial={false}>
-        <AddEventModal
-          header="Add New Event"
-          handleMutateEvent={handleAddEvent}
-        />
+      <AnimatePresence>
+        {isOpen && (
+          <AddEventModal
+            key={Date.now().toString()}
+            header="Add New Event"
+            handleMutateEvent={handleAddEvent}
+            isMobile={isMobile}
+          />
+        )}
       </AnimatePresence>
     </div>
   );

@@ -21,9 +21,16 @@ interface Props {
 }
 
 export default function Events({ activeDate }: Props) {
-  const { onClose, onOpen } = useUpdateEventModalStore();
+  const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const isSmall = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    setIsMobile(isSmall);
+  }, [isSmall]);
 
   const queryClient = useQueryClient();
   const { status } = useSession();
@@ -128,12 +135,18 @@ export default function Events({ activeDate }: Props) {
 
   return (
     <>
-      <UpdateEventModal
-        id={eventId}
-        event={event}
-        header="Edit Event"
-        handleMutateEvent={handleEdit}
-      />
+      <AnimatePresence>
+        {isOpen && (
+          <UpdateEventModal
+            key={new Date().getTime()}
+            id={eventId}
+            event={event}
+            header="Edit Event"
+            handleMutateEvent={handleEdit}
+            isMobile={isMobile}
+          />
+        )}
+      </AnimatePresence>
       <motion.ul
         layout="position"
         variants={variants}

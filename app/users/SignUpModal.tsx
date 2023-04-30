@@ -8,14 +8,13 @@ interface Props {
 }
 
 export default function SignUpModal({ header }: Props) {
-  const { isOpen, onClose } = useSignUpModalStore();
+  const { onClose } = useSignUpModalStore();
 
   const bodyContent = <SignUpForm />;
 
   return (
     <Modal
       header={header}
-      isOpen={isOpen}
       onClose={onClose}
       body={bodyContent}
       fullPage={true}

@@ -21,9 +21,9 @@ export default function EventsBoard() {
     ? format(activeDate, "EEEE")
     : format(new Date(), "EEEE");
 
-  const dayOfMonth = activeDate
-    ? format(activeDate, "d MMMM yyyy")
-    : format(new Date(), "d MMMM yyyy");
+  // const dayOfMonth = activeDate
+  //   ? format(activeDate, "d MMMM yyyy")
+  //   : format(new Date(), "d MMMM yyyy");
 
   useEffect(() => {
     handleResize();

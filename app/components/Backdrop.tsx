@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default function Backdrop({ children, onClick, fullPage }: Props) {
-  console.log("fullPage", fullPage);
   return (
     <motion.div
       className={`backdrop absolute left-0 top-0 z-50 flex h-full w-full ${

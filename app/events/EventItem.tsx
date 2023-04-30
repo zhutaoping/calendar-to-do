@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { MouseEvent, forwardRef, useEffect, useRef } from "react";
+import { MouseEvent, forwardRef, useRef } from "react";
 import { VscCircleFilled } from "react-icons/vsc";
 import { Event } from "@prisma/client";
 import CheckCard from "./cards/CheckCard";
@@ -53,13 +53,13 @@ const EventItem = forwardRef<Ref, Props>(
 
     return (
       <motion.li
+        ref={ref}
+        key={evt.id}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: index * 0.1 }}
-        ref={ref}
         className="mb-1 flex w-full 
         items-center justify-between bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6"
-        key={evt.id}
       >
         <div
           onClick={() => handleClick(evt)}

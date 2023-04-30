@@ -4,27 +4,25 @@ import Backdrop from "./Backdrop";
 
 interface Props {
   header: string;
-  isOpen: boolean;
   onClose: () => void;
   body: JSX.Element;
   footer?: JSX.Element;
   disabled?: boolean;
   onSubmit?: () => void;
   fullPage?: boolean;
+  isMobile?: boolean;
 }
 
-export default function Modal({
+const Modal = ({
   header,
-  isOpen,
   onClose,
   body,
   footer,
   disabled,
   onSubmit,
   fullPage,
-}: Props) {
-  if (!isOpen) return null;
-
+  isMobile,
+}: Props) => {
   function handleClose() {
     if (disabled) return;
     onClose();
@@ -33,11 +31,10 @@ export default function Modal({
   return (
     <Backdrop onClick={handleClose} fullPage={fullPage}>
       <motion.div
-        onClick={(e) => e.stopPropagation()}
         className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10  ${
           fullPage ? "px-12 py-10" : "p-4"
         }`}
-        variants={dropIn}
+        variants={isMobile ? fadeIn : dropIn}
         initial="hidden"
         animate="visible"
         exit="exit"
@@ -58,7 +55,8 @@ export default function Modal({
       </motion.div>
     </Backdrop>
   );
-}
+};
+export default Modal;
 
 const dropIn = {
   hidden: {
@@ -77,6 +75,24 @@ const dropIn = {
   },
   exit: {
     y: "-100vh",
+    opacity: 0,
+  },
+};
+
+const fadeIn = {
+  hidden: {
+    y: 20,
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "tween",
+    },
+  },
+  exit: {
+    y: 20,
     opacity: 0,
   },
 };

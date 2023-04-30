@@ -15,7 +15,6 @@ export default function SignUpModal({ header }: Props) {
   return (
     <Modal
       header={header}
-      isOpen={isOpen}
       onClose={onClose}
       body={bodyContent}
       fullPage={true}

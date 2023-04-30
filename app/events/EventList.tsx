@@ -36,7 +36,7 @@ export default function Events({ activeDate }: Props) {
   const { status } = useSession();
 
   const { data: events, isLoading, isError, error, refetch } = useEvents();
-  const { data: event, isSuccess } = useEvent(eventId);
+  const { data: event } = useEvent(eventId);
   const deleteEventMutation = useDeleteEvent();
   const completeEventMutation = useCompleteEvent();
   const editEventMutation = useEditEvent({
@@ -82,7 +82,6 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleClick(evt: Event) {
-    console.log("evt.id: ", evt.id);
     setEventId(evt.id);
     if (evt.completed) return;
     onOpen();
@@ -132,10 +131,6 @@ export default function Events({ activeDate }: Props) {
       initial: { minHeight: 0 },
       animate: { minHeight: "380px" },
     };
-  }
-
-  if (isSuccess) {
-    console.log("event: ", event);
   }
 
   return (

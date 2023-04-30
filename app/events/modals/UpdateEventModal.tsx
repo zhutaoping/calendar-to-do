@@ -2,8 +2,6 @@ import { Event } from "@prisma/client";
 import EventForm from "../EventForm";
 import Modal from "../../components/Modal";
 import useUpdateEventModalStore from "@/app/store/UpdateEventModalStore";
-import { useEffect, useState } from "react";
-import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 interface Props {
   id: string;

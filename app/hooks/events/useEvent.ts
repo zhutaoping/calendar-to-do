@@ -14,7 +14,7 @@ export const useEvent = (eventId: string) => {
   return useQuery<Event, Error>({
     queryKey: ["events", eventId],
     queryFn: () => fetchEvent(eventId),
-    enabled: !!eventId && status === "authenticated",
+    enabled: !!eventId,
     onSuccess: (data) => {
       // console.log("🚀 ~ useEventQuery ~ data:", data);
     },

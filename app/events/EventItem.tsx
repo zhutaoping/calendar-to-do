@@ -71,8 +71,9 @@ const EventItem = forwardRef<Ref, Props>(
                 evt.completed ? "" : "text-primary"
               } h-4 w-4 shrink-0`}
             />
+            {/* title */}
             <p
-              className={`transition-color pr-3 text-base md:max-w-[320px] md:p-0 ${
+              className={`transition-color flex-fit max-w-[300px] whitespace-pre-wrap text-base md:p-0 xl:max-w-[360px] ${
                 evt.completed
                   ? "text-textOnCalendar line-through"
                   : "text-white"

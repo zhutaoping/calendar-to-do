@@ -107,6 +107,7 @@ export default function Calendar() {
             direction={direction}
             handleChevronLeft={handleChevronLeft}
             handleChevronRight={handleChevronRight}
+            height={height}
             setHeight={setHeight}
             handleDaysOfNextMonth={handleDaysOfNextMonth}
             handleDaysOfLastMonth={handleDaysOfLastMonth}
@@ -124,7 +125,7 @@ export default function Calendar() {
               <SelectMonth setDirection={setDirection} />
             </div>
             <motion.button
-              className="focus-ring z-10 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
+              className="focus-ring z-20 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
               onClick={() => {

@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { UseBoundStore, create } from "zustand";
 
-interface SignUpModalState {
+export interface SignUpModalState {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -11,5 +11,7 @@ const useSignUpModalStore = create<SignUpModalState>()((set) => ({
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
+
+export type SignUpModalType = ReturnType<typeof useSignUpModalStore>;
 
 export default useSignUpModalStore;

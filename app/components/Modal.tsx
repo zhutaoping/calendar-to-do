@@ -1,6 +1,5 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
-import LocalBackdrop from "./Backdrop";
 import Backdrop from "./Backdrop";
 
 interface Props {

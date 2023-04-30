@@ -64,6 +64,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <textarea
+        rows={4}
         placeholder="New Event"
         {...register("title")}
         className="focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"

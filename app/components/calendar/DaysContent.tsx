@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
   handleDaysOfLastMonth: (day: number) => void;
+  height: number;
   setHeight: React.Dispatch<React.SetStateAction<number>>;
   direction: number;
   handleChevronLeft: () => void;
@@ -22,6 +23,7 @@ interface Props {
 const DaysContent = ({
   handleDaysOfNextMonth,
   handleDaysOfLastMonth,
+  height,
   setHeight,
   direction,
   handleChevronLeft,
@@ -30,18 +32,15 @@ const DaysContent = ({
   const { dayInView, setActiveDate } = useDay();
   const divRef = useRef<HTMLDivElement>(null);
 
-  const { status } = useSession();
-
-  useEffect(() => {
-    const size = divRef.current?.getBoundingClientRect();
-    setHeight(size?.height ?? 0);
+  useLayoutEffect(() => {
+    setHeight(divRef.current?.offsetHeight ?? 0);
   }, [dayInView, setHeight]);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      const divRef = document.getElementById("divRef");
-      const size = divRef?.getBoundingClientRect();
-      setHeight(size?.height ?? 0);
+      // const size = divRef.current?.getBoundingClientRect();
+      // const size = divId?.getBoundingClientRect();
+      // setHeight(size?.height ?? 0);
     });
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -117,6 +116,8 @@ const DaysContent = ({
   return (
     <AnimatePresence initial={false} custom={direction}>
       <motion.div
+        ref={divRef}
+        id="divRef"
         key={`${dayInView.getFullYear}-${dayInView.getMonth()}`}
         custom={direction}
         variants={variants}
@@ -125,7 +126,6 @@ const DaysContent = ({
         exit="exit"
         transition={{
           x: { type: "spring", stiffness: 300, damping: 30 },
-          opacity: { duration: 0.2 },
         }}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
@@ -139,8 +139,6 @@ const DaysContent = ({
             handleChevronLeft();
           }
         }}
-        ref={divRef}
-        id="divRef"
         className="days absolute grid grid-cols-7 px-4 pb-4"
       >
         {content}
@@ -153,21 +151,19 @@ export default DaysContent;
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 200 : -200,
+      x: direction > 0 ? 300 : -300,
       opacity: 0,
-      blur: 10,
     };
   },
   center: {
     zIndex: 10,
     x: 0,
     opacity: 1,
-    blur: 0,
   },
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 200 : -200,
+      x: direction < 0 ? 300 : -300,
       opacity: 0,
     };
   },

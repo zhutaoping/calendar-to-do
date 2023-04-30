@@ -7,15 +7,9 @@ interface Props {
 }
 
 export default function Backdrop({ children, onClick, fullPage }: Props) {
+  console.log("fullPage", fullPage);
   return (
     <motion.div
-      // drag
-      // dragConstraints={{
-      //   top: 0,
-      //   left: 0,
-      //   right: 0,
-      //   bottom: 0,
-      // }}
       className={`backdrop absolute left-0 top-0 z-50 flex h-full w-full ${
         fullPage ? "items-center" : "items-start"
       } justify-center md:items-center`}

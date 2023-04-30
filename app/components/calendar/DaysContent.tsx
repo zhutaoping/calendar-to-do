@@ -1,14 +1,12 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
+import { useEffect, useRef } from "react";
+
 import { useDay } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
-import { checkHasEvent } from "@/app/utils/checkHasEvent";
-import DayItem from "./DayItem";
-
-import { AnimatePresence, motion } from "framer-motion";
 import { useEvents } from "../../hooks/events/useEvents";
-
-import { useSession } from "next-auth/react";
+import DayItem from "./DayItem";
+import { checkHasEvent } from "@/app/utils/checkHasEvent";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
@@ -32,7 +30,7 @@ const DaysContent = ({
   const { dayInView, setActiveDate } = useDay();
   const divRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setHeight(divRef.current?.offsetHeight ?? 0);
   }, [dayInView, setHeight]);
 
@@ -40,10 +38,11 @@ const DaysContent = ({
     window.addEventListener("resize", () => {
       // const size = divRef.current?.getBoundingClientRect();
       // const size = divId?.getBoundingClientRect();
-      // setHeight(size?.height ?? 0);
+      const divId = document.getElementById("divRef");
+      setHeight(divId?.offsetHeight ?? 0);
     });
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", () => {});
     };
   }, [setHeight]);
 
@@ -57,10 +56,6 @@ const DaysContent = ({
   const lastDaysInMonth = getDaysInMonth(
     new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, 1)
   );
-
-  function handleResize(this: Window, ev: UIEvent) {
-    throw new Error("Function not implemented.");
-  }
 
   function handleDaysOfLastMonthClick(day: number) {
     handleDaysOfLastMonth(day);

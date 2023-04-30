@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function SignUpModal({ header }: Props) {
-  const { isOpen, onClose } = useLoginModalStore();
+  const { onClose } = useLoginModalStore();
 
   const bodyContent = <LoginForm />;
 

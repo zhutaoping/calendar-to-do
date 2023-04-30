@@ -26,7 +26,7 @@ const Modal = ({
   return (
     <Backdrop fullPage={fullPage} onClose={onClose}>
       <motion.div
-        className={`modal z-50 mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
+        className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
           fullPage ? "px-12 py-10" : "p-4"
         } `}
         variants={isMobile ? fadeIn : dropIn}

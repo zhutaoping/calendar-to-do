@@ -32,8 +32,8 @@ export default function Events({ activeDate }: Props) {
     setIsMobile(isSmall);
   }, [isSmall]);
 
-  const queryClient = useQueryClient();
   const { status } = useSession();
+  const queryClient = useQueryClient();
 
   const { data: events, isLoading, isError, error, refetch } = useEvents();
   const { data: event } = useEvent(eventId);
@@ -63,7 +63,7 @@ export default function Events({ activeDate }: Props) {
     });
   }
 
-  function handleEdit(data: Partial<Event>) {
+  function handleUpdate(data: Partial<Event>) {
     const { title, startTime, endTime, id } = data;
 
     if (id) setEventId(id);
@@ -137,12 +137,12 @@ export default function Events({ activeDate }: Props) {
     <>
       <AnimatePresence>
         {isOpen && (
+          // you don't need a key here?!?!?!
           <UpdateEventModal
-            key={new Date().getTime()}
             id={eventId}
             event={event}
             header="Edit Event"
-            handleMutateEvent={handleEdit}
+            handleMutateEvent={handleUpdate}
             isMobile={isMobile}
           />
         )}

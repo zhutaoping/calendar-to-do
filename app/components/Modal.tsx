@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
 import Backdrop from "./Backdrop";
@@ -23,21 +24,17 @@ const Modal = ({
   fullPage,
   isMobile,
 }: Props) => {
-  function handleClose() {
-    if (disabled) return;
-    onClose();
-  }
-
   return (
-    <Backdrop onClick={handleClose} fullPage={fullPage}>
+    <Backdrop fullPage={fullPage} onClose={onClose}>
       <motion.div
-        className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10  ${
+        className={`modal z-50 mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
           fullPage ? "px-12 py-10" : "p-4"
-        }`}
+        } `}
         variants={isMobile ? fadeIn : dropIn}
         initial="hidden"
         animate="visible"
         exit="exit"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex w-full items-center justify-between">

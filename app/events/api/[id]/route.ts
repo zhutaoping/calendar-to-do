@@ -6,6 +6,8 @@ export async function GET(
   { params: { id } }: { params: { id: string } },
   res: Response
 ) {
+  console.log("🚀 ~ id:", id);
+
   // const id = req.url.slice(req.url.lastIndexOf("/") + 1);
 
   const event = await prisma.event.findUnique({

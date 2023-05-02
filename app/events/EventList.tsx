@@ -54,7 +54,7 @@ export default function Events({ activeDate }: Props) {
   }, [status, refetch]);
 
   function handleCompleted(e: MouseEvent, evt: Event) {
-    e.stopPropagation();
+    // e.stopPropagation();
     setEventId(evt.id);
 
     completeEventMutation.mutate({
@@ -76,9 +76,9 @@ export default function Events({ activeDate }: Props) {
     });
   }
 
-  function handleDelete(e: MouseEvent, id: string) {
-    e.stopPropagation();
-    deleteEventMutation.mutate(id);
+  function handleDelete(e: MouseEvent, eventId: string) {
+    // e.stopPropagation();
+    deleteEventMutation.mutate(eventId);
   }
 
   function handleClick(evt: Event) {

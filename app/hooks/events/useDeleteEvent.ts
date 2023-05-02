@@ -1,5 +1,5 @@
-import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Event } from "@prisma/client";
 
 export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
@@ -36,12 +36,12 @@ export const useDeleteEvent = () => {
       return { previousEvents };
     },
 
-    onError: (_err, deletedId, context) => {
+    onError: (error, deletedId, context) => {
       queryClient.setQueryData(["events"], context?.previousEvents);
     },
 
     onSettled: (deletedId) => {
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["events", deletedId] });
     },
   });
 };

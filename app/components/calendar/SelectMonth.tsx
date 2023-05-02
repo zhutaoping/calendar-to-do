@@ -74,7 +74,7 @@ export default function SelectMonth({ setDirection }: Props) {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Listbox.Options className="scroll-bar absolute bottom-10 max-h-80 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+        <Listbox.Options className="scroll-bar absolute bottom-10 max-h-52 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:max-h-72 ">
           {months.map((month) => (
             <Listbox.Option
               key={month.id}

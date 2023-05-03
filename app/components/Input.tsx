@@ -11,6 +11,7 @@ interface Props {
   setShow?: React.Dispatch<
     SetStateAction<{ password: boolean; cPassword: boolean }>
   >;
+  autofocus?: boolean;
 }
 
 export default function Input({
@@ -21,6 +22,7 @@ export default function Input({
   errors,
   icon,
   setShow,
+  autofocus,
 }: Props) {
   return (
     <>
@@ -30,6 +32,7 @@ export default function Input({
           placeholder={placeholder}
           className="auth-input w-full rounded-md px-5 py-2 text-sm text-black outline-none"
           {...register(id)}
+          autoFocus={autofocus}
         />
         {icon === "HiOutlineUser" && (
           <span className="flex select-none items-center px-3 text-gray-300">

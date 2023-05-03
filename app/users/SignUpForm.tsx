@@ -90,6 +90,7 @@ export default function SignUpForm({ id, user }: Props) {
           errors={errors}
           type="text"
           icon="HiOutlineUser"
+          autofocus
         />
         <Input
           id="email"

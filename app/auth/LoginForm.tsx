@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -23,6 +23,8 @@ type Inputs = z.infer<typeof schema>;
 export default function LoginForm() {
   const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
+
+  const firstInputRef = useRef(null);
 
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
@@ -88,6 +90,7 @@ export default function LoginForm() {
           errors={errors}
           type="text"
           icon="HiAtSymbol"
+          autofocus={true}
         />
         <Input
           id="password"

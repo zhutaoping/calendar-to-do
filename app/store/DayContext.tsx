@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
-const useDayStore = () => {
+export const useDayStore = () => {
   const [dayInView, setDayInView] = useState(new Date());
   const [activeDate, setActiveDate] = useState<Date | null>(new Date());
 
@@ -12,7 +12,9 @@ const useDayStore = () => {
   };
 };
 
-const DayContext = createContext<ReturnType<typeof useDayStore> | null>(null);
+export type DayStoreState = ReturnType<typeof useDayStore>;
+
+const DayContext = createContext<DayStoreState | null>(null);
 
 const DayProvider = ({ children }: { children: ReactNode }) => {
   const dayStore = useDayStore();

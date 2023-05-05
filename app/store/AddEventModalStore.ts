@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface AddEventModalState {
+export interface AddEventModalState {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;

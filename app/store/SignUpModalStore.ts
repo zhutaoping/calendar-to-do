@@ -1,4 +1,4 @@
-import { UseBoundStore, create } from "zustand";
+import { create } from "zustand";
 
 export interface SignUpModalState {
   isOpen: boolean;

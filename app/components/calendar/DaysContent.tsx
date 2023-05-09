@@ -2,11 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useEffect, useRef } from "react";
 
-import { useDay } from "@/app/store/DayContext";
-import { Event } from "@prisma/client";
+import { useDayContext } from "@/app/store/DayContext";
 import { useEvents } from "../../hooks/events/useEvents";
-import DayItem from "./DayItem";
+import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
+import DayItem from "./DayItem";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
@@ -27,7 +27,7 @@ const DaysContent = ({
   handleChevronLeft,
   handleChevronRight,
 }: Props) => {
-  const { dayInView, setActiveDate } = useDay();
+  const { dayInView, setActiveDate } = useDayContext();
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ interface Props {
     SetStateAction<{ password: boolean; cPassword: boolean }>
   >;
   autofocus?: boolean;
+  ariaLabel?: string;
 }
 
 export default function Input({
@@ -23,11 +24,13 @@ export default function Input({
   icon,
   setShow,
   autofocus,
+  ariaLabel,
 }: Props) {
   return (
     <>
       <div className="mt-4 flex rounded-md bg-slate-50">
         <input
+          aria-label={ariaLabel}
           type={type}
           placeholder={placeholder}
           className="auth-input w-full rounded-md px-5 py-2 text-sm text-black outline-none"

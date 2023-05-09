@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 
-export const useDayStore = () => {
+const useDayStore = () => {
   const [dayInView, setDayInView] = useState(new Date());
   const [activeDate, setActiveDate] = useState<Date | null>(new Date());
 
@@ -22,7 +22,7 @@ const DayProvider = ({ children }: { children: ReactNode }) => {
   return <DayContext.Provider value={dayStore}>{children}</DayContext.Provider>;
 };
 
-export const useDay = () => {
+export const useDayContext = () => {
   const context = useContext(DayContext);
 
   if (!context) {

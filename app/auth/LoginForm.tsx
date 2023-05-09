@@ -91,6 +91,7 @@ export default function LoginForm() {
           type="text"
           icon="HiAtSymbol"
           autofocus={true}
+          ariaLabel="email"
         />
         <Input
           id="password"
@@ -100,6 +101,7 @@ export default function LoginForm() {
           setShow={setShow}
           type={show.password ? "text" : "password"}
           icon="HiFingerPrint"
+          ariaLabel="password"
         />
         <SubmitButton />
       </form>

@@ -1,5 +1,5 @@
 "use client";
-import Modal from "@/app/components/Modal";
+import Modal from "../components/Modal";
 import LoginForm from "./LoginForm";
 import useLoginModalStore from "../store/LoginModalStore";
 
@@ -7,7 +7,7 @@ interface Props {
   header: string;
 }
 
-export default function SignUpModal({ header }: Props) {
+export default function LoginModal({ header }: Props) {
   const { onClose } = useLoginModalStore();
 
   const bodyContent = <LoginForm />;

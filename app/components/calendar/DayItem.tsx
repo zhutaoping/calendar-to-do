@@ -1,8 +1,8 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { useDay } from "@/app/store/DayContext";
+import { motion } from "framer-motion";
+import { useDayContext } from "@/app/store/DayContext";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
-import { motion } from "framer-motion";
 
 interface Props {
   i: number;
@@ -15,7 +15,7 @@ const DayItem = ({ i, events }: Props) => {
 
   const daysGridRef = useRef<HTMLDivElement>(null);
 
-  const { activeDate, setActiveDate, dayInView } = useDay();
+  const { activeDate, setActiveDate, dayInView } = useDayContext();
 
   useEffect(() => {
     setIsToday(false);

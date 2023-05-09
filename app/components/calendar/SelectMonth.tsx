@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { motion } from "framer-motion";
 import { HiCheck } from "react-icons/hi2";
-import { useDay } from "@/app/store/DayContext";
+import { useDayContext } from "@/app/store/DayContext";
 
 type Month = {
   id: number;
@@ -30,7 +30,7 @@ interface Props {
 
 export default function SelectMonth({ setDirection }: Props) {
   const [selectedMonth, setSelectedMonth] = useState(months[0]);
-  const { dayInView, setDayInView } = useDay();
+  const { dayInView, setDayInView } = useDayContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const thisMonth = months[dayInView.getMonth()];

@@ -1,8 +1,8 @@
 "use client";
 
-import QueryClientProvider from "./QueryProvider";
 import { SessionProvider } from "next-auth/react";
 import DayProvider from "../store/DayContext";
+import QueryProvider from "./QueryProvider";
 
 interface Props {
   children: React.ReactNode;
@@ -10,10 +10,10 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <QueryClientProvider>
+    <QueryProvider>
       <SessionProvider>
         <DayProvider>{children}</DayProvider>
       </SessionProvider>
-    </QueryClientProvider>
+    </QueryProvider>
   );
 }

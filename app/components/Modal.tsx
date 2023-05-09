@@ -26,13 +26,14 @@ const Modal = ({
   isMobile,
 }: Props) => {
   return (
-    <Backdrop fullPage={fullPage} onClose={onClose}>
-      <FocusTrap
-        focusTrapOptions={{
-          // Still need Backdrop onClick to close modal
-          clickOutsideDeactivates: true,
-        }}
-      >
+    <>
+      <Backdrop fullPage={fullPage} onClose={onClose}>
+        {/* <FocusTrap
+          focusTrapOptions={{
+            // Still need Backdrop onClick to close modal
+            clickOutsideDeactivates: true,
+          }}
+        > */}
         <motion.div
           className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
             fullPage ? "px-12 py-10" : "p-4"
@@ -57,8 +58,9 @@ const Modal = ({
           </div>
           {body}
         </motion.div>
-      </FocusTrap>
-    </Backdrop>
+        {/* </FocusTrap> */}
+      </Backdrop>
+    </>
   );
 };
 export default Modal;

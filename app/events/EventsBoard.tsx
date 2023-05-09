@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useSession, signOut } from "next-auth/react";
-import { useDay } from "@/app/store/DayContext";
+import { useDayContext } from "../store/DayContext";
 import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import useSignUpModalStore from "../store/SignUpModalStore";
@@ -11,7 +11,7 @@ import useLoginModalStore from "../store/LoginModalStore";
 export default function EventsBoard() {
   const [smallScreen, setSmallScreen] = useState(false);
 
-  const { activeDate } = useDay();
+  const { activeDate } = useDayContext();
   const signUpModal = useSignUpModalStore();
   const loginModal = useLoginModalStore();
 

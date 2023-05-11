@@ -12,8 +12,9 @@ export const useEvents = () => {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // from NextResponse
           console.log("🚀 ~ useEventQuery ~ error:", error);
-        }); // from NextResponse
+        });
 
       return data;
     },

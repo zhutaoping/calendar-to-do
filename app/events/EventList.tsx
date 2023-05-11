@@ -24,13 +24,8 @@ export default function Events({ activeDate }: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
   const [eventId, setEventId] = useState("");
   const [eventList, setEventList] = useState<Event[]>([]);
-  const [isMobile, setIsMobile] = useState(false);
 
   const isSmall = useMediaQuery("(max-width: 768px)");
-
-  useEffect(() => {
-    setIsMobile(isSmall);
-  }, [isSmall]);
 
   const { status } = useSession();
   const queryClient = useQueryClient();
@@ -143,7 +138,7 @@ export default function Events({ activeDate }: Props) {
             event={event}
             header="Edit Event"
             handleMutateEvent={handleUpdate}
-            isMobile={isMobile}
+            isMobile={isSmall}
           />
         )}
       </AnimatePresence>

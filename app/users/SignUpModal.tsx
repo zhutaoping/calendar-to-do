@@ -5,9 +5,10 @@ import SignUpForm from "./SignUpForm";
 
 interface Props {
   header: string;
+  isMobile: boolean;
 }
 
-export default function SignUpModal({ header }: Props) {
+export default function SignUpModal({ header, isMobile }: Props) {
   const { onClose } = useSignUpModalStore();
 
   const bodyContent = <SignUpForm />;
@@ -18,6 +19,7 @@ export default function SignUpModal({ header }: Props) {
       onClose={onClose}
       body={bodyContent}
       fullPage={true}
+      isMobile={isMobile}
     />
   );
 }

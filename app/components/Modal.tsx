@@ -1,7 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { motion } from "framer-motion";
 import Backdrop from "./Backdrop";
-import { useEffect, useRef } from "react";
 import FocusTrap from "focus-trap-react";
 
 interface Props {
@@ -28,37 +27,37 @@ const Modal = ({
   return (
     <>
       <Backdrop fullPage={fullPage} onClose={onClose}>
-        {/* <FocusTrap
+        <FocusTrap
           focusTrapOptions={{
             // Still need Backdrop onClick to close modal
             clickOutsideDeactivates: true,
           }}
-        > */}
-        <motion.div
-          className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
-            fullPage ? "px-12 py-10" : "p-4"
-          } `}
-          variants={isMobile ? fadeIn : dropIn}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
-          <div className="flex w-full items-center justify-between">
-            <h2 className="text-lg font-bold text-white">{header}</h2>
-            <motion.button
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onClose()}
-            >
-              <AiOutlineClose color="white" size={20} />
-            </motion.button>
-          </div>
-          {body}
-        </motion.div>
-        {/* </FocusTrap> */}
+          <motion.div
+            className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
+              fullPage ? "px-12 py-10" : "p-4"
+            } `}
+            variants={isMobile ? fadeIn : dropIn}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex w-full items-center justify-between">
+              <h2 className="text-lg font-bold text-white">{header}</h2>
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => onClose()}
+              >
+                <AiOutlineClose color="white" size={20} />
+              </motion.button>
+            </div>
+            {body}
+          </motion.div>
+        </FocusTrap>
       </Backdrop>
     </>
   );

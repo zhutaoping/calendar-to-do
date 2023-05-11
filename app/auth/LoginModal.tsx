@@ -5,9 +5,10 @@ import useLoginModalStore from "../store/LoginModalStore";
 
 interface Props {
   header: string;
+  isMobile: boolean;
 }
 
-export default function LoginModal({ header }: Props) {
+export default function LoginModal({ header, isMobile }: Props) {
   const { onClose } = useLoginModalStore();
 
   const bodyContent = <LoginForm />;
@@ -18,6 +19,7 @@ export default function LoginModal({ header }: Props) {
       onClose={onClose}
       body={bodyContent}
       fullPage={true}
+      isMobile={isMobile}
     />
   );
 }

@@ -7,18 +7,12 @@ import MyTooltip from "../components/MyTooltip";
 import useAddEventModalStore from "../store/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import { useEffect, useState } from "react";
 
 export default function AddEvent() {
   const createEventMutation = useCreateEvent();
   const { isOpen, onOpen, onClose } = useAddEventModalStore();
-  const [isMobile, setIsMobile] = useState(false);
 
   const isSmall = useMediaQuery("(max-width: 768px)");
-
-  useEffect(() => {
-    setIsMobile(isSmall);
-  }, [isSmall]);
 
   const { data: session } = useSession();
   const userId = session?.user?.id || null;
@@ -51,7 +45,7 @@ export default function AddEvent() {
             key={Date.now().toString()}
             header="Add New Event"
             handleMutateEvent={handleAddEvent}
-            isMobile={isMobile}
+            isMobile={isSmall}
           />
         )}
       </AnimatePresence>

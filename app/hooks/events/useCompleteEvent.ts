@@ -1,22 +1,25 @@
+import APIEvent from "@/app/services/apiEvent";
 import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+const apiEvent = new APIEvent<Event>(`/events/api/`);
 
 export const useCompleteEvent = () => {
   const queryClient = useQueryClient();
 
-  async function completeEvent(event: Event) {
-    const res = await fetch(`/events/api/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(event),
-    });
-    return res.json();
-  }
+  // async function completeEvent(event: Event) {
+  //   const res = await fetch(`/events/api/`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(event),
+  //   });
+  //   return res.json();
+  // }
 
   return useMutation({
-    mutationFn: completeEvent,
+    mutationFn: apiEvent.completeEvent,
     onMutate: async (updatedEvent) => {
       await queryClient.cancelQueries(["events", updatedEvent.id]);
 
@@ -47,7 +50,7 @@ export const useCompleteEvent = () => {
 
     onSettled: (resData) => {
       queryClient.invalidateQueries({
-        queryKey: ["events", resData.id],
+        queryKey: ["events", resData?.id],
       });
     },
   });

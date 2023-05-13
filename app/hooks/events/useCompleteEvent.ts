@@ -1,14 +1,12 @@
-import APIEvent from "@/app/services/apiEvent";
+import eventService from "@/app/services/eventService";
 import { Event } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-const apiEvent = new APIEvent<Event>(`/events/api/`);
 
 export const useCompleteEvent = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: apiEvent.completeEvent,
+    mutationFn: eventService.completeEvent,
     //* Optimistic update
     onMutate: async (updatedEvent) => {
       await queryClient.cancelQueries(["events", updatedEvent.id]);

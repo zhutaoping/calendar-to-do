@@ -1,13 +1,10 @@
-import { Event } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import APIEvent from "@/app/services/apiEvent";
-
-const apiEvent = new APIEvent<Event>(`/events/api/`);
+import eventService from "@/app/services/eventService";
 
 export const useEvent = (eventId: string) => {
-  return useQuery<Event, Error>({
+  return useQuery({
     queryKey: ["events", eventId],
-    queryFn: ({ signal }) => apiEvent.getEvent(eventId, { signal }),
+    queryFn: ({ signal }) => eventService.getEvent(eventId, { signal }),
     enabled: !!eventId,
     onSuccess: (data) => {
       // console.log("🚀 ~ useEventQuery ~ data:", data);

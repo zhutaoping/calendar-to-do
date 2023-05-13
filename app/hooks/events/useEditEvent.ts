@@ -1,8 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Event } from "@prisma/client";
-import APIEvent from "@/app/services/apiEvent";
-
-const apiEvent = new APIEvent<Event>(`/events/api/`);
+import eventService from "@/app/services/eventService";
 
 interface Props {
   onSuccess: () => void;
@@ -10,7 +7,7 @@ interface Props {
 
 export const useEditEvent = ({ onSuccess }: Props) => {
   return useMutation({
-    mutationFn: apiEvent.editEvent,
+    mutationFn: eventService.editEvent,
     onSuccess,
   });
 };

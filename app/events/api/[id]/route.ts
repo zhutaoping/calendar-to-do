@@ -18,3 +18,22 @@ export async function GET(
 
   return NextResponse.json(event);
 }
+
+export async function DELETE(
+  req: Request,
+  { params: { id } }: { params: { id: string } },
+  res: Response
+) {
+  if (!id) return NextResponse.json({ message: "No id provided" });
+
+  const deletedEvent = await prisma.event.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Event deleted successfully",
+    data: deletedEvent,
+  });
+}

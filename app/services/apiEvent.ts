@@ -1,11 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-// export interface FetchResponse<T> {
-//   count: number;
-//   next: string | null;
-//   results: T[];
-// }
-
 const axiosInstance = axios.create();
 
 class APIEvent<T> {
@@ -16,25 +10,46 @@ class APIEvent<T> {
   }
 
   getEvents = async (config?: AxiosRequestConfig) => {
+    //* Syntax: get(url[, config])
     const { data } = await axiosInstance.get<T[]>(this.endpoint, config);
     return data;
   };
 
-  getEvent = async (id: string, config?: AxiosRequestConfig) => {
+  getEvent = async (eventId: string, config?: AxiosRequestConfig) => {
     const { data } = await axiosInstance.get<T>(
-      `${this.endpoint}/${id}`,
+      `${this.endpoint}/${eventId}`,
       config
     );
     return data;
   };
 
   createEvent = async (data: Partial<T>, config?: AxiosRequestConfig) => {
+    //* Syntax: post(url[, data[, config]])
     const response = await axiosInstance.post<T>(this.endpoint, data, config);
     return response.data;
   };
 
   completeEvent = async (data: T, config?: AxiosRequestConfig) => {
     const response = await axiosInstance.patch<T>(this.endpoint, data, config);
+    return response.data;
+  };
+
+  editEvent = async (data: Partial<T>, config?: AxiosRequestConfig) => {
+    //* Syntax: patch(url[, data[, config]])
+    const response = await axiosInstance.patch<Partial<T>>(
+      this.endpoint,
+      data,
+      config
+    );
+    return response.data;
+  };
+
+  deleteEvent = async (eventId: T, config?: AxiosRequestConfig) => {
+    //* Delete method doesn't accept a body. Syntax: delete(url[, config])
+    const response = await axiosInstance.delete<T>(
+      `${this.endpoint}/${eventId}`,
+      config
+    );
     return response.data;
   };
 }

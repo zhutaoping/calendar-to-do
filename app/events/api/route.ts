@@ -54,20 +54,3 @@ export async function PATCH(req: Request, res: Response) {
 
   return NextResponse.json(updatedEvent);
 }
-
-export async function DELETE(req: Request, res: Response) {
-  const { id } = await req.json();
-
-  if (!id) return NextResponse.json({ message: "No id provided" });
-
-  const deletedEvent = await prisma.event.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  return NextResponse.json({
-    message: "Event deleted successfully",
-    data: deletedEvent,
-  });
-}

@@ -7,19 +7,9 @@ const apiEvent = new APIEvent<Event>(`/events/api/`);
 export const useCompleteEvent = () => {
   const queryClient = useQueryClient();
 
-  // async function completeEvent(event: Event) {
-  //   const res = await fetch(`/events/api/`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(event),
-  //   });
-  //   return res.json();
-  // }
-
   return useMutation({
     mutationFn: apiEvent.completeEvent,
+    //* Optimistic update
     onMutate: async (updatedEvent) => {
       await queryClient.cancelQueries(["events", updatedEvent.id]);
 

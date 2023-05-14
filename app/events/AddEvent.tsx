@@ -2,9 +2,9 @@ import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPlusCircle } from "react-icons/bs";
 import { Event } from "@prisma/client";
-import { useCreateEvent } from "../hooks/events/useCreateEvent";
-import MyTooltip from "../components/MyTooltip";
-import { useAddEventModalStore } from "../store/AddEventModalStore";
+import { useCreateEvent } from "./hooks/useCreateEvent";
+import MyTooltip from "../components/MyTooltip/MyTooltip";
+import { useAddEventModalStore } from "./stores/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 

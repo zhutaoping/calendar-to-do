@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Event } from "@prisma/client";
-import MyTooltip from "../../components/MyTooltip";
+import MyTooltip from "../../components/MyTooltip/MyTooltip";
 
 interface Props {
   evt: Event;

@@ -1,8 +1,8 @@
 import { vi } from "vitest";
-import { customRender } from "../utils/test-customRender";
+import { customRender } from "../../utils/test-customRender";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 interface Props {
   header: string;

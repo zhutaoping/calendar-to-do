@@ -10,7 +10,7 @@ import { useSignUpModalStore } from "../store/SignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
-import { useCreateUser } from "../hooks/users/useCreateUser";
+import { useCreateUser } from "./hooks/useCreateUser";
 
 const schema = z
   .object({

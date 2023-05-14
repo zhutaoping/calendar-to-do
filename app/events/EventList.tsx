@@ -5,13 +5,13 @@ import { useSession } from "next-auth/react";
 import { Event } from "@prisma/client";
 import UpdateEventModal from "./modals/UpdateEventModal";
 // Hooks
-import { useEvents } from "../hooks/events/useEvents";
-import { useEvent } from "../hooks/events/useEvent";
-import { useDeleteEvent } from "../hooks/events/useDeleteEvent";
-import { useCompleteEvent } from "../hooks/events/useCompleteEvent";
-import { useEditEvent } from "../hooks/events/useEditEvent";
+import { useEvents } from "./hooks/useEvents";
+import { useEvent } from "./hooks/useEvent";
+import { useDeleteEvent } from "./hooks/useDeleteEvent";
+import { useCompleteEvent } from "./hooks/useCompleteEvent";
+import { useEditEvent } from "./hooks/useEditEvent";
 import EventItem from "./EventItem";
-import { useUpdateEventModalStore } from "../store/UpdateEventModalStore";
+import { useUpdateEventModalStore } from "./stores/UpdateEventModalStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 const AnimatedEventItem = motion(EventItem);

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Event } from "@prisma/client";
-import { useDayContext } from "../store/DayContext";
+import { useDay } from "../store/DayContext";
 import SubmitButton from "../components/SubmitButton";
 
 const schema = z
@@ -26,7 +26,7 @@ type Props = {
 };
 
 export default function EventForm({ id, event, handleMutateEvent }: Props) {
-  const { activeDate } = useDayContext();
+  const { activeDate } = useDay();
 
   const {
     register,

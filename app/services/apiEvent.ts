@@ -44,9 +44,9 @@ class APIEvent<T> {
     return response.data;
   };
 
-  deleteEvent = async (eventId: Partial<T>, config?: AxiosRequestConfig) => {
+  deleteEvent = async (eventId: string, config?: AxiosRequestConfig) => {
     //* Delete method doesn't accept a body. Syntax: delete(url[, config])
-    const response = await axiosInstance.delete<Partial<T>>(
+    const response = await axiosInstance.delete<T>(
       `${this.endpoint}/${eventId}`,
       config
     );

@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-export interface UpdateEventModalState {
+export interface UpdateEventModalStore {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }
 
-export const useUpdateEventModalStore = create<UpdateEventModalState>()(
+export const useUpdateEventModalStore = create<UpdateEventModalStore>()(
   (set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),

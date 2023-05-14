@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
+import { Event } from "@prisma/client";
 
 export async function GET(
   req: Request,
@@ -24,7 +25,9 @@ export async function DELETE(
   { params: { id } }: { params: { id: string } },
   res: Response
 ) {
-  if (!id) return NextResponse.json({ message: "No id provided" });
+  if (!id) {
+    return NextResponse.json({ message: "No id provided" });
+  }
 
   const deletedEvent = await prisma.event.delete({
     where: {

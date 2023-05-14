@@ -1,10 +1,9 @@
-import { StoreApi, UseBoundStore } from "zustand";
-import { LoginModalState, LoginModalType } from "../store/LoginModalStore";
-import { SignUpModalState, SignUpModalType } from "../store/SignUpModalStore";
+import { LoginModalStore } from "../store/LoginModalStore";
+import { SignUpModalStore } from "../store/SignUpModalStore";
 
 interface Props {
-  loginModal: LoginModalState;
-  signUpModal: SignUpModalState;
+  loginModal: LoginModalStore;
+  signUpModal: SignUpModalStore;
   ask: string;
   action: string;
 }

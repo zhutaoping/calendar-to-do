@@ -23,7 +23,7 @@ export const DayProvider = ({ children }: { children: ReactNode }) => {
   return <DayContext.Provider value={dayStore}>{children}</DayContext.Provider>;
 };
 
-export const useDayContext = () => {
+export const useDay = () => {
   const context = useContext(DayContext);
 
   if (!context) {

@@ -12,11 +12,12 @@ const useDayStore = () => {
   };
 };
 
-export type DayStoreState = ReturnType<typeof useDayStore>;
+export type DayContextType = ReturnType<typeof useDayStore>;
 
-const DayContext = createContext<DayStoreState | null>(null);
+// null doesn't make sense here
+const DayContext = createContext<DayContextType>({} as DayContextType);
 
-const DayProvider = ({ children }: { children: ReactNode }) => {
+export const DayProvider = ({ children }: { children: ReactNode }) => {
   const dayStore = useDayStore();
 
   return <DayContext.Provider value={dayStore}>{children}</DayContext.Provider>;
@@ -31,5 +32,3 @@ export const useDayContext = () => {
 
   return context;
 };
-
-export default DayProvider;

@@ -3,8 +3,8 @@ import LoginModal from "./auth/LoginModal";
 import SignUpModal from "./users/SignUpModal";
 import Calendar from "./components/calendar/Calendar";
 import EventsBoard from "./events/EventsBoard";
-import useSignUpModalStore from "./store/SignUpModalStore";
-import useLoginModalStore from "./store/LoginModalStore";
+import { useSignUpModalStore } from "./store/SignUpModalStore";
+import { useLoginModalStore } from "./store/LoginModalStore";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 
 export default function Home() {

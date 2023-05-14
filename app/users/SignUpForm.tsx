@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
 import { User } from "@prisma/client";
-import useLoginModalStore from "../store/LoginModalStore";
-import useSignUpModalStore from "../store/SignUpModalStore";
+import { useLoginModalStore } from "../store/LoginModalStore";
+import { useSignUpModalStore } from "../store/SignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";

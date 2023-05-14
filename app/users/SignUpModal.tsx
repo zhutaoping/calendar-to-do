@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/app/components/Modal";
-import useSignUpModalStore from "../store/SignUpModalStore";
+import { useSignUpModalStore } from "../store/SignUpModalStore";
 import SignUpForm from "./SignUpForm";
 
 interface Props {

@@ -6,7 +6,7 @@ export interface LoginModalState {
   onClose: () => void;
 }
 
-const useLoginModalStore = create<LoginModalState>()((set) => ({
+export const useLoginModalStore = create<LoginModalState>()((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
@@ -17,5 +17,3 @@ export type LoginModalType = typeof useLoginModalStore extends UseBoundStore<
 >
   ? T
   : never;
-
-export default useLoginModalStore;

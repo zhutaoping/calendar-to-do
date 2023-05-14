@@ -11,7 +11,7 @@ import { useDeleteEvent } from "../hooks/events/useDeleteEvent";
 import { useCompleteEvent } from "../hooks/events/useCompleteEvent";
 import { useEditEvent } from "../hooks/events/useEditEvent";
 import EventItem from "./EventItem";
-import useUpdateEventModalStore from "../store/UpdateEventModalStore";
+import { useUpdateEventModalStore } from "../store/UpdateEventModalStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 
 const AnimatedEventItem = motion(EventItem);

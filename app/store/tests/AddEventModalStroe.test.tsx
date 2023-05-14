@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { vi } from "vitest";
 import { render } from "@testing-library/react";
-import useAddEventModalStore, {
+import {
+  useAddEventModalStore,
   AddEventModalState,
 } from "../AddEventModalStore";
 

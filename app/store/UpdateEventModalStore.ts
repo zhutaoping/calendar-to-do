@@ -6,10 +6,10 @@ export interface UpdateEventModalState {
   onClose: () => void;
 }
 
-const useUpdateEventModalStore = create<UpdateEventModalState>()((set) => ({
-  isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-}));
-
-export default useUpdateEventModalStore;
+export const useUpdateEventModalStore = create<UpdateEventModalState>()(
+  (set) => ({
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false }),
+  })
+);

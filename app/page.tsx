@@ -16,14 +16,14 @@ export default function Home() {
   const requestModal = useRequestModalStore();
   const isSmall = useMediaQuery("(max-width: 768px)");
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-    // return this null to avoid hydration errors
-  }
+  // const [mounted, setMounted] = useState(false);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+  // if (!mounted) {
+  //   return null;
+  //   // return this null to avoid hydration errors
+  // }
 
   return (
     <>

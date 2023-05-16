@@ -11,7 +11,6 @@ import AuthModalFooter from "../components/AuthModalFooter";
 
 import { useSession, signIn } from "next-auth/react";
 import { useRequestModalStore } from "../stores/RequestModalStore";
-import { set } from "date-fns";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),
@@ -25,6 +24,7 @@ type Inputs = z.infer<typeof schema>;
 export default function LoginForm() {
   const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [disabledGithub, setDisabledGithub] = useState(false);
 
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
@@ -73,7 +73,7 @@ export default function LoginForm() {
   };
 
   async function handleGitHubSignIn() {
-    setDisabled(true);
+    setDisabledGithub(true);
 
     await signIn("github", {
       callbackUrl: "http://localhost:3000",
@@ -113,7 +113,7 @@ export default function LoginForm() {
           type="button"
           className="mb-4 flex w-full items-center justify-center gap-2 rounded-md bg-slate-50 py-2 transition-all hover:bg-gray-200 disabled:animate-pulse disabled:cursor-wait"
           onClick={handleGitHubSignIn}
-          disabled={disabled}
+          disabled={disabledGithub}
         >
           Sign In with GitHub{" "}
           <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}

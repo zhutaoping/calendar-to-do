@@ -1,5 +1,5 @@
-import { LoginModalStore } from "../store/LoginModalStore";
-import { SignUpModalStore } from "../store/SignUpModalStore";
+import { LoginModalStore } from "../stores/LoginModalStore";
+import { SignUpModalStore } from "../stores/SignUpModalStore";
 
 interface Props {
   loginModal: LoginModalStore;

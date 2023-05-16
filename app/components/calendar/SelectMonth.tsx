@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { motion } from "framer-motion";
 import { HiCheck } from "react-icons/hi2";
-import { useDay } from "@/app/store/DayContext";
+import { useDay } from "@/app/stores/DayContext";
 
 type Month = {
   id: number;

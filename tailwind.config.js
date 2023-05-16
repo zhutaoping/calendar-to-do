@@ -15,7 +15,6 @@ module.exports = {
         bgTertiary: "var(--bg-tertiary)",
         borderDays: "var(--border-days)",
         otherDays: "var(--other-days)",
-        bgCredits: "var(--bg-credits)",
       },
     },
   },

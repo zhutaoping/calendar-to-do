@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { endOfMonth, getDaysInMonth, startOfMonth } from "date-fns";
 import { useEffect, useRef } from "react";
 
-import { useDay } from "@/app/store/DayContext";
+import { useDay } from "@/app/stores/DayContext";
 import { useEvents } from "../../events/hooks/useEvents";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";

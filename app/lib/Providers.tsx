@@ -1,7 +1,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import { DayProvider } from "../store/DayContext";
+import { DayProvider } from "../stores/DayContext";
 import QueryProvider from "./QueryProvider";
 
 interface Props {

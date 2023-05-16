@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 
 import { User } from "@prisma/client";
-import { useLoginModalStore } from "../store/LoginModalStore";
-import { useSignUpModalStore } from "../store/SignUpModalStore";
+import { useLoginModalStore } from "../stores/LoginModalStore";
+import { useSignUpModalStore } from "../stores/SignUpModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
@@ -55,7 +55,7 @@ export default function SignUpForm({ id, user }: Props) {
 
   const createUserMutation = useCreateUser({
     // data: response from the server
-    // variables: variables passed into the mutate(name, email, password)
+    // variables: variables would passed to mutate(name, email, password)
 
     onSuccess: async (data, variables, context) => {
       setError("");
@@ -118,7 +118,7 @@ export default function SignUpForm({ id, user }: Props) {
           type={show.cPassword ? "text" : "password"}
           icon="HiFingerPrint"
         />
-        <SubmitButton />
+        <SubmitButton title="Submit" />
       </form>
       <AuthModalFooter
         loginModal={loginModal}

@@ -3,13 +3,14 @@ import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSignUpModalStore } from "../store/SignUpModalStore";
-import { useLoginModalStore } from "../store/LoginModalStore";
+import { useSignUpModalStore } from "../stores/SignUpModalStore";
+import { useLoginModalStore } from "../stores/LoginModalStore";
 import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
 
 import { useSession, signIn } from "next-auth/react";
+import { useRequestModalStore } from "../users/stores/RequestModalStore";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),
@@ -24,10 +25,9 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
 
-  const firstInputRef = useRef(null);
-
   const loginModal = useLoginModalStore();
   const signUpModal = useSignUpModalStore();
+  const requestModal = useRequestModalStore();
 
   const { status } = useSession();
 
@@ -88,7 +88,7 @@ export default function LoginForm() {
           placeholder="email"
           register={register}
           errors={errors}
-          type="text"
+          type="email"
           icon="HiAtSymbol"
           autofocus={true}
           ariaLabel="email"
@@ -103,7 +103,7 @@ export default function LoginForm() {
           icon="HiFingerPrint"
           ariaLabel="password"
         />
-        <SubmitButton />
+        <SubmitButton title="Submit" />
       </form>
       <div className="text-sm">
         <button
@@ -116,12 +116,23 @@ export default function LoginForm() {
           <Image src={"/github.svg"} width={18} height={18} alt="GitHub Logo" />{" "}
         </button>
       </div>
-      <AuthModalFooter
-        loginModal={loginModal}
-        signUpModal={signUpModal}
-        ask="First time being here?"
-        action="Sign Up"
-      />
+      <footer>
+        <AuthModalFooter
+          loginModal={loginModal}
+          signUpModal={signUpModal}
+          ask="First time being here?"
+          action="Sign Up"
+        />
+        <button
+          className="mx-auto mt-2 block text-xs text-violet-300"
+          onClick={() => {
+            loginModal.onClose();
+            requestModal.onOpen();
+          }}
+        >
+          Forgot password?
+        </button>
+      </footer>
     </div>
   );
 }

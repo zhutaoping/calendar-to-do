@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import QueryProvider from "@/app/lib/QueryProvider";
 import { SessionProvider } from "next-auth/react";
-import { DayProvider } from "../store/DayContext";
+import { DayProvider } from "../stores/DayContext";
 
 interface Props {
   children: React.ReactNode;

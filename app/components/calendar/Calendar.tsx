@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useDay } from "@/app/store/DayContext";
+import { useDay } from "@/app/stores/DayContext";
 import { useEvents } from "../../events/hooks/useEvents";
 import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";

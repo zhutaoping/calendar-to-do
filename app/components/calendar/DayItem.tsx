@@ -1,6 +1,6 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useDay } from "@/app/store/DayContext";
+import { useDay } from "@/app/stores/DayContext";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 

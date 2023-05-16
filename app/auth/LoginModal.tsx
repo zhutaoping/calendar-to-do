@@ -1,7 +1,7 @@
 "use client";
 import Modal from "../components/Modal";
 import LoginForm from "./LoginForm";
-import { useLoginModalStore } from "../store/LoginModalStore";
+import { useLoginModalStore } from "../stores/LoginModalStore";
 
 interface Props {
   header: string;

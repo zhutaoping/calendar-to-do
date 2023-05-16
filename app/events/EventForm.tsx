@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Event } from "@prisma/client";
-import { useDay } from "../store/DayContext";
+import { useDay } from "../stores/DayContext";
 import SubmitButton from "../components/SubmitButton";
 
 const schema = z
@@ -98,7 +98,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
       {errors.endTime && (
         <p className="text-sm text-red-500">{errors.endTime.message}</p>
       )}
-      <SubmitButton />
+      <SubmitButton title="Submit" />
     </form>
   );
 }

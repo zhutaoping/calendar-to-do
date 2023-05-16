@@ -41,11 +41,11 @@ export async function POST(req: Request, res: Response) {
   try {
     await transporter.sendMail({
       ...mailOptions,
-      subject: "Password Reset",
+      subject: "Calendar-To-Do App Password Reset",
       html: `
       <div>
       <h2>Hello, ${existingUser.name}</h2>
-      <h3>Please follow <a href="${process.env.WEB_URI}/users/forget-password/${securedTokenId}">this link</a> to reset your password.</h3>
+     
       </div>
       `,
     });

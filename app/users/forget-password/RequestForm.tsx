@@ -5,8 +5,8 @@ import { z } from "zod";
 import Input from "../../components/Input";
 import SubmitButton from "../../components/SubmitButton";
 import { useSession } from "next-auth/react";
-import { useRequestModalStore } from "../stores/RequestModalStore";
-import { useRequestReset } from "../hooks/useRequestReset";
+import { useRequestModalStore } from "../../stores/RequestModalStore";
+import { useRequestReset } from "./useRequestReset";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),

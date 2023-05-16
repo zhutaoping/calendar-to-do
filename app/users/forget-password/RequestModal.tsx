@@ -1,7 +1,7 @@
 "use client";
 import Modal from "../../components/Modal";
 import RequestForm from "./RequestForm";
-import { useRequestModalStore } from "../stores/RequestModalStore";
+import { useRequestModalStore } from "../../stores/RequestModalStore";
 
 interface Props {
   header: string;

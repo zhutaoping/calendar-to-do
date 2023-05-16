@@ -7,7 +7,7 @@ import { useLoginModalStore } from "./stores/LoginModalStore";
 import { useSignUpModalStore } from "./stores/SignUpModalStore";
 import RequestModal from "./users/forget-password/RequestModal";
 import SignUpModal from "./users/SignUpModal";
-import { useRequestModalStore } from "./users/stores/RequestModalStore";
+import { useRequestModalStore } from "./stores/RequestModalStore";
 
 export default function Home() {
   const signUpModal = useSignUpModalStore();

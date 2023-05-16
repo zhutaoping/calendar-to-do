@@ -1,13 +1,13 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import Input from "../../../components/Input";
 import SubmitButton from "../../../components/SubmitButton";
-import { useEffect, useState } from "react";
-import { useResetPassword } from "../../hooks/useResetPassword";
-import { useParams, useRouter } from "next/navigation";
-import { useToken } from "../../../token/useToken";
+import { useResetPassword } from "./hooks/useResetPassword";
+import { useToken } from "./hooks/useToken";
 
 const schema = z
   .object({

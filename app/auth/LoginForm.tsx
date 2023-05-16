@@ -10,7 +10,7 @@ import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
 
 import { useSession, signIn } from "next-auth/react";
-import { useRequestModalStore } from "../users/stores/RequestModalStore";
+import { useRequestModalStore } from "../stores/RequestModalStore";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),

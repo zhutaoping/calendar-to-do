@@ -4,7 +4,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import { Event } from "@prisma/client";
 import { useCreateEvent } from "./hooks/useCreateEvent";
 import MyTooltip from "../components/MyTooltip/MyTooltip";
-import { useAddEventModalStore } from "./stores/AddEventModalStore";
+import { useAddEventModalStore } from "../stores/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 

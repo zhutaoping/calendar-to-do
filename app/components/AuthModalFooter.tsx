@@ -15,7 +15,7 @@ export default function AuthModalFooter({
   action,
 }: Props) {
   return (
-    <p className="mt-1 text-center text-xs text-gray-400">
+    <div className="mt-1 text-center text-xs text-gray-400">
       {ask}{" "}
       <button
         type="button"
@@ -31,6 +31,6 @@ export default function AuthModalFooter({
       >
         <span className="text-violet-300">{action}</span>
       </button>
-    </p>
+    </div>
   );
 }

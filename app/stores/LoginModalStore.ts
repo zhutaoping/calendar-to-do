@@ -1,4 +1,3 @@
-import { mountStoreDevtool } from "simple-zustand-devtools";
 import { UseBoundStore, create } from "zustand";
 
 export interface LoginModalStore {
@@ -13,10 +12,6 @@ export const useLoginModalStore = create<LoginModalStore>()((set) => ({
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
-
-if (process.env.NODE_ENV === "development") {
-  mountStoreDevtool("LoginModalStore", useLoginModalStore);
-}
 
 export type LoginModalType = typeof useLoginModalStore extends UseBoundStore<
   infer T

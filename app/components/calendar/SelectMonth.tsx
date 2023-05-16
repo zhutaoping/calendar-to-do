@@ -86,9 +86,9 @@ export default function SelectMonth({ setDirection }: Props) {
                 <span className="block truncate font-normal ui-selected:font-bold">
                   {month.name}
                 </span>
-                <span className="absolute inset-y-0 left-0 hidden items-center pl-3 text-primary ui-selected:flex">
+                <div className="absolute inset-y-0 left-0 hidden items-center pl-3 text-primary ui-selected:flex">
                   <HiCheck className="h-5 w-5" aria-hidden="true" />
-                </span>
+                </div>
               </>
             </Listbox.Option>
           ))}

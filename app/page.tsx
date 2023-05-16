@@ -8,12 +8,21 @@ import { useSignUpModalStore } from "./stores/SignUpModalStore";
 import RequestModal from "./users/forget-password/RequestModal";
 import SignUpModal from "./users/SignUpModal";
 import { useRequestModalStore } from "./stores/RequestModalStore";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const signUpModal = useSignUpModalStore();
   const loginModal = useLoginModalStore();
   const requestModal = useRequestModalStore();
   const isSmall = useMediaQuery("(max-width: 768px)");
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return null; // return this null to avoid hydration errors
+  }
 
   return (
     <>

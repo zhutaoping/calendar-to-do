@@ -21,7 +21,8 @@ export default function Home() {
     setMounted(true);
   }, []);
   if (!mounted) {
-    return null; // return this null to avoid hydration errors
+    return null;
+    // return this null to avoid hydration errors
   }
 
   return (

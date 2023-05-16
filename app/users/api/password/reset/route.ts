@@ -34,7 +34,7 @@ export async function POST(req: Request, res: Response) {
       token: securedTokenId,
       userId: existingUser.id,
       type: "RESET_PASSWORD",
-      // expires: new Date(Date.now() + 1000 * 60 * 20), // 20 minutes
+      expires: new Date(Date.now() + 1000 * 60 * 20), // 20 minutes
     },
   });
 

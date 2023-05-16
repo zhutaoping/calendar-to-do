@@ -6,6 +6,7 @@ import { useDay } from "@/app/stores/DayContext";
 import { useEvents } from "../../events/hooks/useEvents";
 import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";
+import { setDate } from "date-fns";
 
 export default function Calendar() {
   const { isSuccess } = useEvents();
@@ -13,8 +14,13 @@ export default function Calendar() {
 
   const [direction, setDirection] = useState(0);
   const [height, setHeight] = useState<number>(0);
+  const [dateNow, setDateNow] = useState(new Date());
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setDateNow(new Date());
+  }, []);
 
   useEffect(() => {
     if (height && containerRef.current) {
@@ -52,6 +58,16 @@ export default function Calendar() {
     );
     setDirection(-1);
   };
+
+  function handleToToday() {
+    if (dayInView < dateNow) {
+      setDirection(1);
+    } else {
+      setDirection(-1);
+    }
+    setDayInView(dateNow);
+    setActiveDate(dateNow);
+  }
 
   return (
     <div className="wrapper relative m-4 mx-auto h-fit w-fit transition-transform md:ml-4">
@@ -128,16 +144,7 @@ export default function Calendar() {
               className="focus-ring z-20 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              onClick={() => {
-                const d = new Date();
-                if (dayInView < d) {
-                  setDirection(1);
-                } else {
-                  setDirection(-1);
-                }
-                setDayInView(d);
-                setActiveDate(d);
-              }}
+              onClick={handleToToday}
             >
               Today
             </motion.button>

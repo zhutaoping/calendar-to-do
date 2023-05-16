@@ -11,6 +11,7 @@ import Input from "../components/Input";
 import SubmitButton from "../components/SubmitButton";
 import AuthModalFooter from "../components/AuthModalFooter";
 import { useCreateUser } from "./hooks/useCreateUser";
+import { set } from "date-fns";
 
 const schema = z
   .object({
@@ -38,6 +39,7 @@ export default function SignUpForm({ id, user }: Props) {
   const signUpModal = useSignUpModalStore();
 
   const [error, setError] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const [show, setShow] = useState({
     password: false,
@@ -68,11 +70,13 @@ export default function SignUpForm({ id, user }: Props) {
       signUpModal.onClose();
     },
     onError: async (error, variables, context) => {
+      setDisabled(false);
       setError(error.response.data.message);
     },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setDisabled(true);
     createUserMutation.mutate({
       ...data,
     });
@@ -118,7 +122,7 @@ export default function SignUpForm({ id, user }: Props) {
           type={show.cPassword ? "text" : "password"}
           icon="HiFingerPrint"
         />
-        <SubmitButton title="Submit" />
+        <SubmitButton title="Submit" disabled={disabled} />
       </form>
       <AuthModalFooter
         loginModal={loginModal}

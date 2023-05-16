@@ -58,13 +58,9 @@ export default function ResetPasswordTokenPage() {
     );
   }
 
-  if (isError) {
-    console.log("error: ", error);
-  }
-
   if (!currentToken) {
     return (
-      <div className="m-8 grid h-[80vh] max-w-md place-content-center text-white">
+      <div className="m-8 grid h-[90vh] max-w-md place-content-center text-white">
         <h1 className="text-2xl text-red-500">Invalid Link</h1>
         <p>
           It looks like you may have clicked on an invalid link. Please close
@@ -81,11 +77,11 @@ export default function ResetPasswordTokenPage() {
 
   return (
     <div className="grid h-screen place-content-center">
-      {/* {isError && (
+      {isError && (
         <div className="text-sm text-red-500">
-          {anyError.response.data.message}
+          {(error as any).response.data.message}
         </div>
-      )} */}
+      )}
       <form
         className="loginForm mx-4 rounded-lg bg-slate-800 px-12 py-10"
         onSubmit={handleSubmit(onSubmit)}

@@ -11,6 +11,7 @@ import AuthModalFooter from "../components/AuthModalFooter";
 
 import { useSession, signIn } from "next-auth/react";
 import { useRequestModalStore } from "../stores/RequestModalStore";
+import { set } from "date-fns";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),
@@ -51,6 +52,7 @@ export default function LoginForm() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setDisabled(true);
     const result = await signIn("credentials", {
       redirect: false,
       email: data.email,
@@ -61,6 +63,7 @@ export default function LoginForm() {
     // From [...nextauth].ts: throw new Error("No user found");
     if (result?.error) {
       console.log("🚀 ~ loginStatus.error:", result?.error);
+      setDisabled(false);
       setError(result.error);
     }
 
@@ -103,7 +106,7 @@ export default function LoginForm() {
           icon="HiFingerPrint"
           ariaLabel="password"
         />
-        <SubmitButton title="Submit" />
+        <SubmitButton title="Submit" disabled={disabled} />
       </form>
       <div className="text-sm">
         <button

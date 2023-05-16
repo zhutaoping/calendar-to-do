@@ -7,6 +7,7 @@ import SubmitButton from "../../components/SubmitButton";
 import { useSession } from "next-auth/react";
 import { useRequestModalStore } from "../../stores/RequestModalStore";
 import { useRequestReset } from "./useRequestReset";
+import { set } from "date-fns";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email." }),
@@ -21,6 +22,9 @@ export default function RequestForm() {
   const { mutate, isError, error } = useRequestReset({
     onSuccess: () => {
       requestModal.onClose();
+    },
+    onError: (error) => {
+      setDisabled(false);
     },
   });
 

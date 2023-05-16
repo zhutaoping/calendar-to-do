@@ -9,7 +9,7 @@ export async function GET(
   const targetToken = await prisma.token.findUnique({
     where: { token },
   });
-  console.log("🚀 ~ targetToken:", targetToken);
+  // console.log("🚀 ~ targetToken:", targetToken);
 
   if (!targetToken) {
     return new NextResponse(null);

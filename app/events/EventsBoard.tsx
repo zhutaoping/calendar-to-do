@@ -11,7 +11,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import ClientOnly from "../components/ClientOnly";
 
 export default function EventsBoard() {
-  // const [smallScreen, setSmallScreen] = useState(false);
+  const [username, setUsername] = useState("");
 
   const { activeDate } = useDay();
   const signUpModal = useSignUpModalStore();
@@ -49,9 +49,7 @@ export default function EventsBoard() {
   if (status === "authenticated") {
     sessionContent = (
       <div className="flex gap-4">
-        <span className="text-sm text-violet-300">
-          Hi, {session?.user?.name || ""}
-        </span>
+        <span className="text-sm text-violet-300">Hi, {username}</span>
         <button
           type="button"
           onClick={(e) => {
@@ -84,9 +82,7 @@ export default function EventsBoard() {
       <div className="flex flex-col">
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
-          <ClientOnly>
-            <div className="space-x-4 text-sm text-white">{sessionContent}</div>
-          </ClientOnly>
+          <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
         {isSmall && <AddEvent />}
         <EventList activeDate={activeDate} />

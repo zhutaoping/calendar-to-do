@@ -8,7 +8,8 @@ import { useSignUpModalStore } from "./stores/SignUpModalStore";
 import RequestModal from "./users/forget-password/RequestModal";
 import SignUpModal from "./users/SignUpModal";
 import { useRequestModalStore } from "./stores/RequestModalStore";
-import { useEffect, useState } from "react";
+import useHasMounted from "./hooks/useHasMounted";
+import ClientOnly from "./components/ClientOnly";
 
 export default function Home() {
   const signUpModal = useSignUpModalStore();
@@ -16,18 +17,14 @@ export default function Home() {
   const requestModal = useRequestModalStore();
   const isSmall = useMediaQuery("(max-width: 768px)");
 
-  // const [mounted, setMounted] = useState(false);
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-  // if (!mounted) {
+  // const hasMounted = useHasMounted();
+  // if (!hasMounted) {
   //   return null;
-  // return this null to avoid hydration errors
   // }
 
   return (
     <>
-      <main className="blackboard grid  gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">
+      <main className="blackboard grid gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">
         {signUpModal.isOpen && (
           <SignUpModal header="Sign Up" isMobile={isSmall} />
         )}
@@ -35,7 +32,9 @@ export default function Home() {
         {requestModal.isOpen && (
           <RequestModal header="Forget password" isMobile={isSmall} />
         )}
-        <Calendar />
+        <ClientOnly>
+          <Calendar />
+        </ClientOnly>
         <EventsBoard />
       </main>
     </>

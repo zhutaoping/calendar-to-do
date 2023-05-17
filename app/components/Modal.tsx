@@ -31,6 +31,7 @@ const Modal = ({
           focusTrapOptions={{
             // Still need Backdrop onClick to close modal
             clickOutsideDeactivates: true,
+            initialFocus: ".initFocus",
           }}
         >
           <motion.div

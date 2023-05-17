@@ -7,7 +7,7 @@ interface Props {
   id: string;
   event?: Event;
   header: string;
-  handleMutateEvent: (data: Partial<Event>) => void;
+  onMutateEvent: (data: Partial<Event>) => void;
   isMobile: boolean;
 }
 
@@ -15,13 +15,13 @@ export default function UpdateEventModal({
   id,
   event,
   header,
-  handleMutateEvent,
+  onMutateEvent,
   isMobile,
 }: Props) {
   const { onClose } = useUpdateEventModalStore();
 
   const bodyContent = (
-    <EventForm id={id} event={event} handleMutateEvent={handleMutateEvent} />
+    <EventForm id={id} event={event} onMutateEvent={onMutateEvent} />
   );
 
   return (

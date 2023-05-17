@@ -143,7 +143,7 @@ export default function Events({ activeDate }: Props) {
             id={eventId}
             event={event}
             header="Edit Event"
-            handleMutateEvent={handleUpdate}
+            onMutateEvent={handleUpdate}
             isMobile={isSmall}
           />
         )}

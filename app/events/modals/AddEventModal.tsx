@@ -5,14 +5,14 @@ import { useAddEventModalStore } from "../../stores/AddEventModalStore";
 
 interface Props {
   header: string;
-  handleMutateEvent: (data: Partial<Event>) => void;
+  onMutateEvent: (data: Partial<Event>) => void;
   isMobile: boolean;
 }
 
-const AddEventModal = ({ header, handleMutateEvent, isMobile }: Props) => {
+const AddEventModal = ({ header, onMutateEvent, isMobile }: Props) => {
   const { onClose } = useAddEventModalStore();
 
-  const bodyContent = <EventForm handleMutateEvent={handleMutateEvent} />;
+  const bodyContent = <EventForm onMutateEvent={onMutateEvent} />;
 
   return (
     <Modal

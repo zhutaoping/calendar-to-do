@@ -93,8 +93,8 @@ export default function LoginForm() {
           errors={errors}
           type="email"
           icon="HiAtSymbol"
-          autofocus={true}
           ariaLabel="email"
+          myClass="initFocus"
         />
         <Input
           id="password"

@@ -94,7 +94,7 @@ export default function SignUpForm({ id, user }: Props) {
           errors={errors}
           type="text"
           icon="HiOutlineUser"
-          autofocus
+          myClass="initFocus"
         />
         <Input
           id="email"

@@ -11,8 +11,9 @@ interface Props {
   setShow?: React.Dispatch<
     SetStateAction<{ password: boolean; cPassword: boolean }>
   >;
-  autofocus?: boolean;
   ariaLabel?: string;
+  myClass?: string;
+  autofocus?: boolean;
 }
 
 export default function Input({
@@ -23,8 +24,9 @@ export default function Input({
   errors,
   icon,
   setShow,
-  autofocus,
   ariaLabel,
+  myClass,
+  autofocus,
 }: Props) {
   return (
     <>
@@ -33,22 +35,22 @@ export default function Input({
           aria-label={ariaLabel}
           type={type}
           placeholder={placeholder}
-          className="auth-input w-full rounded-md px-3 py-2 text-sm text-black outline-none"
+          className={`auth-input w-full rounded-md px-3 py-2 text-sm text-black outline-none ${myClass}`}
           {...register(id)}
-          autoFocus={autofocus}
+          autoFocus
         />
         {icon === "HiOutlineUser" && (
-          <span className="flex select-none items-center px-3 text-gray-300">
+          <div className="flex select-none items-center px-3 text-gray-300">
             <HiOutlineUser size={16} />
-          </span>
+          </div>
         )}
         {icon === "HiAtSymbol" && (
-          <span className="flex select-none items-center px-3 text-gray-300">
+          <div className="flex select-none items-center px-3 text-gray-300">
             <HiAtSymbol size={16} />
-          </span>
+          </div>
         )}
         {icon === "HiFingerPrint" && (
-          <span className="flex cursor-pointer select-none items-center px-3 text-gray-300">
+          <div className="flex cursor-pointer select-none items-center px-3 text-gray-300">
             <HiFingerPrint
               size={16}
               onClick={() => {
@@ -59,7 +61,7 @@ export default function Input({
                 }
               }}
             />
-          </span>
+          </div>
         )}
       </div>
       {errors[id] && (

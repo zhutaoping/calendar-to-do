@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,10 +22,12 @@ type Inputs = z.infer<typeof schema>;
 type Props = {
   id?: string;
   event?: Event;
-  handleMutateEvent: (data: Partial<Event>) => void;
+  onMutateEvent: (data: Partial<Event>) => void;
 };
 
-export default function EventForm({ id, event, handleMutateEvent }: Props) {
+export default function EventForm({ id, event, onMutateEvent }: Props) {
+  const [disabled, setDisabled] = useState(false);
+
   const { activeDate } = useDay();
 
   const {
@@ -47,12 +49,13 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!activeDate) return;
+    setDisabled(true);
 
     const year = activeDate.getFullYear();
     const month = activeDate.getMonth()! + 1;
     const day = activeDate.getDate();
 
-    handleMutateEvent({
+    onMutateEvent({
       ...data,
       id,
       year,
@@ -67,7 +70,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
         rows={4}
         placeholder="New Event"
         {...register("title")}
-        className="focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
+        className="initFocus focus-ring bg-bgInput mt-4 w-full rounded-md p-2 text-base  text-black focus-visible:ring-0"
         autoFocus
       />
       {errors.title && (
@@ -98,7 +101,7 @@ export default function EventForm({ id, event, handleMutateEvent }: Props) {
       {errors.endTime && (
         <p className="text-sm text-red-500">{errors.endTime.message}</p>
       )}
-      <SubmitButton title="Submit" />
+      <SubmitButton title="Submit" disabled={disabled} />
     </form>
   );
 }

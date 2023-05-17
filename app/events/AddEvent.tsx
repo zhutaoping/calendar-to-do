@@ -50,7 +50,7 @@ export default function AddEvent() {
           <AddEventModal
             key={dateNow}
             header="Add New Event"
-            handleMutateEvent={handleAddEvent}
+            onMutateEvent={handleAddEvent}
             isMobile={isSmall}
           />
         )}

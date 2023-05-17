@@ -4,7 +4,7 @@ import eventService from "@/app/services/eventService";
 export const useEvents = () => {
   return useQuery({
     queryKey: ["events"],
-    queryFn: (signal) => eventService.getEvents(signal),
+    queryFn: ({ signal }) => eventService.getEvents({ signal }),
     onSuccess: (data) => {
       // console.log("🚀 ~ useEventsQuery ~ data:", data);
     },

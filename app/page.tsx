@@ -32,9 +32,7 @@ export default function Home() {
         {requestModal.isOpen && (
           <RequestModal header="Forget password" isMobile={isSmall} />
         )}
-        <ClientOnly>
-          <Calendar />
-        </ClientOnly>
+        <Calendar />
         <EventsBoard />
       </main>
     </>

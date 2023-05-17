@@ -7,6 +7,7 @@ import { useEvents } from "../../events/hooks/useEvents";
 import DaysContent from "./DaysContent";
 import SelectMonth from "./SelectMonth";
 import { setDate } from "date-fns";
+import ClientOnly from "../ClientOnly";
 
 export default function Calendar() {
   const { isSuccess } = useEvents();
@@ -71,7 +72,7 @@ export default function Calendar() {
 
   return (
     <div className="wrapper relative m-4 mx-auto h-fit w-fit transition-transform md:ml-4">
-      <div className="calendar col-span-1 min-h-[360px] overflow-hidden rounded-md bg-white p-6 sm:min-h-[420px] md:my-0 md:ml-0 md:min-h-[500px] md:min-w-fit lg:min-h-[550px] xl:min-h-[600px]">
+      <div className="calendar sm:min-h-[420px] md:min-h-[500px] lg:min-h-[550px] xl:min-h-[600px] col-span-1 min-h-[360px] overflow-hidden rounded-md bg-white p-6 md:my-0 md:ml-0 md:min-w-fit">
         <div className="text-textOnPrimary flex items-center justify-between">
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -119,15 +120,17 @@ export default function Calendar() {
         </div>
         {/* Days Of Month */}
         <div ref={containerRef} className="slide-container relative">
-          <DaysContent
-            direction={direction}
-            handleChevronLeft={handleChevronLeft}
-            handleChevronRight={handleChevronRight}
-            height={height}
-            setHeight={setHeight}
-            handleDaysOfNextMonth={handleDaysOfNextMonth}
-            handleDaysOfLastMonth={handleDaysOfLastMonth}
-          />
+          <ClientOnly>
+            <DaysContent
+              direction={direction}
+              handleChevronLeft={handleChevronLeft}
+              handleChevronRight={handleChevronRight}
+              height={height}
+              setHeight={setHeight}
+              handleDaysOfNextMonth={handleDaysOfNextMonth}
+              handleDaysOfLastMonth={handleDaysOfLastMonth}
+            />
+          </ClientOnly>
         </div>
         {isSuccess && (
           <motion.footer

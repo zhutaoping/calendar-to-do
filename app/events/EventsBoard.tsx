@@ -8,10 +8,11 @@ import AddEvent from "./AddEvent";
 import { useSignUpModalStore } from "../stores/SignUpModalStore";
 import { useLoginModalStore } from "../stores/LoginModalStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import ClientOnly from "../components/ClientOnly";
+import useHasMounted from "../hooks/useHasMounted";
 
 export default function EventsBoard() {
-  const [username, setUsername] = useState("");
+  const hasMounted = useHasMounted();
+  if (!hasMounted) return null;
 
   const { activeDate } = useDay();
   const signUpModal = useSignUpModalStore();
@@ -69,10 +70,10 @@ export default function EventsBoard() {
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
-        {/* {isSmall && <AddEvent />} */}
-        {/* <EventList activeDate={activeDate} /> */}
+        {isSmall && <AddEvent />}
+        <EventList activeDate={activeDate} />
       </div>
-      {/* {!isSmall && <AddEvent />} */}
+      {!isSmall && <AddEvent />}
     </div>
   );
 }

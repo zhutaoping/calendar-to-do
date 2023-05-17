@@ -86,12 +86,20 @@ export default function EventsBoard() {
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
-        {isSmall && <AddEvent />}
+        {isSmall && (
+          <ClientOnly>
+            <AddEvent />
+          </ClientOnly>
+        )}
         <ClientOnly>
           <EventList activeDate={activeDate} />
         </ClientOnly>
       </div>
-      {!isSmall && <AddEvent />}
+      {!isSmall && (
+        <ClientOnly>
+          <AddEvent />
+        </ClientOnly>
+      )}
     </div>
   );
 }

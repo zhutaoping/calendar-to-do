@@ -8,6 +8,7 @@ import AddEvent from "./AddEvent";
 import { useSignUpModalStore } from "../stores/SignUpModalStore";
 import { useLoginModalStore } from "../stores/LoginModalStore";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import ClientOnly from "../components/ClientOnly";
 
 export default function EventsBoard() {
   // const [smallScreen, setSmallScreen] = useState(false);
@@ -90,10 +91,18 @@ export default function EventsBoard() {
             </span> */}
           </div>
         </div>
-        {isSmall && <AddEvent />}
+        {isSmall && (
+          <ClientOnly>
+            <AddEvent />
+          </ClientOnly>
+        )}
         <EventList activeDate={activeDate} />
       </div>
-      {!isSmall && <AddEvent />}
+      {!isSmall && (
+        <ClientOnly>
+          <AddEvent />
+        </ClientOnly>
+      )}
     </div>
   );
 }

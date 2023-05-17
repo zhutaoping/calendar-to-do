@@ -12,34 +12,34 @@ export const useCreateEvent = () => {
   return useMutation<Event, Error, Partial<Event>, AddEventContext>({
     mutationFn: eventService.createEvent,
     onSuccess: (data, variables, context) => {
-      // queryClient.invalidateQueries(["events"]);
+      queryClient.invalidateQueries(["events"]);
     },
     //* Optimistic update
-    onMutate: async (newEvent) => {
-      await queryClient.cancelQueries({ queryKey: ["events"] });
+    //   onMutate: async (newEvent) => {
+    //     await queryClient.cancelQueries({ queryKey: ["events"] });
 
-      const previousEvents =
-        queryClient.getQueryData<Event[]>(["events"]) || [];
+    //     const previousEvents =
+    //       queryClient.getQueryData<Event[]>(["events"]) || [];
 
-      queryClient.setQueryData<Event[]>(["events"], (old = []) => [
-        ...old,
-        newEvent as Event,
-      ]);
+    //     queryClient.setQueryData<Event[]>(["events"], (old = []) => [
+    //       ...old,
+    //       newEvent as Event,
+    //     ]);
 
-      return { previousEvents };
-    },
+    //     return { previousEvents };
+    //   },
 
-    onError: (error, newEvent, context) => {
-      if (!context?.previousEvents) return;
+    //   onError: (error, newEvent, context) => {
+    //     if (!context?.previousEvents) return;
 
-      queryClient.setQueryData(["events"], context?.previousEvents);
-    },
+    //     queryClient.setQueryData(["events"], context?.previousEvents);
+    //   },
 
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["events"],
-      });
-    },
+    //   onSettled: () => {
+    //     queryClient.invalidateQueries({
+    //       queryKey: ["events"],
+    //     });
+    //   },
+    // });
   });
-  // });
 };

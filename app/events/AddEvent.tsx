@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsPlusCircle } from "react-icons/bs";

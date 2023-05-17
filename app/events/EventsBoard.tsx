@@ -29,19 +29,6 @@ export default function EventsBoard() {
 
   const isSmall = useMediaQuery("(max-width: 768px)");
 
-  // useEffect(() => {
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-  // });
-
-  // function handleResize() {
-  //   if (window.innerWidth < 768) {
-  //     setSmallScreen(true);
-  //   } else {
-  //     setSmallScreen(false);
-  //   }
-  // }
-
   let sessionContent;
   if (status === "loading") {
     sessionContent = <div>Hang in there...</div>;
@@ -49,7 +36,9 @@ export default function EventsBoard() {
   if (status === "authenticated") {
     sessionContent = (
       <div className="flex gap-4">
-        <span className="text-sm text-violet-300">Hi, {username}</span>
+        <span className="text-sm text-violet-300">
+          Hi, {session?.user?.name || ""}
+        </span>
         <button
           type="button"
           onClick={(e) => {

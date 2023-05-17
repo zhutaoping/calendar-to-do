@@ -13,7 +13,6 @@ interface Props {
   >;
   ariaLabel?: string;
   myClass?: string;
-  autofocus?: boolean;
 }
 
 export default function Input({
@@ -26,7 +25,6 @@ export default function Input({
   setShow,
   ariaLabel,
   myClass,
-  autofocus,
 }: Props) {
   return (
     <>
@@ -35,9 +33,8 @@ export default function Input({
           aria-label={ariaLabel}
           type={type}
           placeholder={placeholder}
-          className={`auth-input w-full rounded-md px-3 py-2 text-sm text-black outline-none ${myClass}`}
+          className={` ${myClass} auth-input w-full rounded-md px-3 py-2 text-sm text-black outline-none`}
           {...register(id)}
-          autoFocus
         />
         {icon === "HiOutlineUser" && (
           <div className="flex select-none items-center px-3 text-gray-300">

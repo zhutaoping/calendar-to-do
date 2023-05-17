@@ -61,8 +61,8 @@ export default function RequestForm() {
           register={register}
           errors={errors}
           type="email"
-          autofocus={true}
           ariaLabel="email"
+          myClass="initFocus"
         />
         <SubmitButton title="Send Reset Link" disabled={disabled} />
       </form>

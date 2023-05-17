@@ -7,9 +7,10 @@ import EventList from "./EventList";
 import AddEvent from "./AddEvent";
 import { useSignUpModalStore } from "../stores/SignUpModalStore";
 import { useLoginModalStore } from "../stores/LoginModalStore";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 export default function EventsBoard() {
-  const [smallScreen, setSmallScreen] = useState(false);
+  // const [smallScreen, setSmallScreen] = useState(false);
 
   const { activeDate } = useDay();
   const signUpModal = useSignUpModalStore();
@@ -25,18 +26,20 @@ export default function EventsBoard() {
   //   ? format(activeDate, "d MMMM yyyy")
   //   : format(new Date(), "d MMMM yyyy");
 
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-  });
+  const isSmall = useMediaQuery("(max-width: 768px)");
 
-  function handleResize() {
-    if (window.innerWidth < 768) {
-      setSmallScreen(true);
-    } else {
-      setSmallScreen(false);
-    }
-  }
+  // useEffect(() => {
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  // });
+
+  // function handleResize() {
+  //   if (window.innerWidth < 768) {
+  //     setSmallScreen(true);
+  //   } else {
+  //     setSmallScreen(false);
+  //   }
+  // }
 
   let sessionContent;
   if (status === "loading") {
@@ -87,10 +90,10 @@ export default function EventsBoard() {
             </span> */}
           </div>
         </div>
-        {smallScreen && <AddEvent />}
+        {isSmall && <AddEvent />}
         <EventList activeDate={activeDate} />
       </div>
-      {!smallScreen && <AddEvent />}
+      {!isSmall && <AddEvent />}
     </div>
   );
 }

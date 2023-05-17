@@ -23,10 +23,6 @@ export default function EventsBoard() {
     ? format(activeDate, "EEEE")
     : format(new Date(), "EEEE");
 
-  // const dayOfMonth = activeDate
-  //   ? format(activeDate, "d MMMM yyyy")
-  //   : format(new Date(), "d MMMM yyyy");
-
   const isSmall = useMediaQuery("(max-width: 768px)");
 
   let sessionContent;
@@ -71,9 +67,9 @@ export default function EventsBoard() {
       <div className="flex flex-col">
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
-          <div className="space-x-4 text-sm text-white">
-            <ClientOnly>{sessionContent}</ClientOnly>
-          </div>
+          <ClientOnly>
+            <div className="space-x-4 text-sm text-white">{sessionContent}</div>
+          </ClientOnly>
         </div>
         {isSmall && <AddEvent />}
         <ClientOnly>

@@ -9,6 +9,7 @@ import { useAddEventModalStore } from "../stores/AddEventModalStore";
 import AddEventModal from "./modals/AddEventModal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useEffect, useState } from "react";
+import ClientOnly from "../components/ClientOnly";
 
 export default function AddEvent() {
   const createEventMutation = useCreateEvent();
@@ -34,28 +35,30 @@ export default function AddEvent() {
   };
 
   return (
-    <div>
-      <MyTooltip title="Add New Event">
-        <motion.button
-          className="add-btn focus-ring mx-auto my-4 flex focus-visible:ring-0 md:absolute md:bottom-4 md:left-1/2"
-          onClick={() => onOpen()}
-          type="button"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <BsPlusCircle color="white" size={30} />
-        </motion.button>
-      </MyTooltip>
-      <AnimatePresence>
-        {isOpen && (
-          <AddEventModal
-            key={dateNow}
-            header="Add New Event"
-            onMutateEvent={handleAddEvent}
-            isMobile={isSmall}
-          />
-        )}
-      </AnimatePresence>
-    </div>
+    <ClientOnly>
+      <div>
+        <MyTooltip title="Add New Event">
+          <motion.button
+            className="add-btn focus-ring mx-auto my-4 flex focus-visible:ring-0 md:absolute md:bottom-4 md:left-1/2"
+            onClick={() => onOpen()}
+            type="button"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <BsPlusCircle color="white" size={30} />
+          </motion.button>
+        </MyTooltip>
+        <AnimatePresence>
+          {isOpen && (
+            <AddEventModal
+              key={dateNow}
+              header="Add New Event"
+              onMutateEvent={handleAddEvent}
+              isMobile={isSmall}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+    </ClientOnly>
   );
 }

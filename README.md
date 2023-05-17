@@ -8,8 +8,6 @@
 
 # 功能 / User Stories
 
-網頁應用具下述功能:
-
 - [x] 使用者可選擇註冊後使用
 - [x] You can register and login
 - [x] 連結 MongoDB Atlas，享受雲端的便利

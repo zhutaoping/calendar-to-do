@@ -11,9 +11,6 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import useHasMounted from "../hooks/useHasMounted";
 
 export default function EventsBoard() {
-  const hasMounted = useHasMounted();
-  if (!hasMounted) return null;
-
   const { activeDate } = useDay();
   const signUpModal = useSignUpModalStore();
   const loginModal = useLoginModalStore();
@@ -25,6 +22,9 @@ export default function EventsBoard() {
     : format(new Date(), "EEEE");
 
   const isSmall = useMediaQuery("(max-width: 768px)");
+
+  const hasMounted = useHasMounted();
+  if (!hasMounted) return null;
 
   let sessionContent;
   if (status === "loading") {

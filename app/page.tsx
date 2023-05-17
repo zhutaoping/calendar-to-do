@@ -27,11 +27,6 @@ export default function Home() {
     setDateNow(Date.now().toString());
   }, [loginModal.isOpen, signUpModal.isOpen, requestModal.isOpen]);
 
-  // const hasMounted = useHasMounted();
-  // if (!hasMounted) {
-  //   return null;
-  // }
-
   return (
     <>
       <main className="blackboard grid gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">

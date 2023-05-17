@@ -90,11 +90,7 @@ const DaysContent = ({
   }
   // This month
   for (let i = 0; i < daysInMonth; i++) {
-    content.push(
-      // <ClientOnly key={i + 31}>
-      <DayItem key={i + 32} i={i} events={events} />
-      // </ClientOnly>
-    );
+    content.push(<DayItem key={i + 32} i={i} events={events} />);
   }
   // Next month
   for (let i = 0; i < 6 - endDay; i++) {
@@ -151,7 +147,7 @@ export default DaysContent;
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 200 : -200,
+      x: direction > 0 ? 600 : -600,
       opacity: 0,
     };
   },
@@ -163,7 +159,7 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 200 : -200,
+      x: direction < 0 ? 600 : -600,
       opacity: 0,
     };
   },

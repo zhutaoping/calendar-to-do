@@ -44,7 +44,7 @@ export default function EventsBoard() {
 
   let sessionContent;
   if (status === "loading") {
-    sessionContent = <div>Hang on there...</div>;
+    sessionContent = <div>Hang in there...</div>;
   }
   if (status === "authenticated") {
     sessionContent = (
@@ -84,25 +84,14 @@ export default function EventsBoard() {
       <div className="flex flex-col">
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
-          <div className="space-x-4 text-sm text-white">
-            {sessionContent}
-            {/* <span className="ml-4 hidden text-sm text-textOnCalendar lg:inline-block">
-              {dayOfMonth}
-            </span> */}
-          </div>
+          <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
-        {isSmall && (
-          <ClientOnly>
-            <AddEvent />
-          </ClientOnly>
-        )}
-        <EventList activeDate={activeDate} />
-      </div>
-      {!isSmall && (
+        {isSmall && <AddEvent />}
         <ClientOnly>
-          <AddEvent />
+          <EventList activeDate={activeDate} />
         </ClientOnly>
-      )}
+      </div>
+      {!isSmall && <AddEvent />}
     </div>
   );
 }

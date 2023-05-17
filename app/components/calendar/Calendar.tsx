@@ -120,17 +120,15 @@ export default function Calendar() {
         </div>
         {/* Days Of Month */}
         <div ref={containerRef} className="slide-container relative">
-          <ClientOnly>
-            <DaysContent
-              direction={direction}
-              handleChevronLeft={handleChevronLeft}
-              handleChevronRight={handleChevronRight}
-              height={height}
-              setHeight={setHeight}
-              handleDaysOfNextMonth={handleDaysOfNextMonth}
-              handleDaysOfLastMonth={handleDaysOfLastMonth}
-            />
-          </ClientOnly>
+          <DaysContent
+            direction={direction}
+            handleChevronLeft={handleChevronLeft}
+            handleChevronRight={handleChevronRight}
+            height={height}
+            setHeight={setHeight}
+            handleDaysOfNextMonth={handleDaysOfNextMonth}
+            handleDaysOfLastMonth={handleDaysOfLastMonth}
+          />
         </div>
         {isSuccess && (
           <motion.footer

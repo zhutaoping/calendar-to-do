@@ -7,6 +7,7 @@ import { useEvents } from "../../events/hooks/useEvents";
 import { Event } from "@prisma/client";
 import { checkHasEvent } from "@/app/utils/checkHasEvent";
 import DayItem from "./DayItem";
+import ClientOnly from "../ClientOnly";
 
 interface Props {
   handleDaysOfNextMonth: (day: number) => void;
@@ -89,7 +90,11 @@ const DaysContent = ({
   }
   // This month
   for (let i = 0; i < daysInMonth; i++) {
-    content.push(<DayItem key={i + 32} i={i} events={events} />);
+    content.push(
+      // <ClientOnly key={i + 31}>
+      <DayItem key={i + 32} i={i} events={events} />
+      // </ClientOnly>
+    );
   }
   // Next month
   for (let i = 0; i < 6 - endDay; i++) {

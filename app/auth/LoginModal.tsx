@@ -8,7 +8,7 @@ interface Props {
   isMobile: boolean;
 }
 
-export default function LoginModal({ header, isMobile }: Props) {
+const LoginModal = ({ header, isMobile }: Props) => {
   const { onClose } = useLoginModalStore();
 
   const bodyContent = <LoginForm />;
@@ -22,4 +22,5 @@ export default function LoginModal({ header, isMobile }: Props) {
       isMobile={isMobile}
     />
   );
-}
+};
+export default LoginModal;

@@ -10,12 +10,22 @@ import SignUpModal from "./users/SignUpModal";
 import { useRequestModalStore } from "./stores/RequestModalStore";
 import useHasMounted from "./hooks/useHasMounted";
 import ClientOnly from "./components/ClientOnly";
+import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [dateNow, setDateNow] = useState("");
+
   const signUpModal = useSignUpModalStore();
   const loginModal = useLoginModalStore();
   const requestModal = useRequestModalStore();
+
   const isSmall = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    setDateNow(Date.now().toString());
+  }, [loginModal.isOpen, signUpModal.isOpen, requestModal.isOpen]);
 
   // const hasMounted = useHasMounted();
   // if (!hasMounted) {
@@ -25,13 +35,21 @@ export default function Home() {
   return (
     <>
       <main className="blackboard grid gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">
-        {signUpModal.isOpen && (
-          <SignUpModal header="Sign Up" isMobile={isSmall} />
-        )}
-        {loginModal.isOpen && <LoginModal header="Log In" isMobile={isSmall} />}
-        {requestModal.isOpen && (
-          <RequestModal header="Forget password" isMobile={isSmall} />
-        )}
+        <AnimatePresence>
+          {signUpModal.isOpen && (
+            <SignUpModal key={dateNow} header="Sign Up" isMobile={isSmall} />
+          )}
+          {loginModal.isOpen && (
+            <LoginModal key={dateNow} header="Log In" isMobile={isSmall} />
+          )}
+          {requestModal.isOpen && (
+            <RequestModal
+              key={dateNow}
+              header="Forgot Password"
+              isMobile={true}
+            />
+          )}
+        </AnimatePresence>
         <Calendar />
         <EventsBoard />
       </main>

@@ -154,7 +154,7 @@ export default function Events({ activeDate }: Props) {
         variants={variants}
         initial="initial"
         animate="animate"
-        className={`event-list mb-8 overflow-y-auto text-textOnCalendar md:mb-0 md:max-h-[380px] lg:max-h-[420px] xl:max-h-[475px]`}
+        className={`event-list mb-8 text-textOnCalendar md:mb-0 md:max-h-[380px] md:overflow-y-auto lg:max-h-[420px] xl:max-h-[475px]`}
       >
         <AnimatePresence mode="popLayout">
           {sortedEvents.map((evt, index) => (

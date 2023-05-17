@@ -10,6 +10,7 @@ import AddEventModal from "./modals/AddEventModal";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useEffect, useState } from "react";
 import ClientOnly from "../components/ClientOnly";
+import useHasMounted from "../hooks/useHasMounted";
 
 export default function AddEvent() {
   const createEventMutation = useCreateEvent();
@@ -20,6 +21,11 @@ export default function AddEvent() {
 
   const { data: session } = useSession();
   const userId = session?.user?.id || null;
+
+  // const hasMounted = useHasMounted();
+  // if (!hasMounted) {
+  //   return null;
+  // }
 
   useEffect(() => {
     setDateNow(Date.now().toString());

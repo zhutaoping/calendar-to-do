@@ -67,16 +67,12 @@ export default function EventsBoard() {
       <div className="flex flex-col">
         <div className="flex items-baseline justify-between px-8 pt-4 md:px-10 md:py-6">
           <span className="text-xl text-white">{dayOfWeek}</span>
-          <ClientOnly>
-            <div className="space-x-4 text-sm text-white">{sessionContent}</div>
-          </ClientOnly>
+          <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
-        {isSmall && <AddEvent />}
-        <ClientOnly>
-          <EventList activeDate={activeDate} />
-        </ClientOnly>
+        {/* {isSmall && <AddEvent />} */}
+        {/* <EventList activeDate={activeDate} /> */}
       </div>
-      {!isSmall && <AddEvent />}
+      {/* {!isSmall && <AddEvent />} */}
     </div>
   );
 }

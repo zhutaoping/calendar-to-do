@@ -50,8 +50,8 @@ export default function Home() {
             />
           )}
         </AnimatePresence>
+        <Calendar />
         <ClientOnly>
-          <Calendar />
           <EventsBoard />
         </ClientOnly>
       </main>

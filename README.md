@@ -14,6 +14,7 @@
 - [x] 新增，讀取，修改，刪除清單項目
 - [x] 滑動選取月分，或使用下拉選單
 - [x] 響應式設計，桌機，手機階適用
+
 - [x] You can register and login
 - [x] Use MongoDB Atlas as a data service
 - [x] You can request a password reset

@@ -33,6 +33,6 @@
 - React Hook Form / Zod
 - Framer Motion
 - Axios
-- Nodemailer
-- data-fns / bcrypt /
 - Headless UI / Radix UI
+- Nodemailer
+- data-fns / bcrypt

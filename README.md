@@ -9,8 +9,6 @@ Modern calendar with an animated to-do list
 
 # 功能 / User Stories
 
-# 功能 / User Stories
-
 - [x] 使用者可選擇註冊後使用
 - [x] 連結 MongoDB Atlas，享受雲端的便利
 - [x] 忘記密碼時，可要求重置密碼
@@ -23,8 +21,6 @@ Modern calendar with an animated to-do list
 - [x] Implement CRUD Functionality
 - [x] Swipe to next/previous month or use dropdown menu
 - [x] Responsive design for mobile and desktop
-
-# 工具 / Technologies
 
 # 工具 / Technologies
 

@@ -9,7 +9,7 @@
 # 功能 / User Stories
 
 - [x] 使用者可選擇註冊後使用
-      / You can register and login
+      You can register and login
 - [x] 連結 MongoDB Atlas，享受雲端的便利
 - [x] Use MongoDB Atlas as a data service
 - [x] 忘記密碼時，可要求重置密碼

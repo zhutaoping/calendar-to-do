@@ -6,6 +6,7 @@ import CredentialProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/app/lib/prisma";
 import { User } from "@prisma/client";
+import { randomBytes, randomUUID } from "crypto";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -35,21 +36,21 @@ export const authOptions: NextAuthOptions = {
         if (!isValid) {
           throw new Error("Invalid password");
         }
-        console.log("Authenticated user: ", user);
         return user;
       },
     }),
   ],
   callbacks: {
     jwt({ token, user }) {
-      // means user just logged in)
+      // means user just logged in
       if (user) {
         const u = user as unknown as User;
         return {
           ...token,
-          id: u.id,
+          // id: u.id,
         };
       }
+      // console.log("token: ", token);
       return token;
     },
     async session({ session, token }) {
@@ -58,7 +59,7 @@ export const authOptions: NextAuthOptions = {
           ...session,
           user: {
             ...session.user,
-            id: token.id,
+            id: token.sub,
           },
         };
       }
@@ -66,12 +67,18 @@ export const authOptions: NextAuthOptions = {
     },
   },
   session: {
-    strategy: "jwt", // "database" is the default
+    //! database is disabled here by next-auth!?
+    strategy: "jwt",
+    maxAge: 60 * 60, // 1 hour
+    // generateSessionToken: () => {
+    //   return randomUUID?.() ?? randomBytes(32).toString("hex");
+    // },
   },
-  // jwt: {
-  //   secret: process.env.NEXTAUTH_JWT_SECRET, // for signing tokens
-  // },
-  // secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    // for signing tokens
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

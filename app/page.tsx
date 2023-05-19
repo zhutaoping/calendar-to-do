@@ -1,17 +1,15 @@
 "use client";
+import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import LoginModal from "./auth/LoginModal";
 import Calendar from "./components/calendar/Calendar";
 import EventsBoard from "./events/EventsBoard";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 import { useLoginModalStore } from "./stores/LoginModalStore";
-import { useSignUpModalStore } from "./stores/SignUpModalStore";
-import RequestModal from "./users/forget-password/RequestModal";
-import SignUpModal from "./users/SignUpModal";
 import { useRequestModalStore } from "./stores/RequestModalStore";
-import useHasMounted from "./hooks/useHasMounted";
-import ClientOnly from "./components/ClientOnly";
-import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useSignUpModalStore } from "./stores/SignUpModalStore";
+import SignUpModal from "./users/SignUpModal";
+import RequestModal from "./users/forget-password/RequestModal";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);

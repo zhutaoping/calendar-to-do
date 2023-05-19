@@ -3,11 +3,11 @@
 清爽月曆搭配動感清單
 Modern calendar with an animated to-do list
 
-# 連結 / Links
+## 連結 / Links
 
 - Live Demo: [https://calendar-to-do.vercel.app/]
 
-# 功能 / User Stories
+## 功能 / User Stories
 
 - [x] 使用者可選擇註冊後使用
 - [x] 連結 MongoDB Atlas，享受雲端的便利
@@ -22,7 +22,7 @@ Modern calendar with an animated to-do list
 - [x] Swipe to next/previous month or use dropdown menu
 - [x] Responsive design for mobile and desktop
 
-# 工具 / Technologies
+## 工具 / Technologies
 
 - Next.js / React.js
 - TypeScript / JavaScript

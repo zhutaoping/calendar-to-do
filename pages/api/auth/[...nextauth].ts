@@ -74,10 +74,10 @@ export const authOptions: NextAuthOptions = {
     //   return randomUUID?.() ?? randomBytes(32).toString("hex");
     // },
   },
-  jwt: {
-    // for signing tokens
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
+  // jwt: {
+  //   // for signing tokens
+  //   secret: process.env.NEXTAUTH_JWT_SECRET,
+  // },
   secret: process.env.NEXTAUTH_SECRET,
 };
 

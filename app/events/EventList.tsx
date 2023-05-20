@@ -1,26 +1,24 @@
 'use client'
-import { MouseEvent, useEffect, useState } from 'react'
+import { Event } from '@prisma/client'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   AnimatePresence,
-  AnimationControls,
-  animationControls,
   motion,
   stagger,
-  useAnimate,
+  useAnimate
 } from 'framer-motion'
 import { useSession } from 'next-auth/react'
-import { Event } from '@prisma/client'
+import { MouseEvent, useEffect, useState } from 'react'
 import UpdateEventModal from './modals/UpdateEventModal'
 // Hooks
-import { useEvents } from './hooks/useEvents'
-import { useEvent } from './hooks/useEvent'
-import { useDeleteEvent } from './hooks/useDeleteEvent'
-import { useCompleteEvent } from './hooks/useCompleteEvent'
-import { useEditEvent } from './hooks/useEditEvent'
-import EventItem from './EventItem'
-import { useUpdateEventModalStore } from '../stores/UpdateEventModalStore'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { useUpdateEventModalStore } from '../stores/UpdateEventModalStore'
+import EventItem from './EventItem'
+import { useCompleteEvent } from './hooks/useCompleteEvent'
+import { useDeleteEvent } from './hooks/useDeleteEvent'
+import { useEditEvent } from './hooks/useEditEvent'
+import { useEvent } from './hooks/useEvent'
+import { useEvents } from './hooks/useEvents'
 
 const AnimatedEventItem = motion(EventItem)
 

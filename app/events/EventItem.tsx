@@ -11,7 +11,7 @@ interface Props {
   evt: Event
   index: number
   handleClick: (evt: Event) => void
-  handleCompleted: (e: React.MouseEvent, evt: Event) => void
+  handleCompleted: (e: React.MouseEvent, evt: Event, index: number) => void
   handleDelete: (e: React.MouseEvent, id: string) => void
 }
 

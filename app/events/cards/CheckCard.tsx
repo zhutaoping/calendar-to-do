@@ -4,7 +4,7 @@ import MyTooltip from '../../components/MyTooltip/MyTooltip'
 
 interface Props {
   evt: Event
-  handleCompleted: (e: React.MouseEvent, evt: Event) => void
+  handleCompleted: (e: React.MouseEvent, evt: Event, index: number) => void
   handleChip: (e: any) => void
   index: number
 }

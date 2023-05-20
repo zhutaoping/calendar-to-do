@@ -1,91 +1,125 @@
-"use client";
-import { MouseEvent, useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
-import { Event } from "@prisma/client";
-import UpdateEventModal from "./modals/UpdateEventModal";
+'use client'
+import { MouseEvent, useEffect, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import {
+  AnimatePresence,
+  AnimationControls,
+  animationControls,
+  motion,
+  stagger,
+  useAnimate,
+} from 'framer-motion'
+import { useSession } from 'next-auth/react'
+import { Event } from '@prisma/client'
+import UpdateEventModal from './modals/UpdateEventModal'
 // Hooks
-import { useEvents } from "./hooks/useEvents";
-import { useEvent } from "./hooks/useEvent";
-import { useDeleteEvent } from "./hooks/useDeleteEvent";
-import { useCompleteEvent } from "./hooks/useCompleteEvent";
-import { useEditEvent } from "./hooks/useEditEvent";
-import EventItem from "./EventItem";
-import { useUpdateEventModalStore } from "../stores/UpdateEventModalStore";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useEvents } from './hooks/useEvents'
+import { useEvent } from './hooks/useEvent'
+import { useDeleteEvent } from './hooks/useDeleteEvent'
+import { useCompleteEvent } from './hooks/useCompleteEvent'
+import { useEditEvent } from './hooks/useEditEvent'
+import EventItem from './EventItem'
+import { useUpdateEventModalStore } from '../stores/UpdateEventModalStore'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
-const AnimatedEventItem = motion(EventItem);
+const AnimatedEventItem = motion(EventItem)
 
 interface Props {
-  activeDate: Date | null;
+  activeDate: Date | null
 }
 
 export default function Events({ activeDate }: Props) {
-  const { isOpen, onClose, onOpen } = useUpdateEventModalStore();
-  const [eventId, setEventId] = useState("");
-  const [eventList, setEventList] = useState<Event[]>([]);
-  const [dateNow, setDateNow] = useState("");
+  const { isOpen, onClose, onOpen } = useUpdateEventModalStore()
+  const [eventId, setEventId] = useState('')
+  const [eventList, setEventList] = useState<Event[]>([])
+  const [dateNow, setDateNow] = useState('')
 
   useEffect(() => {
-    setDateNow(Date.now().toString());
-  }, [isOpen]);
+    setDateNow(Date.now().toString())
+  }, [isOpen])
 
-  const isSmall = useMediaQuery("(max-width: 768px)");
+  const isSmall = useMediaQuery('(max-width: 768px)')
 
-  const { status } = useSession();
-  const queryClient = useQueryClient();
+  const { status } = useSession()
+  const queryClient = useQueryClient()
 
-  const { data: events, isLoading, isError, error, refetch } = useEvents();
-  const { data: event } = useEvent(eventId);
-  const deleteEventMutation = useDeleteEvent();
-  const completeEventMutation = useCompleteEvent();
+  const { data: events, isLoading, isError, error, refetch } = useEvents()
+  const { data: event } = useEvent(eventId)
+  const deleteEventMutation = useDeleteEvent()
+  const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
     onSuccess: () => {
-      queryClient.invalidateQueries(["events"]);
-      onClose();
+      queryClient.invalidateQueries(['events'])
+      onClose()
     },
-  });
+  })
 
-  const isLarge = useMediaQuery("(min-width: 1024px)");
-  const isXL = useMediaQuery("(min-width: 1280px)");
+  const isLarge = useMediaQuery('(min-width: 1024px)')
+  const isXL = useMediaQuery('(min-width: 1280px)')
 
   useEffect(() => {
-    refetch();
-  }, [status, refetch]);
+    refetch()
+  }, [status, refetch])
 
-  function handleCompleted(e: MouseEvent, evt: Event) {
-    // e.stopPropagation();
-    setEventId(evt.id);
+  let [scope, animate] = useAnimate()
+
+  async function handleCompleted(e: MouseEvent, evt: Event, index: number) {
+    e.stopPropagation()
+    setEventId(evt.id)
 
     completeEventMutation.mutate({
       ...evt,
       completed: !evt.completed,
-    });
+    })
+    //* just use css selector
+    if (
+      //* hacky hacky hacky
+      !evt.completed &&
+      events?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
+    ) {
+      let random = Math.random()
+      let animation
+      if (random < 0.5) {
+        animation = animate(
+          '.flip-board',
+          { rotate: [0, 10, -10, 0] },
+          { duration: 0.5, delay: stagger(0.1, { from: index }) },
+        )
+      } else {
+        animation = animate(
+          '.flip-board',
+          { x: [0, 4, -4, 0] },
+          { duration: 0.4, delay: stagger(0.1, { from: index }) },
+        )
+      }
+      //* hacky way to show full animation
+      await animation
+      animation.play()
+    }
   }
 
   function handleUpdate(data: Partial<Event>) {
-    const { title, startTime, endTime, id } = data;
+    const { title, startTime, endTime, id } = data
 
-    if (id) setEventId(id);
+    if (id) setEventId(id)
 
     editEventMutation.mutate({
       id: eventId,
       title,
       startTime,
       endTime,
-    });
+    })
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {
     // e.stopPropagation();
-    deleteEventMutation.mutate(eventId);
+    deleteEventMutation.mutate(eventId)
   }
 
   function handleClick(evt: Event) {
-    setEventId(evt.id);
-    if (evt.completed) return;
-    onOpen();
+    setEventId(evt.id)
+    if (evt.completed) return
+    onOpen()
   }
 
   useEffect(() => {
@@ -94,44 +128,43 @@ export default function Events({ activeDate }: Props) {
         (evt: Event) =>
           evt.day === activeDate.getDate() &&
           evt.month === activeDate.getMonth() + 1 &&
-          evt.year === activeDate.getFullYear()
-      );
-      setEventList(listOfDay);
+          evt.year === activeDate.getFullYear(),
+      )
+      setEventList(listOfDay)
     }
-  }, [events, activeDate]);
+  }, [events, activeDate])
 
   const sortedEvents = eventList.sort((a, b) => {
     if (a.startTime < b.startTime) {
-      return -1;
+      return -1
     }
     if (a.startTime > b.startTime) {
-      return 1;
+      return 1
     }
-    return 0;
-  });
+    return 0
+  })
 
-  if (isLoading)
-    return <p className="mx-auto text-lg text-white">Loading...</p>;
+  if (isLoading) return <p className="mx-auto text-lg text-white">Loading...</p>
   if (isError) {
-    return <pre>{JSON.stringify(error)}</pre>;
+    return <pre>{JSON.stringify(error)}</pre>
   }
 
-  let variants;
+  let variants
   if (isLarge) {
     variants = {
       initial: { minHeight: 0 },
-      animate: { minHeight: "420px" },
-    };
+      animate: { minHeight: '420px' },
+    }
   } else if (isXL) {
     variants = {
       initial: { minHeight: 0 },
-      animate: { minHeight: "475px" },
-    };
+      animate: { minHeight: '475px' },
+    }
   } else {
     variants = {
       initial: { minHeight: 0 },
-      animate: { minHeight: "380px" },
-    };
+      animate: { minHeight: '380px' },
+    }
   }
 
   return (
@@ -150,6 +183,7 @@ export default function Events({ activeDate }: Props) {
         )}
       </AnimatePresence>
       <motion.ul
+        ref={scope}
         layout="position"
         variants={variants}
         initial="initial"
@@ -171,5 +205,5 @@ export default function Events({ activeDate }: Props) {
         </AnimatePresence>
       </motion.ul>
     </>
-  );
+  )
 }

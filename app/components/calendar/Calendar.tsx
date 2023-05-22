@@ -1,75 +1,80 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useDay } from "@/app/stores/DayContext";
-import { useEvents } from "../../events/hooks/useEvents";
-import DaysContent from "./DaysContent";
-import SelectMonth from "./SelectMonth";
+'use client'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { useDay } from '@/app/stores/DayContext'
+import { useEvents } from '../../events/hooks/useEvents'
+import DaysContent from './DaysContent'
+import SelectMonth from './SelectMonth'
+import useMeasure from 'react-use-measure'
 
 export default function Calendar() {
-  const { isSuccess } = useEvents();
-  const { dayInView, setDayInView, setActiveDate } = useDay();
+  const [ref, { width }] = useMeasure()
+  const { isSuccess } = useEvents()
+  const { dayInView, setDayInView, setActiveDate } = useDay()
 
-  const [direction, setDirection] = useState(0);
-  const [height, setHeight] = useState<number>(0);
-  const [dateNow, setDateNow] = useState(new Date());
+  const [direction, setDirection] = useState(0)
+  const [height, setHeight] = useState<number>(0)
+  const [dateNow, setDateNow] = useState(new Date())
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setDateNow(new Date());
-  }, []);
+    setDateNow(new Date())
+  }, [])
 
   useEffect(() => {
     if (height && containerRef.current) {
-      containerRef.current.style.height = `${height}px`;
+      containerRef.current.style.height = `${height}px`
     }
-  }, [height]);
+  }, [height])
 
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-  const yearAndMonth = dayInView.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-  });
+  const yearAndMonth = dayInView.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+  })
 
   const handleChevronLeft = () => {
-    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() - 1));
-    setDirection(-1);
-  };
+    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() - 1))
+    setDirection(-1)
+  }
 
   const handleChevronRight = () => {
-    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() + 1));
-    setDirection(1);
-  };
+    setDayInView(new Date(dayInView.getFullYear(), dayInView.getMonth() + 1))
+    setDirection(1)
+  }
 
   const handleDaysOfNextMonth = (day: number) => {
     setDayInView(
-      new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day)
-    );
-    setDirection(1);
-  };
+      new Date(dayInView.getFullYear(), dayInView.getMonth() + 1, day),
+    )
+    setDirection(1)
+  }
 
   const handleDaysOfLastMonth = (day: number) => {
     setDayInView(
-      new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day)
-    );
-    setDirection(-1);
-  };
+      new Date(dayInView.getFullYear(), dayInView.getMonth() - 1, day),
+    )
+    setDirection(-1)
+  }
 
   function handleToToday() {
     if (dayInView < dateNow) {
-      setDirection(1);
+      setDirection(1)
     } else {
-      setDirection(-1);
+      setDirection(-1)
     }
-    setDayInView(dateNow);
-    setActiveDate(dateNow);
+    setDayInView(dateNow)
+    setActiveDate(dateNow)
   }
 
   return (
-    <div className="wrapper relative m-4 mx-auto h-fit w-fit transition-transform md:ml-4">
+    <div
+      ref={ref}
+      className="wrapper relative m-4 mx-auto h-fit w-fit transition-transform md:ml-4"
+    >
       <div className="calendar col-span-1 min-h-[360px] overflow-hidden rounded-md bg-white p-6 sm:min-h-[420px] md:my-0 md:ml-0 md:min-h-[500px] md:min-w-fit lg:min-h-[550px] xl:min-h-[600px]">
         <div className="text-textOnPrimary flex items-center justify-between">
           <motion.button
@@ -90,7 +95,7 @@ export default function Calendar() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  x: { type: 'spring', stiffness: 300, damping: 30 },
                   opacity: { duration: 0.2 },
                 }}
                 className="absolute text-sm"
@@ -110,7 +115,7 @@ export default function Calendar() {
         </div>
         {/* Days Of Week */}
         <div className="grid grid-cols-7 px-4 md:py-3">
-          {daysOfWeek.map((day) => (
+          {daysOfWeek.map(day => (
             <div key={day} className="square text-center text-xs">
               {day}
             </div>
@@ -119,6 +124,7 @@ export default function Calendar() {
         {/* Days Of Month */}
         <div ref={containerRef} className="slide-container relative">
           <DaysContent
+            width={width}
             direction={direction}
             handleChevronLeft={handleChevronLeft}
             handleChevronRight={handleChevronRight}
@@ -142,7 +148,7 @@ export default function Calendar() {
             <motion.button
               className="focus-ring z-20 select-none !rounded-lg bg-primary px-2 py-1 text-xs text-white shadow-lg focus-visible:ring-offset-2"
               whileHover={{ scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
               onClick={handleToToday}
             >
               Today
@@ -151,7 +157,7 @@ export default function Calendar() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
 const variants = {
@@ -159,7 +165,7 @@ const variants = {
     return {
       x: direction > 0 ? 50 : -50,
       opacity: 0,
-    };
+    }
   },
   center: {
     zIndex: 1,
@@ -171,6 +177,6 @@ const variants = {
       zIndex: 0,
       x: direction < 0 ? 50 : -50,
       opacity: 0,
-    };
+    }
   },
-};
+}

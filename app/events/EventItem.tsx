@@ -58,8 +58,7 @@ const EventItem = forwardRef<Ref, Props>(
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: index * 0.1 }}
-        className="mb-1 flex w-full 
-        items-center justify-between bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6"
+        className="mb-1 flex w-full items-center justify-between bg-gradient-to-r from-slate-600 to-bgContainer px-8 py-2 md:pr-6"
       >
         <div
           onClick={() => handleClick(evt)}

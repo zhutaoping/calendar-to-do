@@ -16,15 +16,24 @@ export default function CheckCard({
   index,
 }: Props) {
   return (
-    <div
-      onClick={e => handleCompleted(e, evt, index)}
-      className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
-    >
-      {evt.completed ? <CheckIcon2 /> : <CheckIcon1 />}
-      <MyTooltip title="Flip the card">
-        <div className="chip" onClick={e => handleChip(e)}></div>
-      </MyTooltip>
-    </div>
+    <>
+      <div
+        role="checkbox"
+        aria-checked={evt.completed}
+        tabIndex={0}
+        aria-labelledby="chk-label"
+        onClick={e => handleCompleted(e, evt, index)}
+        className="check-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
+      >
+        {evt.completed ? <CheckIcon2 /> : <CheckIcon1 />}
+        <MyTooltip title="Flip the card">
+          <div className="chip" onClick={e => handleChip(e)}></div>
+        </MyTooltip>
+      </div>
+      <label className="sr-only" htmlFor="chk-label">
+        Event completed
+      </label>
+    </>
   )
 }
 

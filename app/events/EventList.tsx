@@ -1,12 +1,7 @@
 'use client'
 import { Event } from '@prisma/client'
 import { useQueryClient } from '@tanstack/react-query'
-import {
-  AnimatePresence,
-  motion,
-  stagger,
-  useAnimate
-} from 'framer-motion'
+import { AnimatePresence, motion, stagger, useAnimate } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { MouseEvent, useEffect, useState } from 'react'
 import UpdateEventModal from './modals/UpdateEventModal'
@@ -37,7 +32,6 @@ export default function Events({ activeDate }: Props) {
   }, [isOpen])
 
   const isSmall = useMediaQuery('(max-width: 768px)')
-
   const { status } = useSession()
   const queryClient = useQueryClient()
 
@@ -55,28 +49,29 @@ export default function Events({ activeDate }: Props) {
   const isLarge = useMediaQuery('(min-width: 1024px)')
   const isXL = useMediaQuery('(min-width: 1280px)')
 
+  let [scope, animate] = useAnimate()
+
   useEffect(() => {
     refetch()
   }, [status, refetch])
 
-  let [scope, animate] = useAnimate()
-
   async function handleCompleted(e: MouseEvent, evt: Event, index: number) {
     e.stopPropagation()
     setEventId(evt.id)
+    const bool = !evt.completed
 
     completeEventMutation.mutate({
       ...evt,
-      completed: !evt.completed,
+      completed: bool,
     })
-    //* just use css selector
+
     if (
-      //* hacky hacky hacky
-      !evt.completed &&
+      bool &&
       events?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
     ) {
       let random = Math.random()
       let animation
+      //* use css selector
       if (random < 0.5) {
         animation = animate(
           '.flip-board',
@@ -110,7 +105,7 @@ export default function Events({ activeDate }: Props) {
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {
-    // e.stopPropagation();
+    // e.stopPropagation()
     deleteEventMutation.mutate(eventId)
   }
 

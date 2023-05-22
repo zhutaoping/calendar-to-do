@@ -1,6 +1,7 @@
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { endOfMonth, getDaysInMonth, startOfMonth } from 'date-fns'
-import { useEffect, useRef } from 'react'
+import useMeasure from 'react-use-measure'
 
 import { useDay } from '@/app/stores/DayContext'
 import { useEvents } from '../../events/hooks/useEvents'
@@ -11,42 +12,28 @@ import DayItem from './DayItem'
 interface Props {
   handleDaysOfNextMonth: (day: number) => void
   handleDaysOfLastMonth: (day: number) => void
-  height: number
-  setHeight: React.Dispatch<React.SetStateAction<number>>
-  direction: number
   handleChevronLeft: () => void
   handleChevronRight: () => void
+  setHeight: Dispatch<SetStateAction<number>>
+  direction: number
   width: number
 }
 
 const DaysContent = ({
   handleDaysOfNextMonth,
   handleDaysOfLastMonth,
-  height,
-  setHeight,
-  direction,
   handleChevronLeft,
   handleChevronRight,
+  setHeight,
+  direction,
   width,
 }: Props) => {
   const { dayInView, setActiveDate } = useDay()
-  const divRef = useRef<HTMLDivElement>(null)
+  const [divRef, { height }] = useMeasure()
 
   useEffect(() => {
-    setHeight(divRef.current?.offsetHeight ?? 0)
-  }, [dayInView, setHeight])
-
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      // const size = divRef.current?.getBoundingClientRect();
-      // const size = divId?.getBoundingClientRect();
-      const divId = document.getElementById('divRef')
-      setHeight(divId?.offsetHeight ?? 0)
-    })
-    return () => {
-      window.removeEventListener('resize', () => {})
-    }
-  }, [setHeight])
+    setHeight(height)
+  }, [height, setHeight])
 
   const { data } = useEvents()
   const events = data as Event[] | null
@@ -158,7 +145,6 @@ const variants = {
     opacity: 1,
   },
   exit: ({ direction, width }: { direction: number; width: number }) => {
-    console.log('width', width)
     return {
       zIndex: 0,
       x: direction * -width,

@@ -124,14 +124,13 @@ export default function Calendar() {
         {/* Days Of Month */}
         <div ref={containerRef} className="slide-container relative">
           <DaysContent
-            width={width}
-            direction={direction}
             handleChevronLeft={handleChevronLeft}
             handleChevronRight={handleChevronRight}
-            height={height}
-            setHeight={setHeight}
             handleDaysOfNextMonth={handleDaysOfNextMonth}
             handleDaysOfLastMonth={handleDaysOfLastMonth}
+            setHeight={setHeight}
+            direction={direction}
+            width={width}
           />
         </div>
         {isSuccess && (
@@ -163,7 +162,7 @@ export default function Calendar() {
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 50 : -50,
+      x: direction * 50,
       opacity: 0,
     }
   },
@@ -175,7 +174,7 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 50 : -50,
+      x: direction * -50,
       opacity: 0,
     }
   },

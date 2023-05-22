@@ -13,7 +13,7 @@ export default function DeleteCard({ evt, handleDelete, handleChip }: Props) {
       <div
         role="button"
         tabIndex={0}
-        aria-aria-labelledby="delete-label"
+        aria-labelledby="delete-label"
         onClick={e => handleDelete(e, evt.id)}
         className="delete-card flex h-10 w-10 items-center justify-center overflow-hidden border border-gray-500/20"
       >

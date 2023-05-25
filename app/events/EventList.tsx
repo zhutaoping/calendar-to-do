@@ -67,7 +67,7 @@ export default function Events({ activeDate }: Props) {
 
     if (
       bool &&
-      events?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
+      eventList?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
     ) {
       let random = Math.random()
       let animation

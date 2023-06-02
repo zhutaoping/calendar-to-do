@@ -11,7 +11,7 @@ export const useCompleteEvent = () => {
     onMutate: async updatedEvent => {
       await queryClient.cancelQueries(['events', updatedEvent.id])
 
-      const previousEvent = queryClient.getQueryData([
+      const previousEvent = queryClient.getQueryData<Event[]>([
         'events',
         updatedEvent.id,
       ])

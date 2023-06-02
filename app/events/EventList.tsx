@@ -41,7 +41,7 @@ export default function Events({ activeDate }: Props) {
   const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
     onSuccess: () => {
-      queryClient.invalidateQueries(['events'])
+      // queryClient.invalidateQueries(['events'])
       onClose()
     },
   })

@@ -21,12 +21,7 @@ export default function UpdateEventModal({
   const { onClose } = useUpdateEventModalStore()
 
   const bodyContent = (
-    <EventForm
-      id={id}
-      event={event}
-      onMutateEvent={onMutateEvent}
-      onClose={onClose}
-    />
+    <EventForm id={id} event={event} onMutateEvent={onMutateEvent} />
   )
 
   return (

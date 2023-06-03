@@ -3,17 +3,10 @@ import { prisma } from '@/app/lib/prisma'
 import { Event } from '@prisma/client'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { NextResponse } from 'next/server'
-import { prisma } from '@/app/lib/prisma'
-import { Event } from '@prisma/client'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 export async function GET(req: Request, res: Response) {
   const session = await getServerSession(authOptions)
-  const session = await getServerSession(authOptions)
 
-  let events: Event[] = []
   let events: Event[] = []
   if (!session) {
     events = await prisma.event.findMany({
@@ -21,16 +14,13 @@ export async function GET(req: Request, res: Response) {
         userId: null,
       },
     })
-    })
   } else {
     events = await prisma.event.findMany({
       where: {
         userId: session.user.id,
       },
     })
-    })
   }
-  return NextResponse.json(events)
   return NextResponse.json(events)
 }
 
@@ -42,14 +32,11 @@ export async function POST(req: Request, res: Response) {
       ...event,
     },
   })
-  })
 
-  return NextResponse.json(newEvent)
   return NextResponse.json(newEvent)
 }
 
 export async function PATCH(req: Request, res: Response) {
-  const event: Event = await req.json()
   const event: Event = await req.json()
 
   const updatedEvent = await prisma.event.update({
@@ -63,8 +50,6 @@ export async function PATCH(req: Request, res: Response) {
       completed: event.completed,
     },
   })
-  })
 
-  return NextResponse.json(updatedEvent)
   return NextResponse.json(updatedEvent)
 }

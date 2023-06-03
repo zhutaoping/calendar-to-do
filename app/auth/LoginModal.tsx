@@ -1,17 +1,17 @@
-"use client";
-import Modal from "../components/Modal";
-import LoginForm from "./LoginForm";
-import { useLoginModalStore } from "../stores/LoginModalStore";
+'use client'
+import Modal from '../components/Modal'
+import LoginForm from './LoginForm'
+import { useLoginModalStore } from '../stores/LoginModalStore'
 
 interface Props {
-  header: string;
-  isMobile: boolean;
+  header: string
+  isMobile: boolean
 }
 
 const LoginModal = ({ header, isMobile }: Props) => {
-  const { onClose } = useLoginModalStore();
+  const { onClose } = useLoginModalStore()
 
-  const bodyContent = <LoginForm />;
+  const bodyContent = <LoginForm />
 
   return (
     <Modal
@@ -21,6 +21,6 @@ const LoginModal = ({ header, isMobile }: Props) => {
       fullPage={true}
       isMobile={isMobile}
     />
-  );
-};
-export default LoginModal;
+  )
+}
+export default LoginModal

@@ -2,7 +2,11 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import Providers from './lib/Providers'
 
-const poppins = Poppins({ weight: ['400', '700'], subsets: ['latin'] })
+const poppins = Poppins({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-poppins',
+})
 
 export const metadata = {
   title: 'Calender To-Do App',
@@ -17,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} min-h-screen place-content-center bg-bgContainer md:grid md:bg-slate-600`}
+        className={`${poppins.variable} min-h-screen place-content-center bg-bgContainer font-poppins md:grid md:bg-slate-600`}
       >
         <Providers>{children}</Providers>
       </body>

@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@radix-ui/colors/blackA.css';
-@import '@radix-ui/colors/violet.css';
-
 @layer base {
   :root {
     --primary: #b38add;

@@ -46,6 +46,7 @@ export default function AddEvent({ isSmall }: Props) {
           type="button"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="Add new event"
         >
           <BsPlusCircle color="white" size={30} />
         </motion.button>

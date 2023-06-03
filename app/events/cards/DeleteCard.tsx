@@ -23,7 +23,7 @@ export default function DeleteCard({ evt, handleDelete, handleChip }: Props) {
           onClick={e => handleChip(e)}
         ></div>
       </div>
-      <label className="sr-only" htmlFor="delete-label">
+      <label className="sr-only" id="delete-label">
         Delete event
       </label>
     </>

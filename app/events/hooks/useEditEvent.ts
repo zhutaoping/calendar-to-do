@@ -13,7 +13,6 @@ export const useEditEvent = ({ onSuccess, onError }: Props) => {
   return useMutation({
     mutationFn: eventService.editEvent,
     onSuccess,
-    // onError,
 
     onMutate: async editedEvent => {
       await queryClient.cancelQueries({ queryKey: ['events', editedEvent.id] })

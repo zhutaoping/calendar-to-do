@@ -29,7 +29,7 @@ export default function Events({ activeDate }: Props) {
 
   useEffect(() => {
     setDateNow(Date.now().toString())
-  }, [isOpen])
+  }, [])
 
   const isSmall = useMediaQuery('(max-width: 768px)')
   const { status } = useSession()
@@ -42,6 +42,7 @@ export default function Events({ activeDate }: Props) {
   const editEventMutation = useEditEvent({
     onSuccess: () => {
       // queryClient.invalidateQueries(['events'])
+      // onClose()
     },
   })
 
@@ -101,8 +102,6 @@ export default function Events({ activeDate }: Props) {
       startTime,
       endTime,
     })
-
-    onClose()
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {

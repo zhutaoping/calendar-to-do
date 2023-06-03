@@ -1,17 +1,17 @@
-import { AiOutlineClose } from "react-icons/ai";
-import { motion } from "framer-motion";
-import Backdrop from "./Backdrop";
-import FocusTrap from "focus-trap-react";
+import { AiOutlineClose } from 'react-icons/ai'
+import { motion } from 'framer-motion'
+import Backdrop from './Backdrop'
+import FocusTrap from 'focus-trap-react'
 
 interface Props {
-  header: string;
-  onClose: () => void;
-  body: JSX.Element;
-  footer?: JSX.Element;
-  disabled?: boolean;
-  onSubmit?: () => void;
-  fullPage?: boolean;
-  isMobile?: boolean;
+  header: string
+  onClose: () => void
+  body: JSX.Element
+  footer?: JSX.Element
+  disabled?: boolean
+  onSubmit?: () => void
+  fullPage?: boolean
+  isMobile?: boolean
 }
 
 const Modal = ({
@@ -31,18 +31,18 @@ const Modal = ({
           focusTrapOptions={{
             // Still need Backdrop onClick to close modal
             clickOutsideDeactivates: true,
-            initialFocus: ".initFocus",
+            initialFocus: '.initFocus',
           }}
         >
           <motion.div
             className={`modal mx-4 flex max-w-sm flex-col justify-center rounded-lg bg-slate-800 p-10 ${
-              fullPage ? "px-12 py-10" : "p-4"
+              fullPage ? 'px-12 py-10' : 'p-4'
             } `}
             variants={isMobile ? fadeIn : dropIn}
             initial="hidden"
             animate="visible"
             exit="exit"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex w-full items-center justify-between">
@@ -61,30 +61,30 @@ const Modal = ({
         </FocusTrap>
       </Backdrop>
     </>
-  );
-};
-export default Modal;
+  )
+}
+export default Modal
 
 const dropIn = {
   hidden: {
-    y: "-100vh",
+    y: '-100vh',
     opacity: 0,
   },
   visible: {
-    y: "0",
+    y: '0',
     opacity: 1,
     transition: {
       // delay: 0.1,
-      type: "spring",
+      type: 'spring',
       damping: 20,
       stiffness: 300,
     },
   },
   exit: {
-    y: "-100vh",
+    y: '-100vh',
     opacity: 0,
   },
-};
+}
 
 const fadeIn = {
   hidden: {
@@ -95,11 +95,11 @@ const fadeIn = {
     y: 0,
     opacity: 1,
     transition: {
-      type: "tween",
+      type: 'tween',
     },
   },
   exit: {
     y: 20,
     opacity: 0,
   },
-};
+}

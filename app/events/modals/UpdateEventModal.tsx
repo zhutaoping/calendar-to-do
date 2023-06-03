@@ -2,6 +2,7 @@ import { Event } from '@prisma/client'
 import EventForm from '../EventForm'
 import Modal from '../../components/Modal'
 import { useUpdateEventModalStore } from '../../stores/UpdateEventModalStore'
+import { useMediaQuery } from '@/app/hooks/useMediaQuery'
 
 interface Props {
   id: string
@@ -11,13 +12,13 @@ interface Props {
   isMobile: boolean
 }
 
-export default function UpdateEventModal({
+const UpdateEventModal = ({
   id,
   event,
   header,
   onMutateEvent,
   isMobile,
-}: Props) {
+}: Props) => {
   const { onClose } = useUpdateEventModalStore()
 
   const bodyContent = (
@@ -34,3 +35,4 @@ export default function UpdateEventModal({
     />
   )
 }
+export default UpdateEventModal

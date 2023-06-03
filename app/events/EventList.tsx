@@ -14,21 +14,27 @@ import { useDeleteEvent } from './hooks/useDeleteEvent'
 import { useEditEvent } from './hooks/useEditEvent'
 import { useEvent } from './hooks/useEvent'
 import { useEvents } from './hooks/useEvents'
+import { nanoid } from 'nanoid'
 
-const AnimatedEventItem = motion(EventItem)
+const MotionEventItem = motion(EventItem)
 
 interface Props {
   activeDate: Date | null
+  isSmall: boolean
 }
 
-export default function Events({ activeDate }: Props) {
+export default function Events({ activeDate, isSmall }: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore()
   const [eventId, setEventId] = useState('')
   const [eventList, setEventList] = useState<Event[]>([])
 
-  const isSmall = useMediaQuery('(max-width: 768px)')
+  const [forKey, setForKey] = useState(Date.now().toString())
+
+  useEffect(() => {
+    setForKey(Date.now().toString())
+  }, [isOpen])
+
   const { status } = useSession()
-  const queryClient = useQueryClient()
 
   const { data: events, isLoading, isError, error, refetch } = useEvents()
   const { data: event } = useEvent(eventId)
@@ -36,11 +42,11 @@ export default function Events({ activeDate }: Props) {
   const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
     onSuccess: () => {
-      // queryClient.invalidateQueries(['events'])
-      // onClose()
+      onClose()
     },
   })
 
+  // const isSmall = useMediaQuery('(max-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
   const isXL = useMediaQuery('(min-width: 1280px)')
 
@@ -60,30 +66,30 @@ export default function Events({ activeDate }: Props) {
       completed: bool,
     })
 
-    if (
-      bool &&
-      eventList?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
-    ) {
-      let random = Math.random()
-      let animation
-      //* use css selector
-      if (random < 0.5) {
-        animation = animate(
-          '.flip-board',
-          { rotate: [0, 10, -10, 0] },
-          { duration: 0.5, delay: stagger(0.1, { from: index }) },
-        )
-      } else {
-        animation = animate(
-          '.flip-board',
-          { x: [0, 4, -4, 0] },
-          { duration: 0.4, delay: stagger(0.1, { from: index }) },
-        )
-      }
-      //* hacky way to show full animation
-      await animation
-      animation.play()
-    }
+    // if (
+    //   bool &&
+    //   eventList?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
+    // ) {
+    //   let random = Math.random()
+    //   let animation
+    //   //* use css selector
+    //   if (random < 0.5) {
+    //     animation = animate(
+    //       '.flip-board',
+    //       { rotate: [0, 10, -10, 0] },
+    //       { duration: 0.5, delay: stagger(0.1, { from: index }) },
+    //     )
+    //   } else {
+    //     animation = animate(
+    //       '.flip-board',
+    //       { x: [0, 4, -4, 0] },
+    //       { duration: 0.4, delay: stagger(0.1, { from: index }) },
+    //     )
+    //   }
+    //   //* hacky way to show full animation
+    //   await animation
+    //   animation.play()
+    // }
   }
 
   function handleUpdate(data: Partial<Event>) {
@@ -161,7 +167,7 @@ export default function Events({ activeDate }: Props) {
         {isOpen && (
           //! Need a key for AnimatePresence to work
           <UpdateEventModal
-            key="updateEventModal"
+            key={forKey}
             id={eventId}
             event={event}
             header="Edit Event"
@@ -180,7 +186,7 @@ export default function Events({ activeDate }: Props) {
       >
         <AnimatePresence mode="popLayout">
           {sortedEvents.map((evt, index) => (
-            <AnimatedEventItem
+            <MotionEventItem
               layout="position"
               evt={evt}
               key={evt.id}

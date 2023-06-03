@@ -1,18 +1,18 @@
-import { Event } from "@prisma/client";
-import EventForm from "../EventForm";
-import Modal from "../../components/Modal";
-import { useAddEventModalStore } from "../../stores/AddEventModalStore";
+import { Event } from '@prisma/client'
+import EventForm from '../EventForm'
+import Modal from '../../components/Modal'
+import { useAddEventModalStore } from '../../stores/AddEventModalStore'
 
 interface Props {
-  header: string;
-  onMutateEvent: (data: Partial<Event>) => void;
-  isMobile: boolean;
+  header: string
+  onMutateEvent: (data: Partial<Event>) => void
+  isMobile: boolean
 }
 
 const AddEventModal = ({ header, onMutateEvent, isMobile }: Props) => {
-  const { onClose } = useAddEventModalStore();
+  const { onClose } = useAddEventModalStore()
 
-  const bodyContent = <EventForm onMutateEvent={onMutateEvent} />;
+  const bodyContent = <EventForm onMutateEvent={onMutateEvent} />
 
   return (
     <Modal
@@ -22,6 +22,6 @@ const AddEventModal = ({ header, onMutateEvent, isMobile }: Props) => {
       fullPage={false}
       isMobile={isMobile}
     />
-  );
-};
-export default AddEventModal;
+  )
+}
+export default AddEventModal

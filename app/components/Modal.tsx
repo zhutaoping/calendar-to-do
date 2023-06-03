@@ -52,6 +52,7 @@ const Modal = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onClose()}
+                aria-label="Close modal"
               >
                 <AiOutlineClose color="white" size={20} />
               </motion.button>

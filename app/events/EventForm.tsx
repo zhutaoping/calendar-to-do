@@ -5,6 +5,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Event } from '@prisma/client'
 import { useDay } from '../stores/DayContext'
 import SubmitButton from '../components/SubmitButton'
+import { useEffect, useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Event } from '@prisma/client'
+import { useDay } from '../stores/DayContext'
+import SubmitButton from '../components/SubmitButton'
 
 const schema = z
   .object({
@@ -27,6 +34,7 @@ type Props = {
 
 export default function EventForm({ id, event, onMutateEvent }: Props) {
   const [disabled, setDisabled] = useState(false)
+
   const { activeDate } = useDay()
 
   const {

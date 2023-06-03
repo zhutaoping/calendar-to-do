@@ -1,6 +1,5 @@
 'use client'
 import { Event } from '@prisma/client'
-import { useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, stagger, useAnimate } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { MouseEvent, useEffect, useState } from 'react'
@@ -14,7 +13,6 @@ import { useDeleteEvent } from './hooks/useDeleteEvent'
 import { useEditEvent } from './hooks/useEditEvent'
 import { useEvent } from './hooks/useEvent'
 import { useEvents } from './hooks/useEvents'
-import { nanoid } from 'nanoid'
 
 const MotionEventItem = motion(EventItem)
 
@@ -41,12 +39,9 @@ export default function Events({ activeDate, isSmall }: Props) {
   const deleteEventMutation = useDeleteEvent()
   const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
-    onSuccess: () => {
-      onClose()
-    },
+    onSuccess: () => {},
   })
 
-  // const isSmall = useMediaQuery('(max-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
   const isXL = useMediaQuery('(min-width: 1280px)')
 
@@ -56,7 +51,7 @@ export default function Events({ activeDate, isSmall }: Props) {
     refetch()
   }, [status, refetch])
 
-  async function handleCompleted(e: MouseEvent, evt: Event, index: number) {
+  async function handleCompleted(e: MouseEvent, evt: Event) {
     e.stopPropagation()
     setEventId(evt.id)
     const bool = !evt.completed
@@ -65,31 +60,6 @@ export default function Events({ activeDate, isSmall }: Props) {
       ...evt,
       completed: bool,
     })
-
-    // if (
-    //   bool &&
-    //   eventList?.filter((e: Event) => e.id !== evt.id).every(e => e.completed)
-    // ) {
-    //   let random = Math.random()
-    //   let animation
-    //   //* use css selector
-    //   if (random < 0.5) {
-    //     animation = animate(
-    //       '.flip-board',
-    //       { rotate: [0, 10, -10, 0] },
-    //       { duration: 0.5, delay: stagger(0.1, { from: index }) },
-    //     )
-    //   } else {
-    //     animation = animate(
-    //       '.flip-board',
-    //       { x: [0, 4, -4, 0] },
-    //       { duration: 0.4, delay: stagger(0.1, { from: index }) },
-    //     )
-    //   }
-    //   //* hacky way to show full animation
-    //   await animation
-    //   animation.play()
-    // }
   }
 
   function handleUpdate(data: Partial<Event>) {
@@ -103,6 +73,8 @@ export default function Events({ activeDate, isSmall }: Props) {
       startTime,
       endTime,
     })
+
+    onClose()
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {
@@ -189,7 +161,7 @@ export default function Events({ activeDate, isSmall }: Props) {
             <MotionEventItem
               layout="position"
               evt={evt}
-              key={evt.id}
+              key={evt.id || evt.id + index}
               index={index}
               handleClick={handleClick}
               handleCompleted={handleCompleted}

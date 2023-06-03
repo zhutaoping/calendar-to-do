@@ -10,7 +10,6 @@ import { useRequestModalStore } from './stores/RequestModalStore'
 import { useSignUpModalStore } from './stores/SignUpModalStore'
 import SignUpModal from './users/SignUpModal'
 import RequestModal from './users/forget-password/RequestModal'
-import { nanoid } from 'nanoid'
 
 export default function Home() {
   const signUpModal = useSignUpModalStore()

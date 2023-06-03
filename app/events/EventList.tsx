@@ -25,11 +25,6 @@ export default function Events({ activeDate }: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore()
   const [eventId, setEventId] = useState('')
   const [eventList, setEventList] = useState<Event[]>([])
-  const [dateNow, setDateNow] = useState('')
-
-  useEffect(() => {
-    setDateNow(Date.now().toString())
-  }, [isOpen])
 
   const isSmall = useMediaQuery('(max-width: 768px)')
   const { status } = useSession()
@@ -167,7 +162,7 @@ export default function Events({ activeDate }: Props) {
         {isOpen && (
           //! Need a key for AnimatePresence to work
           <UpdateEventModal
-            key={dateNow}
+            key="updateEventModal"
             id={eventId}
             event={event}
             header="Edit Event"

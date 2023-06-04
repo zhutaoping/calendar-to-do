@@ -13,13 +13,13 @@
 - [x] 忘記密碼時，可要求重置密碼
 - [x] 新增，讀取，修改，刪除清單項目
 - [x] 滑動選取月分，或使用下拉選單
-- [x] 響應式設計，手機，桌機皆適用
+- [x] 響應式設計，行動裝置，桌機皆適用
 - [x] You can register and login
 - [x] Use MongoDB Atlas as a data service
 - [x] You can request a password reset
 - [x] Implement CRUD Functionality
 - [x] Swipe to next/previous month or use dropdown menu
-- [x] Responsive design for mobile and desktop
+- [x] Responsive design for mobile device and desktop
 
 ## 工具 / Technologies
 

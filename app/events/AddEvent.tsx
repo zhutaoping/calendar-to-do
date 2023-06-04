@@ -20,6 +20,12 @@ export default function AddEvent() {
 
   const userId = session?.user?.id || null
 
+  const [forKey, setForKey] = useState(Date.now().toString())
+
+  useEffect(() => {
+    setForKey(Date.now().toString())
+  }, [isOpen])
+
   // const hasMounted = useHasMounted();
   // if (!hasMounted) {
   //   return null;
@@ -51,7 +57,7 @@ export default function AddEvent() {
       <AnimatePresence>
         {isOpen && (
           <AddEventModal
-            key="addEventModal"
+            key={forKey}
             header="Add New Event"
             onMutateEvent={handleAddEvent}
             isMobile={isSmall}

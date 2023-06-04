@@ -17,7 +17,7 @@ export const useCreateEvent = () => {
     //* Optimistic update
     //* newEvent is the data that we are sending to the server
     onMutate: async newEvent => {
-      await queryClient.cancelQueries({ queryKey: ['events', newEvent.id] })
+      await queryClient.cancelQueries({ queryKey: ['events'] })
 
       const previousEvents = queryClient.getQueryData<Event[]>(['events']) || []
 

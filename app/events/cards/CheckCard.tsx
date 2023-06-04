@@ -30,7 +30,7 @@ export default function CheckCard({
           <div className="chip" onClick={e => handleChip(e)}></div>
         </MyTooltip>
       </div>
-      <label className="sr-only" htmlFor="chk-label">
+      <label className="sr-only" id="chk-label">
         Event completed
       </label>
     </>

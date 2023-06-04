@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { MouseEvent } from 'react'
 
 interface Props {
   children: React.ReactNode

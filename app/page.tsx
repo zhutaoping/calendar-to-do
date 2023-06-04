@@ -31,17 +31,13 @@ export default function Home() {
       <main className="blackboard grid gap-5 bg-bgContainer transition-all md:min-h-min md:grid-cols-2 md:rounded-md">
         <AnimatePresence>
           {signUpModal.isOpen && (
-            <SignUpModal key={dateNow} header="Sign Up" isMobile={isSmall} />
+            <SignUpModal header="Sign Up" isMobile={isSmall} />
           )}
           {loginModal.isOpen && (
-            <LoginModal key={dateNow} header="Log In" isMobile={isSmall} />
+            <LoginModal header="Log In" isMobile={isSmall} />
           )}
           {requestModal.isOpen && (
-            <RequestModal
-              key={dateNow}
-              header="Forgot Password"
-              isMobile={true}
-            />
+            <RequestModal header="Forgot Password" isMobile={true} />
           )}
         </AnimatePresence>
         <Calendar />

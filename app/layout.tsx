@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} min-h-screen place-content-center bg-bgContainer md:grid md:bg-slate-600`}
+        className={`${poppins.className}  min-h-screen place-content-center bg-bgContainer md:grid md:bg-slate-600`}
       >
         <Providers>{children}</Providers>
       </body>

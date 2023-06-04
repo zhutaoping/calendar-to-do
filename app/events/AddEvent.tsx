@@ -57,7 +57,6 @@ export default function AddEvent() {
       <AnimatePresence>
         {isOpen && (
           <AddEventModal
-            key={dateNow}
             header="Add New Event"
             onMutateEvent={handleAddEvent}
             isMobile={isSmall}

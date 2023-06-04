@@ -162,9 +162,8 @@ export default function Events({ activeDate }: Props) {
     <>
       <AnimatePresence>
         {isOpen && (
-          //! Need a key for AnimatePresence to work
+          //? Need a key for AnimatePresence to work?
           <UpdateEventModal
-            key={dateNow}
             id={eventId}
             event={event}
             header="Edit Event"

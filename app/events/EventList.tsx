@@ -13,6 +13,7 @@ import { useDeleteEvent } from './hooks/useDeleteEvent'
 import { useEditEvent } from './hooks/useEditEvent'
 import { useEvent } from './hooks/useEvent'
 import { useEvents } from './hooks/useEvents'
+import { nanoid } from 'nanoid'
 
 const MotionEventItem = motion(EventItem)
 
@@ -140,7 +141,7 @@ export default function Events({ activeDate }: Props) {
         {isOpen && (
           //! Need a key for AnimatePresence to work
           <UpdateEventModal
-            key={forKey}
+            key={nanoid()}
             id={eventId}
             event={event}
             header="Edit Event"

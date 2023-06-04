@@ -18,6 +18,10 @@ export default function AddEvent() {
   const { data: session } = useSession()
   const userId = session?.user?.id || null
 
+  // const hasMounted = useHasMounted();
+  // if (!hasMounted) {
+  //   return null;
+  // }
   const [dateNow, setDateNow] = useState('')
 
   useEffect(() => {

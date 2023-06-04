@@ -14,14 +14,13 @@ export default function EventsBoard() {
   const { activeDate } = useDay()
   const signUpModal = useSignUpModalStore()
   const loginModal = useLoginModalStore()
+  const isSmall = useMediaQuery('(max-width: 768px)')
 
   const { data: session, status } = useSession()
 
   const dayOfWeek = activeDate
     ? format(activeDate, 'EEEE')
     : format(new Date(), 'EEEE')
-
-  const isSmall = useMediaQuery('(max-width: 768px)')
 
   const hasMounted = useHasMounted()
   if (!hasMounted) return null
@@ -70,10 +69,10 @@ export default function EventsBoard() {
           <span className="text-xl text-white">{dayOfWeek}</span>
           <div className="space-x-4 text-sm text-white">{sessionContent}</div>
         </div>
-        {isSmall && <AddEvent isSmall={isSmall} />}
-        <EventList activeDate={activeDate} isSmall={isSmall} />
+        {isSmall && <AddEvent />}
+        <EventList activeDate={activeDate} />
       </div>
-      {!isSmall && <AddEvent isSmall={isSmall} />}
+      {!isSmall && <AddEvent />}
     </div>
   )
 }

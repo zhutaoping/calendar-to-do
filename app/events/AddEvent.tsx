@@ -12,15 +12,12 @@ import { useEffect, useState } from 'react'
 import ClientOnly from '../components/ClientOnly'
 import useHasMounted from '../hooks/useHasMounted'
 
-interface Props {
-  isSmall: boolean
-}
-
-export default function AddEvent({ isSmall }: Props) {
+export default function AddEvent() {
   const createEventMutation = useCreateEvent()
+  const isSmall = useMediaQuery('(max-width: 768px)')
   const { isOpen, onOpen, onClose } = useAddEventModalStore()
-  // const isSmall = useMediaQuery('(max-width: 768px)')
   const { data: session } = useSession()
+
   const userId = session?.user?.id || null
 
   // const hasMounted = useHasMounted();
@@ -54,7 +51,7 @@ export default function AddEvent({ isSmall }: Props) {
       <AnimatePresence>
         {isOpen && (
           <AddEventModal
-            // key="addEventModal"
+            key="addEventModal"
             header="Add New Event"
             onMutateEvent={handleAddEvent}
             isMobile={isSmall}

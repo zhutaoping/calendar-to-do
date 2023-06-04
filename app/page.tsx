@@ -38,7 +38,7 @@ export default function Home() {
             <RequestModal
               key={forKey}
               header="Forgot Password"
-              isMobile={true}
+              isMobile={isSmall}
             />
           )}
         </AnimatePresence>

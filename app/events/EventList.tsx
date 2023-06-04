@@ -18,10 +18,9 @@ const MotionEventItem = motion(EventItem)
 
 interface Props {
   activeDate: Date | null
-  isSmall: boolean
 }
 
-export default function Events({ activeDate, isSmall }: Props) {
+export default function Events({ activeDate }: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore()
   const [eventId, setEventId] = useState('')
   const [eventList, setEventList] = useState<Event[]>([])
@@ -42,6 +41,7 @@ export default function Events({ activeDate, isSmall }: Props) {
     onSuccess: () => {},
   })
 
+  const isSmall = useMediaQuery('(max-width: 768px)')
   const isLarge = useMediaQuery('(min-width: 1024px)')
   const isXL = useMediaQuery('(min-width: 1280px)')
 

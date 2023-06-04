@@ -29,6 +29,7 @@ export default function Events({ activeDate }: Props) {
 
   useEffect(() => {
     setForKey(Date.now().toString())
+    console.log('forKey: ', forKey)
   }, [isOpen])
 
   const { status } = useSession()

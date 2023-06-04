@@ -20,6 +20,7 @@ export default function Home() {
   //! This is for full enter animation.
   useEffect(() => {
     setForKey(Date.now().toString())
+    console.log('forKey: ', forKey)
   }, [signUpModal.isOpen, loginModal.isOpen, requestModal.isOpen])
 
   const isSmall = useMediaQuery('(max-width: 768px)')

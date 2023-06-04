@@ -28,6 +28,7 @@
     "date-fns": "^2.29.3",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "eslint-config-prettier": "^8.8.0",
     "focus-trap-react": "^10.1.1",
     "framer-motion": "^10.12.2",
     "nanoid": "^4.0.2",

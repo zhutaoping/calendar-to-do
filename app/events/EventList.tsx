@@ -33,7 +33,6 @@ export default function Events({ activeDate }: Props) {
 
   const isSmall = useMediaQuery('(max-width: 768px)')
   const { status } = useSession()
-  const queryClient = useQueryClient()
 
   const { data: events, isLoading, isError, error, refetch } = useEvents()
   const { data: event } = useEvent(eventId)
@@ -41,7 +40,6 @@ export default function Events({ activeDate }: Props) {
   const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
     onSuccess: () => {
-      // queryClient.invalidateQueries(['events'])
       onClose()
     },
   })

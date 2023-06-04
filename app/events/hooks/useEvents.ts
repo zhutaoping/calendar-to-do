@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import eventService from "@/app/services/eventService";
+import { useQuery } from '@tanstack/react-query'
+import eventService from '@/app/events/services/eventService'
 
 export const useEvents = () => {
   return useQuery({
-    queryKey: ["events"],
+    queryKey: ['events'],
     queryFn: ({ signal }) => eventService.getEvents({ signal }),
-    onSuccess: (data) => {
+    onSuccess: data => {
       // console.log("🚀 ~ useEventsQuery ~ data:", data);
     },
-  });
-};
+  })
+}

@@ -1,4 +1,4 @@
-import eventService from '@/app/services/eventService'
+import eventService from '@/app/events/services/eventService'
 import { Event } from '@prisma/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 

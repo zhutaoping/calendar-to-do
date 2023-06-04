@@ -186,7 +186,7 @@ export default function Events({ activeDate }: Props) {
             <AnimatedEventItem
               layout="position"
               evt={evt}
-              key={evt.id}
+              key={evt.id || evt.title}
               index={index}
               handleClick={handleClick}
               handleCompleted={handleCompleted}

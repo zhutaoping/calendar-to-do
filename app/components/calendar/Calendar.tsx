@@ -82,7 +82,7 @@ export default function Calendar() {
             whileTap={{ scale: 0.95 }}
             onClick={handleChevronLeft}
             className="focus-ring rounded p-2 text-sm hover:bg-borderDays"
-            aria-label="Previous month"
+            aria-label="Previous Month"
           >
             <FaChevronLeft />
           </motion.button>
@@ -110,7 +110,7 @@ export default function Calendar() {
             whileTap={{ scale: 0.95 }}
             onClick={handleChevronRight}
             className="focus-ring p-2 text-sm hover:bg-borderDays"
-            aria-label="Next month"
+            aria-label="Next Month"
           >
             <FaChevronRight className="text-sm" />
           </motion.button>

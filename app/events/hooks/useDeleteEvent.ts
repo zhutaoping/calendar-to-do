@@ -1,31 +1,31 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Event } from "@prisma/client";
-import eventService from "@/app/services/eventService";
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Event } from '@prisma/client'
+import eventService from '@/app/events/services/eventService'
 
 export const useDeleteEvent = () => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: eventService.deleteEvent,
     //* Optimistic Update
-    onMutate: async (deletedId) => {
-      await queryClient.cancelQueries(["events", deletedId]);
+    onMutate: async deletedId => {
+      await queryClient.cancelQueries(['events', deletedId])
 
-      const previousEvents = queryClient.getQueryData(["events"]);
+      const previousEvents = queryClient.getQueryData(['events'])
 
-      queryClient.setQueryData<Event[]>(["events"], (old) =>
-        old?.filter((evt) => evt.id !== deletedId)
-      );
+      queryClient.setQueryData<Event[]>(['events'], old =>
+        old?.filter(evt => evt.id !== deletedId),
+      )
 
-      return { previousEvents };
+      return { previousEvents }
     },
 
     onError: (error, deletedId, context) => {
-      queryClient.setQueryData(["events"], context?.previousEvents);
+      queryClient.setQueryData(['events'], context?.previousEvents)
     },
 
-    onSettled: (deletedId) => {
-      queryClient.invalidateQueries({ queryKey: ["events", deletedId] });
+    onSettled: deletedId => {
+      queryClient.invalidateQueries({ queryKey: ['events', deletedId] })
     },
-  });
-};
+  })
+}

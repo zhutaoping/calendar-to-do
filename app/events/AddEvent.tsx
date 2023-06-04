@@ -14,22 +14,22 @@ import useHasMounted from '../hooks/useHasMounted'
 
 export default function AddEvent() {
   const createEventMutation = useCreateEvent()
-  const isSmall = useMediaQuery('(max-width: 768px)')
   const { isOpen, onOpen, onClose } = useAddEventModalStore()
+  const [dateNow, setDateNow] = useState('')
+
+  const isSmall = useMediaQuery('(max-width: 768px)')
+
   const { data: session } = useSession()
-
   const userId = session?.user?.id || null
-
-  const [forKey, setForKey] = useState(Date.now().toString())
-
-  useEffect(() => {
-    setForKey(Date.now().toString())
-  }, [isOpen])
 
   // const hasMounted = useHasMounted();
   // if (!hasMounted) {
   //   return null;
   // }
+
+  useEffect(() => {
+    setDateNow(Date.now().toString())
+  }, [isOpen])
 
   const handleAddEvent = (data: Partial<Event>) => {
     // const newData = { ...data, id: Date.now().toString() };
@@ -49,7 +49,7 @@ export default function AddEvent() {
           type="button"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          aria-label="Add new event"
+          aria-label="Add New Event"
         >
           <BsPlusCircle color="white" size={30} />
         </motion.button>

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import eventService from '@/app/services/eventService'
+import eventService from '@/app/events/services/eventService'
 import { Event } from '@prisma/client'
 
 interface Props {
@@ -17,27 +17,30 @@ export const useEditEvent = ({ onSuccess, onError }: Props) => {
     onMutate: async editedEvent => {
       await queryClient.cancelQueries({ queryKey: ['events', editedEvent.id] })
 
-      const previousEvents = queryClient.getQueryData<Event[]>(['events']) || []
+      const previousEvent = queryClient.getQueryData<Event>([
+        'events',
+        editedEvent.id,
+      ])
 
-      queryClient.setQueryData<Event[]>(['events'], old => {
-        const newEvents = old?.map(event => {
+      queryClient.setQueryData<Event[]>(['events'], (old = []) => {
+        return old.map(event => {
           if (event.id === editedEvent.id) {
             return { ...event, ...editedEvent }
           }
+
           return event
         })
-        return newEvents
       })
 
-      return { previousEvents, editedEvent }
+      return { previousEvent, editedEvent }
     },
 
-    onError: (_error, newEvent, context) => {
-      if (!context?.previousEvents) return
+    onError: (error, editedEvent, context) => {
+      if (!context?.previousEvent) return
 
       queryClient.setQueryData(
-        ['events', context?.editedEvent.id],
-        context?.previousEvents,
+        ['events', editedEvent.id],
+        context?.previousEvent,
       )
     },
 

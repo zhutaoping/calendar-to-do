@@ -74,6 +74,8 @@ export default function Events({ activeDate }: Props) {
       startTime,
       endTime,
     })
+
+    onClose()
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {
@@ -160,7 +162,7 @@ export default function Events({ activeDate }: Props) {
             <MotionEventItem
               layout="position"
               evt={evt}
-              key={evt.id || evt.id + index}
+              key={evt.id || evt.title}
               index={index}
               handleClick={handleClick}
               handleCompleted={handleCompleted}

@@ -1,53 +1,52 @@
-"use client";
-import { useEffect, useState } from "react";
-import { format } from "date-fns";
-import { useSession, signOut } from "next-auth/react";
-import { useDay } from "../stores/DayContext";
-import EventList from "./EventList";
-import AddEvent from "./AddEvent";
-import { useSignUpModalStore } from "../stores/SignUpModalStore";
-import { useLoginModalStore } from "../stores/LoginModalStore";
-import { useMediaQuery } from "../hooks/useMediaQuery";
-import useHasMounted from "../hooks/useHasMounted";
+'use client'
+import { format } from 'date-fns'
+import { useSession, signOut } from 'next-auth/react'
+import { useDay } from '../stores/DayContext'
+import EventList from './EventList'
+import AddEvent from './AddEvent'
+import { useSignUpModalStore } from '../stores/SignUpModalStore'
+import { useLoginModalStore } from '../stores/LoginModalStore'
+import { useMediaQuery } from '../hooks/useMediaQuery'
+import useHasMounted from '../hooks/useHasMounted'
 
 export default function EventsBoard() {
-  const { activeDate } = useDay();
-  const signUpModal = useSignUpModalStore();
-  const loginModal = useLoginModalStore();
+  const { activeDate } = useDay()
+  const signUpModal = useSignUpModalStore()
+  const loginModal = useLoginModalStore()
 
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession()
 
   const dayOfWeek = activeDate
-    ? format(activeDate, "EEEE")
-    : format(new Date(), "EEEE");
+    ? format(activeDate, 'EEEE')
+    : format(new Date(), 'EEEE')
 
-  const isSmall = useMediaQuery("(max-width: 768px)");
+  const isSmall = useMediaQuery('(max-width: 768px)')
 
-  const hasMounted = useHasMounted();
-  if (!hasMounted) return null;
+  const hasMounted = useHasMounted()
+  if (!hasMounted) return null
 
-  let sessionContent;
-  if (status === "loading") {
-    sessionContent = <div>Hang in there...</div>;
+  let sessionContent
+  if (status === 'loading') {
+    sessionContent = <div>Hang in there...</div>
   }
-  if (status === "authenticated") {
+  if (status === 'authenticated') {
     sessionContent = (
       <div className="flex gap-4">
         <span className="text-sm text-violet-300">
-          Hi, {session?.user?.name || ""}
+          Hi, {session?.user?.name || ''}
         </span>
         <button
           type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            signOut();
+          onClick={e => {
+            e.preventDefault()
+            signOut()
           }}
           className="text-sm text-white"
         >
           Log Out
         </button>
       </div>
-    );
+    )
   } else {
     sessionContent = (
       <>
@@ -60,7 +59,7 @@ export default function EventsBoard() {
           </span>
         </button>
       </>
-    );
+    )
   }
 
   return (
@@ -75,5 +74,5 @@ export default function EventsBoard() {
       </div>
       {!isSmall && <AddEvent />}
     </div>
-  );
+  )
 }

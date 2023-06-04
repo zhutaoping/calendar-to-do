@@ -4,16 +4,14 @@ import { Event } from '@prisma/client'
 
 interface Props {
   onSuccess: () => void
-  onError?: () => void
 }
 
-export const useEditEvent = ({ onSuccess, onError }: Props) => {
+export const useEditEvent = ({ onSuccess }: Props) => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: eventService.editEvent,
     onSuccess,
-    // onError,
 
     onMutate: async editedEvent => {
       await queryClient.cancelQueries({ queryKey: ['events', editedEvent.id] })
@@ -41,7 +39,7 @@ export const useEditEvent = ({ onSuccess, onError }: Props) => {
 
       queryClient.setQueryData(
         ['events', editedEvent.id],
-        context?.previousEvent,
+        context?.previousEvent
       )
     },
 

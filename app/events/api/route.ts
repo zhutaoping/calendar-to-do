@@ -26,7 +26,6 @@ export async function GET(req: Request, res: Response) {
 
 export async function POST(req: Request, res: Response) {
   const event: Event = await req.json()
-  // console.log("🚀 ~ POST ~ event:", event);
 
   const newEvent = await prisma.event.create({
     data: {

@@ -6,8 +6,6 @@ export const useEvent = (eventId: string) => {
     queryKey: ['events', eventId],
     queryFn: ({ signal }) => eventService.getEvent(eventId, { signal }),
     enabled: !!eventId,
-    onSuccess: data => {
-      // console.log("🚀 ~ useEventQuery ~ data:", data);
-    },
+    onSuccess: data => {},
   })
 }

@@ -4,12 +4,12 @@ export const checkHasEvent = (
   i: number,
   dayInView: Date,
   events: Event[] | null,
-  plus: number, // which month to check for host
+  plus: number // which month to check
 ) => {
   const filteredEvents = events?.filter(
     event =>
       event.month === dayInView.getMonth() + plus &&
-      event.year === dayInView.getFullYear(),
+      event.year === dayInView.getFullYear()
   )
   const filterArray = filteredEvents?.map(event => event.day)
 

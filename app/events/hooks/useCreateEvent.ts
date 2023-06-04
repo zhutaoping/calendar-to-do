@@ -11,9 +11,7 @@ export const useCreateEvent = () => {
 
   return useMutation<Event, Error, Partial<Event>, AddEventContext>({
     mutationFn: eventService.createEvent,
-    // onSuccess: (data, variables, context) => {
-    //   queryClient.invalidateQueries(["events"]);
-    // },
+
     //* Optimistic update
     //* newEvent is the data that we are sending to the server
     onMutate: async newEvent => {
@@ -30,7 +28,6 @@ export const useCreateEvent = () => {
     },
 
     onError: (error, newEvent, context) => {
-      // if (!context?.previousEvents) return
       queryClient.setQueryData(['events'], context?.previousEvents)
     },
 

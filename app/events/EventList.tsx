@@ -1,6 +1,5 @@
 'use client'
 import { Event } from '@prisma/client'
-import { useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion, stagger, useAnimate } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { MouseEvent, useEffect, useState } from 'react'
@@ -25,11 +24,6 @@ export default function Events({ activeDate }: Props) {
   const { isOpen, onClose, onOpen } = useUpdateEventModalStore()
   const [eventId, setEventId] = useState('')
   const [eventList, setEventList] = useState<Event[]>([])
-  const [dateNow, setDateNow] = useState('')
-
-  useEffect(() => {
-    setDateNow(Date.now().toString())
-  }, [isOpen])
 
   const isSmall = useMediaQuery('(max-width: 768px)')
   const { status } = useSession()
@@ -72,13 +66,13 @@ export default function Events({ activeDate }: Props) {
         animation = animate(
           '.flip-board',
           { rotate: [0, 10, -10, 0] },
-          { duration: 0.5, delay: stagger(0.1, { from: index }) },
+          { duration: 0.5, delay: stagger(0.1, { from: index }) }
         )
       } else {
         animation = animate(
           '.flip-board',
           { x: [0, 4, -4, 0] },
-          { duration: 0.4, delay: stagger(0.1, { from: index }) },
+          { duration: 0.4, delay: stagger(0.1, { from: index }) }
         )
       }
       //* hacky way to show full animation
@@ -119,7 +113,7 @@ export default function Events({ activeDate }: Props) {
         (evt: Event) =>
           evt.day === activeDate.getDate() &&
           evt.month === activeDate.getMonth() + 1 &&
-          evt.year === activeDate.getFullYear(),
+          evt.year === activeDate.getFullYear()
       )
       setEventList(listOfDay)
     }

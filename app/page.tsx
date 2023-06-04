@@ -1,29 +1,30 @@
-"use client";
-import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import LoginModal from "./auth/LoginModal";
-import Calendar from "./components/calendar/Calendar";
-import EventsBoard from "./events/EventsBoard";
-import { useMediaQuery } from "./hooks/useMediaQuery";
-import { useLoginModalStore } from "./stores/LoginModalStore";
-import { useRequestModalStore } from "./stores/RequestModalStore";
-import { useSignUpModalStore } from "./stores/SignUpModalStore";
-import SignUpModal from "./users/SignUpModal";
-import RequestModal from "./users/forget-password/RequestModal";
+'use client'
+import { AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import LoginModal from './auth/LoginModal'
+import Calendar from './components/calendar/Calendar'
+import EventsBoard from './events/EventsBoard'
+import { useMediaQuery } from './hooks/useMediaQuery'
+import { useLoginModalStore } from './stores/LoginModalStore'
+import { useRequestModalStore } from './stores/RequestModalStore'
+import { useSignUpModalStore } from './stores/SignUpModalStore'
+import SignUpModal from './users/SignUpModal'
+import RequestModal from './users/forget-password/RequestModal'
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [dateNow, setDateNow] = useState("");
+  const [isMobile, setIsMobile] = useState(false)
 
-  const signUpModal = useSignUpModalStore();
-  const loginModal = useLoginModalStore();
-  const requestModal = useRequestModalStore();
+  const signUpModal = useSignUpModalStore()
+  const loginModal = useLoginModalStore()
+  const requestModal = useRequestModalStore()
 
-  const isSmall = useMediaQuery("(max-width: 768px)");
+  const isSmall = useMediaQuery('(max-width: 768px)')
+
+  const [dateNow, setDateNow] = useState('')
 
   useEffect(() => {
-    setDateNow(Date.now().toString());
-  }, [loginModal.isOpen, signUpModal.isOpen, requestModal.isOpen]);
+    setDateNow(Date.now().toString())
+  }, [loginModal.isOpen, signUpModal.isOpen, requestModal.isOpen])
 
   return (
     <>
@@ -47,5 +48,5 @@ export default function Home() {
         <EventsBoard />
       </main>
     </>
-  );
+  )
 }

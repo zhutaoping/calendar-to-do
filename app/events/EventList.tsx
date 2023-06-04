@@ -39,9 +39,7 @@ export default function Events({ activeDate }: Props) {
   const deleteEventMutation = useDeleteEvent()
   const completeEventMutation = useCompleteEvent()
   const editEventMutation = useEditEvent({
-    onSuccess: () => {
-      onClose()
-    },
+    onSuccess: () => {},
   })
 
   const isLarge = useMediaQuery('(min-width: 1024px)')
@@ -100,6 +98,8 @@ export default function Events({ activeDate }: Props) {
       startTime,
       endTime,
     })
+
+    onClose()
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {

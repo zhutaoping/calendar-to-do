@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import eventService from '@/app/services/eventService'
+import { Event } from '@prisma/client'
 
 interface Props {
   onSuccess: () => void
@@ -14,28 +15,39 @@ export const useEditEvent = ({ onSuccess, onError }: Props) => {
     onSuccess,
     // onError,
 
-    onMutate: async newEvent => {
-      await queryClient.cancelQueries({ queryKey: ['events'] })
+    onMutate: async editedEvent => {
+      await queryClient.cancelQueries({ queryKey: ['events', editedEvent.id] })
 
-      const previousEvents = queryClient.getQueryData<Event[]>(['events']) || []
-
-      queryClient.setQueryData<Event[]>(['events'], (old = []) => [
-        ...old,
-        newEvent as Event,
+      const previousEvent = queryClient.getQueryData<Event>([
+        'events',
+        editedEvent.id,
       ])
 
-      return { previousEvents }
+      queryClient.setQueryData<Event[]>(['events'], (old = []) => {
+        return old.map(event => {
+          if (event.id === editedEvent.id) {
+            return { ...event, ...editedEvent }
+          }
+
+          return event
+        })
+      })
+
+      return { previousEvent, editedEvent }
     },
 
-    onError: (error, newEvent, context) => {
-      if (!context?.previousEvents) return
+    onError: (error, editedEvent, context) => {
+      if (!context?.previousEvent) return
 
-      queryClient.setQueryData(['events'], context?.previousEvents)
+      queryClient.setQueryData(
+        ['events', editedEvent.id],
+        context?.previousEvent,
+      )
     },
 
-    onSettled: () => {
+    onSettled: resData => {
       queryClient.invalidateQueries({
-        queryKey: ['events'],
+        queryKey: ['events', resData?.id],
       })
     },
   })

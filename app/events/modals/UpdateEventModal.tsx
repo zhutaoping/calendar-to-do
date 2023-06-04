@@ -22,7 +22,12 @@ const UpdateEventModal = ({
   const { onClose } = useUpdateEventModalStore()
 
   const bodyContent = (
-    <EventForm id={id} event={event} onMutateEvent={onMutateEvent} />
+    <EventForm
+      id={id}
+      event={event}
+      onMutateEvent={onMutateEvent}
+      onClose={onClose}
+    />
   )
 
   return (

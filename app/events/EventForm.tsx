@@ -23,9 +23,15 @@ type Props = {
   id?: string
   event?: Event
   onMutateEvent: (data: Partial<Event>) => void
+  onClose?: () => void
 }
 
-export default function EventForm({ id, event, onMutateEvent }: Props) {
+export default function EventForm({
+  id,
+  event,
+  onMutateEvent,
+  onClose,
+}: Props) {
   const [disabled, setDisabled] = useState(false)
 
   const { activeDate } = useDay()
@@ -62,6 +68,8 @@ export default function EventForm({ id, event, onMutateEvent }: Props) {
       month,
       day,
     })
+
+    onClose && onClose()
   }
 
   return (

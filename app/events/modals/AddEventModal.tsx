@@ -12,7 +12,9 @@ interface Props {
 const AddEventModal = ({ header, onMutateEvent, isMobile }: Props) => {
   const { onClose } = useAddEventModalStore()
 
-  const bodyContent = <EventForm onMutateEvent={onMutateEvent} />
+  const bodyContent = (
+    <EventForm onMutateEvent={onMutateEvent} onClose={onClose} />
+  )
 
   return (
     <Modal

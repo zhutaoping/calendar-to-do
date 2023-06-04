@@ -9,30 +9,22 @@ import { useAddEventModalStore } from '../stores/AddEventModalStore'
 import AddEventModal from './modals/AddEventModal'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { useEffect, useState } from 'react'
-import ClientOnly from '../components/ClientOnly'
-import useHasMounted from '../hooks/useHasMounted'
 
 export default function AddEvent() {
+  const isSmall = useMediaQuery('(max-width: 768px)')
   const createEventMutation = useCreateEvent()
   const { isOpen, onOpen, onClose } = useAddEventModalStore()
-  const [dateNow, setDateNow] = useState('')
-
-  const isSmall = useMediaQuery('(max-width: 768px)')
 
   const { data: session } = useSession()
   const userId = session?.user?.id || null
 
-  // const hasMounted = useHasMounted();
-  // if (!hasMounted) {
-  //   return null;
-  // }
+  const [dateNow, setDateNow] = useState('')
 
   useEffect(() => {
     setDateNow(Date.now().toString())
   }, [isOpen])
 
   const handleAddEvent = (data: Partial<Event>) => {
-    // const newData = { ...data, id: Date.now().toString() };
     createEventMutation.mutate({
       ...data,
       userId,
@@ -57,7 +49,7 @@ export default function AddEvent() {
       <AnimatePresence>
         {isOpen && (
           <AddEventModal
-            key={forKey}
+            key={dateNow}
             header="Add New Event"
             onMutateEvent={handleAddEvent}
             isMobile={isSmall}

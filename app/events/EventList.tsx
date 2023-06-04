@@ -74,8 +74,6 @@ export default function Events({ activeDate }: Props) {
       startTime,
       endTime,
     })
-
-    onClose()
   }
 
   function handleDelete(e: MouseEvent, eventId: string) {

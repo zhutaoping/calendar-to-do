@@ -1,4 +1,4 @@
-# Calender-To-Do
+# Calendar-To-Do
 
 清爽月曆搭配動感清單 / Modern calendar with an animated to-do list
 

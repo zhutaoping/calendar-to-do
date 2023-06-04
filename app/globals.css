@@ -210,10 +210,6 @@
   .auth-input[type='password'] ~ span:hover * {
     @apply text-violet-600;
   }
-
-  div:has(div[style*='opacity: 0']) {
-    pointer-events: none;
-  }
 }
 
 @layer utilities {
